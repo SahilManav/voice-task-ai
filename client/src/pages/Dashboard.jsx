@@ -38,6 +38,15 @@ const buildTaskPayload = (task, completed = task.completed) => ({
 const parseVoiceCommand = (text) => {
   const lower = text.toLowerCase();
 
+  // Detect action
+  let action = "create";
+
+  if (lower.startsWith("complete") || lower.startsWith("mark")) {
+    action = "complete";
+  } else if (lower.startsWith("delete") || lower.startsWith("remove")) {
+    action = "delete";
+  }
+
   let priority = "medium";
 
   if (lower.includes("high")) priority = "high";
@@ -53,6 +62,11 @@ const parseVoiceCommand = (text) => {
 
   let title = text
     .replace(/create task/i, "")
+    .replace(/complete/i, "")
+    .replace(/mark/i, "")
+    .replace(/delete/i, "")
+    .replace(/remove/i, "")
+    .replace(/task/i, "")
     .replace(/tomorrow/i, "")
     .replace(/high priority/i, "")
     .replace(/medium priority/i, "")
@@ -63,16 +77,17 @@ const parseVoiceCommand = (text) => {
     .trim();
 
   return {
+    action,
     title,
     priority,
     dueDate,
-    preview: `📌 Title: ${title}
+    preview: `🎯 Action: ${action.toUpperCase()}
+
+📌 Title: ${title}
 
 🔥 Priority: ${priority.toUpperCase()}
 
-📅 Due: ${dueDate ? "Tomorrow" : "None"}
-
-✅ Status: Ready to Create`,
+📅 Due: ${dueDate ? "Tomorrow" : "None"}`,
   };
 };
 
@@ -264,11 +279,11 @@ export default function Dashboard() {
   };
 
   const handleTaskEdit = (task) => {
-  console.log("EDIT CLICKED", task);
-  alert("EDIT CLICKED");
-  setEditingTask(task);
-  setTaskModalOpen(true);
-};
+    console.log("EDIT CLICKED", task);
+    alert("EDIT CLICKED");
+    setEditingTask(task);
+    setTaskModalOpen(true);
+  };
 
   const handleTaskDelete = async (taskToDelete) => {
     const previousTasks = tasks;
@@ -345,15 +360,70 @@ export default function Dashboard() {
       return;
     }
 
-    const parsed = parseVoiceCommand(transcript);
+  const parsed = parseVoiceCommand(transcript);
 
-    const created = await createTask({
-      title: parsed.title,
-      description: "Created using Voice Assistant",
-      priority: parsed.priority,
-      dueDate: parsed.dueDate,
-      voiceCommand: true,
-    });
+// Voice Complete
+if (parsed.action === "complete") {
+  const task = tasks.find((t) =>
+    t.title.toLowerCase().includes(parsed.title.toLowerCase())
+  );
+
+  if (!task) {
+    toast.error("Task not found.");
+    return;
+  }
+
+  await handleTaskComplete(task);
+
+  setVoiceHistory((prev) => [
+    {
+      text: transcript,
+      time: "Just now",
+      success: true,
+    },
+    ...prev,
+  ]);
+
+  toast.success("Task completed successfully!");
+  handleCancelVoice();
+  return;
+}
+
+// Voice Delete
+if (parsed.action === "delete") {
+  const task = tasks.find((t) =>
+    t.title.toLowerCase().includes(parsed.title.toLowerCase())
+  );
+
+  if (!task) {
+    toast.error("Task not found.");
+    return;
+  }
+
+  await handleTaskDelete(task);
+
+  setVoiceHistory((prev) => [
+    {
+      text: transcript,
+      time: "Just now",
+      success: true,
+    },
+    ...prev,
+  ]);
+
+  toast.success("Task deleted successfully!");
+  handleCancelVoice();
+  return;
+}
+
+// Existing Create Task
+const created = await createTask({
+  title: parsed.title,
+  description: "Created using Voice Assistant",
+  priority: parsed.priority,
+  dueDate: parsed.dueDate,
+  voiceCommand: true,
+});
 
     if (created) {
       setVoiceHistory((prev) => [
