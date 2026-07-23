@@ -6,6 +6,7 @@ const createTask = async (req, res) => {
     const task = await Task.create({
       user: req.user._id,
       title: req.body.title,
+      description: req.body.description || "",
       dueDate: req.body.dueDate,
       priority: req.body.priority,
     });
@@ -59,6 +60,7 @@ const updateTask = async (req, res) => {
     }
 
     task.title = req.body.title;
+    task.description = req.body.description || "";
     task.priority = req.body.priority;
     task.dueDate = req.body.dueDate;
     task.completed = req.body.completed;

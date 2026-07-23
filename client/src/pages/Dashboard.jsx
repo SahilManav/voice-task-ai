@@ -1,0 +1,506 @@
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Settings } from "lucide-react";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+
+import CreateTaskModal from "../components/dashboard/CreateTaskModal";
+import Navbar from "../components/dashboard/Navbar";
+import Sidebar from "../components/dashboard/Sidebar";
+import VoiceAssistantPanel from "../components/dashboard/VoiceAssistantPanel";
+import DashboardOverview from "../components/dashboard/DashboardOverview";
+import DashboardTasks from "../components/dashboard/DashboardTasks";
+import DashboardAnalyticsView from "../components/dashboard/DashboardAnalyticsView";
+import DashboardVoiceView from "../components/dashboard/DashboardVoiceView";
+import DashboardSettingsView from "../components/dashboard/DashboardSettingsView";
+import api from "../services/api";
+import { useAuth } from "../context/AuthContext";
+
+const initialVoiceHistory = [];
+
+const normalizeTask = (task) => ({
+  _id: task._id ?? task.id ?? crypto.randomUUID(),
+  title: task.title ?? "Untitled task",
+  description: task.description ?? "No description provided yet.",
+  priority: task.priority ?? "medium",
+  dueDate: task.dueDate ?? null,
+  completed: Boolean(task.completed),
+  voiceCommand: Boolean(task.voiceCommand),
+});
+
+const buildTaskPayload = (task, completed = task.completed) => ({
+  title: task.title,
+  description: task.description ?? "",
+  priority: task.priority ?? "medium",
+  dueDate: task.dueDate ?? null,
+  completed,
+});
+const parseVoiceCommand = (text) => {
+  const lower = text.toLowerCase();
+
+  let priority = "medium";
+
+  if (lower.includes("high")) priority = "high";
+  if (lower.includes("low")) priority = "low";
+
+  let dueDate = null;
+
+  if (lower.includes("tomorrow")) {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    dueDate = tomorrow.toISOString();
+  }
+
+  let title = text
+    .replace(/create task/i, "")
+    .replace(/tomorrow/i, "")
+    .replace(/high priority/i, "")
+    .replace(/medium priority/i, "")
+    .replace(/low priority/i, "")
+    .replace(/with priority high/i, "")
+    .replace(/with priority medium/i, "")
+    .replace(/with priority low/i, "")
+    .trim();
+
+  return {
+    title,
+    priority,
+    dueDate,
+    preview: `📌 Title: ${title}
+
+🔥 Priority: ${priority.toUpperCase()}
+
+📅 Due: ${dueDate ? "Tomorrow" : "None"}
+
+✅ Status: Ready to Create`,
+  };
+};
+
+export default function Dashboard() {
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
+
+  const [activeTab, setActiveTab] = useState("dashboard");
+  const [voicePanelOpen, setVoicePanelOpen] = useState(false);
+  const [taskModalOpen, setTaskModalOpen] = useState(false);
+  const [editingTask, setEditingTask] = useState(null);
+  const [isListening, setIsListening] = useState(false);
+  const [isTaskSubmitting, setIsTaskSubmitting] = useState(false);
+  const [transcript, setTranscript] = useState("");
+  const [aiResponse, setAiResponse] = useState("");
+  const [tasks, setTasks] = useState([]);
+  const [voiceHistory, setVoiceHistory] = useState(initialVoiceHistory);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const res = await api.get("/tasks");
+
+        if (res.data.success) {
+          setTasks((res.data.tasks ?? []).map(normalizeTask));
+        } else {
+          setTasks([]);
+          toast.error("Could not load tasks.");
+        }
+      } catch (err) {
+        console.error("Failed to fetch tasks:", err);
+        setTasks([]);
+        toast.error("Failed to fetch tasks.");
+      }
+    };
+
+    fetchTasks();
+  }, []);
+
+  const createTask = async ({
+    title,
+    description,
+    priority = "medium",
+    dueDate = null,
+    voiceCommand = false,
+  }) => {
+    try {
+      const res = await api.post("/tasks", {
+        title,
+        description,
+        priority,
+        dueDate,
+      });
+
+      if (res.data.success) {
+        const createdTask = normalizeTask({
+          ...res.data.task,
+          description,
+          voiceCommand,
+        });
+
+        setTasks((currentTasks) => [createdTask, ...currentTasks]);
+        return true;
+      }
+    } catch (err) {
+      console.error("Failed to create task:", err);
+      toast.error(
+        err.response?.data?.message || "Failed to create task."
+      );
+    }
+
+    return false;
+  };
+
+  const handleTaskModalClose = () => {
+    if (isTaskSubmitting) {
+      return;
+    }
+
+    setTaskModalOpen(false);
+  };
+
+  const handleManualTaskAdd = () => {
+    setEditingTask(null);
+    setTaskModalOpen(true);
+  };
+
+  const handleTaskCreate = async (taskData) => {
+    if (!taskData.title) {
+      toast.error("Task title is required.");
+      return;
+    }
+
+    setIsTaskSubmitting(true);
+
+    let success = false;
+
+    if (editingTask) {
+      try {
+        const res = await api.put(`/tasks/${editingTask._id}`, {
+          title: taskData.title,
+          description: taskData.description,
+          priority: taskData.priority,
+          dueDate: taskData.dueDate,
+          completed: editingTask.completed,
+        });
+
+        if (res.data.success) {
+          setTasks((currentTasks) =>
+            currentTasks.map((task) =>
+              task._id === editingTask._id
+                ? normalizeTask({
+                  ...task,
+                  ...res.data.task,
+                  voiceCommand: task.voiceCommand,
+                })
+                : task
+            )
+          );
+
+          toast.success("Task updated successfully.");
+          success = true;
+        }
+      } catch (err) {
+        console.error(err);
+        toast.error("Failed to update task.");
+      }
+    } else {
+      success = await createTask({
+        ...taskData,
+        voiceCommand: false,
+      });
+
+      if (success) {
+        toast.success("Task created successfully.");
+      }
+    }
+
+    if (success) {
+      setEditingTask(null);
+      setTaskModalOpen(false);
+    }
+
+    setIsTaskSubmitting(false);
+  };
+
+  const handleTaskComplete = async (taskToToggle) => {
+    const nextCompleted = !taskToToggle.completed;
+
+    setTasks((currentTasks) =>
+      currentTasks.map((task) =>
+        task._id === taskToToggle._id
+          ? { ...task, completed: nextCompleted }
+          : task
+      )
+    );
+
+    try {
+      const res = await api.put(
+        `/tasks/${taskToToggle._id}`,
+        buildTaskPayload(taskToToggle, nextCompleted)
+      );
+
+      if (res.data.success) {
+        setTasks((currentTasks) =>
+          currentTasks.map((task) =>
+            task._id === taskToToggle._id
+              ? normalizeTask({
+                ...task,
+                ...res.data.task,
+                voiceCommand: task.voiceCommand,
+              })
+              : task
+          )
+        );
+      }
+    } catch (err) {
+      console.error("Failed to update task:", err);
+      toast.error("Failed to update task.");
+
+      setTasks((currentTasks) =>
+        currentTasks.map((task) =>
+          task._id === taskToToggle._id
+            ? { ...task, completed: taskToToggle.completed }
+            : task
+        )
+      );
+    }
+  };
+
+  const handleTaskEdit = (task) => {
+  console.log("EDIT CLICKED", task);
+  alert("EDIT CLICKED");
+  setEditingTask(task);
+  setTaskModalOpen(true);
+};
+
+  const handleTaskDelete = async (taskToDelete) => {
+    const previousTasks = tasks;
+
+    setTasks((currentTasks) =>
+      currentTasks.filter((task) => task._id !== taskToDelete._id)
+    );
+
+    try {
+      await api.delete(`/tasks/${taskToDelete._id}`);
+      toast.success("Task deleted successfully.");
+    } catch (err) {
+      console.error("Failed to delete task:", err);
+      setTasks(previousTasks);
+      toast.error("Failed to delete task.");
+    }
+  };
+
+  const handleMicToggle = () => {
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      toast.error("Your browser does not support Speech Recognition.");
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+
+    recognition.lang = "en-US";
+    recognition.continuous = false;
+    recognition.interimResults = true;
+
+    setTranscript("");
+    setAiResponse("");
+    setIsListening(true);
+
+    let finalTranscript = "";
+
+    recognition.onresult = (event) => {
+      let speech = "";
+
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        speech += event.results[i][0].transcript;
+      }
+
+      finalTranscript = speech;
+
+      setTranscript(speech);
+    };
+
+    recognition.onerror = () => {
+      setIsListening(false);
+      toast.error("Voice recognition failed.");
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+
+      if (!finalTranscript.trim()) return;
+
+      const parsed = parseVoiceCommand(finalTranscript);
+
+      setTranscript(finalTranscript);
+      setAiResponse(parsed.preview);
+    };
+
+    recognition.start();
+  };
+
+  const handleConfirmTask = async () => {
+    if (!transcript.trim()) {
+      toast.error("Please speak a command first.");
+      return;
+    }
+
+    const parsed = parseVoiceCommand(transcript);
+
+    const created = await createTask({
+      title: parsed.title,
+      description: "Created using Voice Assistant",
+      priority: parsed.priority,
+      dueDate: parsed.dueDate,
+      voiceCommand: true,
+    });
+
+    if (created) {
+      setVoiceHistory((prev) => [
+        {
+          text: transcript,
+          time: "Just now",
+          success: true,
+        },
+        ...prev,
+      ]);
+
+      toast.success("Voice task created successfully.");
+      handleCancelVoice();
+    }
+  };
+  const handleCancelVoice = () => {
+    setIsListening(false);
+    setTranscript("");
+    setAiResponse("");
+    setVoicePanelOpen(false);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/login");
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  };
+
+  const renderContentView = () => {
+    switch (activeTab) {
+      case "tasks":
+        return (
+          <DashboardTasks
+            title="Active Tasks Board"
+            description="Review, prioritize, and structure your workspace tasks."
+            tasks={tasks}
+            onAddTask={handleManualTaskAdd}
+            onComplete={handleTaskComplete}
+            onEdit={handleTaskEdit}
+            onDelete={handleTaskDelete}
+            showAddButton
+            showCompletedSection
+            gridClassName="grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+          />
+        );
+
+      case "settings":
+        return (
+          <DashboardSettingsView
+            icon={Settings}
+            title="Settings Console"
+            description="To configure system defaults, please access the Settings subpage directly."
+          />
+        );
+
+      case "analytics":
+        return <DashboardAnalyticsView tasks={tasks} />;
+
+      case "voice":
+        return (
+          <DashboardVoiceView
+            isListening={isListening}
+            transcript={transcript}
+            aiResponse={aiResponse}
+            recentCommands={voiceHistory}
+            onOpenVoice={() => setVoicePanelOpen(true)}
+          />
+        );
+
+      case "dashboard":
+      default:
+        return (
+          <DashboardOverview
+            userName={user?.name}
+            tasks={tasks}
+            recentCommands={voiceHistory}
+            onOpenVoice={() => setVoicePanelOpen(true)}
+            onOpenTaskModal={handleManualTaskAdd}
+            onTaskComplete={handleTaskComplete}
+            onTaskEdit={handleTaskEdit}
+            onTaskDelete={handleTaskDelete}
+          />
+        );
+    }
+  };
+
+  return (
+    <div className="flex min-h-screen w-full overflow-hidden bg-[#0B0F19] font-sans text-white">
+      <Sidebar
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        onLogout={handleLogout}
+      />
+
+      <div className="flex h-screen flex-1 flex-col overflow-hidden">
+        <Navbar
+          onMicClick={() => setVoicePanelOpen(true)}
+          onLogout={handleLogout}
+          userName={user?.name}
+          userEmail={user?.email}
+        />
+
+        <main className="relative flex-1 overflow-y-auto px-6 py-8">
+          <div className="mx-auto w-full max-w-7xl">{renderContentView()}</div>
+
+          <CreateTaskModal
+            isOpen={taskModalOpen}
+            onClose={handleTaskModalClose}
+            onSubmit={handleTaskCreate}
+            task={editingTask}
+            isSubmitting={isTaskSubmitting}
+          />
+
+          <AnimatePresence>
+            {voicePanelOpen && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={handleCancelVoice}
+                className="fixed inset-0 z-50 flex items-center justify-center bg-[#0B0F19]/80 p-4 backdrop-blur-sm"
+              >
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                  transition={{ type: "spring", duration: 0.5 }}
+                  onClick={(event) => event.stopPropagation()}
+                  className="h-[480px] w-full max-w-lg"
+                >
+                  <VoiceAssistantPanel
+                    isListening={isListening}
+                    onMicToggle={handleMicToggle}
+                    transcript={transcript}
+                    aiResponse={aiResponse}
+                    onConfirm={handleConfirmTask}
+                    onCancel={handleCancelVoice}
+                  />
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </main>
+      </div>
+    </div>
+  );
+}

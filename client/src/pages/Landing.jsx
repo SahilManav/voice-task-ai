@@ -1,0 +1,335 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { 
+  Mic, 
+  Cpu, 
+  Layers, 
+  Sparkles, 
+  TrendingUp, 
+  Volume2, 
+  ChevronRight, 
+  Lock,
+  Menu,
+  X
+} from 'lucide-react';
+import HeroSection from "../components/landing/HeroSection";
+import FeatureCard from "../components/landing/FeatureCard";
+import Button from "../components/common/Button";
+import Footer from "../components/landing/Footer";
+
+/**
+ * Landing Page component.
+ * Integrates HeroSection, Feature Grids, Interactive Previews, and Navigation Header.
+ */
+const Landing = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+
+  // Features list
+  const features = [
+    {
+      icon: Mic,
+      title: "Natural Voice Processing",
+      description: "Simply speak to add, complete, or edit tasks. Our AI handles accents, phrasing variations, and speed automatically.",
+      delay: 0.1
+    },
+    {
+      icon: Cpu,
+      title: "AI Action Summaries",
+      description: "No more long logs. The engine summarizes voice recordings into clear, actionable bullet points and titles.",
+      delay: 0.2
+    },
+    {
+      icon: Layers,
+      title: "Auto-Categorization",
+      description: "The AI parsing engine automatically sets priorities, tags projects, and marks deadlines based on your speech context.",
+      delay: 0.3
+    },
+    {
+      icon: Sparkles,
+      title: "Futuristic Glassmorphic UI",
+      description: "Designed with modern dark aesthetics, soft neon glows, responsive layouts, and responsive, interactive card grids.",
+      delay: 0.4
+    },
+    {
+      icon: TrendingUp,
+      title: "Deep Activity Analytics",
+      description: "Track your voice commands, AI productivity indicators, weekly workload velocity, and task completion metrics.",
+      delay: 0.5
+    },
+    {
+      icon: Volume2,
+      title: "Smart Audio Cues",
+      description: "Get immersive, futuristic auditory feedback for assistant triggers, command confirmations, and alert states.",
+      delay: 0.6
+    }
+  ];
+
+  return (
+    <div className="w-full bg-[#0B0F19] text-white overflow-hidden min-h-screen flex flex-col font-sans">
+      
+      {/* Navigation Header */}
+      <header className="fixed top-0 left-0 w-full z-50 bg-[#0B0F19]/60 backdrop-blur-lg border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          
+          {/* Logo */}
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-400 to-purple-600 flex items-center justify-center text-[#0B0F19]">
+              <Mic className="w-4.5 h-4.5" />
+            </div>
+            <span className="font-extrabold text-white tracking-wider text-lg">
+              VOX<span className="text-teal-400">AI</span>
+            </span>
+          </div>
+
+          {/* Desktop Navigation Links */}
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
+            <a href="#features" className="hover:text-teal-300 transition-colors duration-300">Features</a>
+            <a href="#how-it-works" className="hover:text-teal-300 transition-colors duration-300">How it Works</a>
+            <a href="#preview" className="hover:text-teal-300 transition-colors duration-300">Interface Preview</a>
+          </nav>
+
+          {/* Desktop Action Buttons */}
+          <div className="hidden md:flex items-center gap-4">
+            <Link to="/login">
+              <Button variant="ghost" size="sm">
+                Login
+              </Button>
+            </Link>
+            <Link to="/register">
+              <Button variant="outline" size="sm">
+                Register
+              </Button>
+            </Link>
+            <Link to="/dashboard">
+              <Button variant="primary" size="sm">
+                Dashboard
+              </Button>
+            </Link>
+          </div>
+
+          {/* Mobile Menu Toggle Button */}
+          <button 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 text-gray-400 hover:text-white focus:outline-none"
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
+
+        {/* Mobile Navigation Drawer */}
+        {mobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="md:hidden absolute top-20 left-0 w-full bg-[#0B0F19] border-b border-white/10 px-6 py-8 flex flex-col gap-6"
+          >
+            <a 
+              href="#features" 
+              onClick={() => setMobileMenuOpen(false)}
+              className="text-gray-300 hover:text-teal-300 text-lg font-medium"
+            >
+              Features
+            </a>
+            <a 
+              href="#how-it-works" 
+              onClick={() => setMobileMenuOpen(false)}
+              className="text-gray-300 hover:text-teal-300 text-lg font-medium"
+            >
+              How it Works
+            </a>
+            <a 
+              href="#preview" 
+              onClick={() => setMobileMenuOpen(false)}
+              className="text-gray-300 hover:text-teal-300 text-lg font-medium"
+            >
+              Interface Preview
+            </a>
+
+            <div className="h-px bg-white/5 w-full my-2" />
+
+            <div className="flex flex-col gap-4">
+              <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="w-full">
+                <Button variant="ghost" className="w-full">Login</Button>
+              </Link>
+              <Link to="/register" onClick={() => setMobileMenuOpen(false)} className="w-full">
+                <Button variant="outline" className="w-full">Register</Button>
+              </Link>
+              <Link to="/dashboard" onClick={() => setMobileMenuOpen(false)} className="w-full">
+                <Button variant="primary" className="w-full">Dashboard</Button>
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </header>
+
+      {/* Hero Section */}
+      <HeroSection />
+
+      {/* Features Grid Section */}
+      <section id="features" className="py-24 px-6 max-w-7xl mx-auto w-full relative">
+        <div className="absolute top-1/2 left-0 w-72 h-72 bg-teal-500/5 rounded-full blur-[100px] pointer-events-none" />
+        
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+          <h2 className="text-xs uppercase tracking-widest text-teal-400 font-bold">
+            Features Matrix
+          </h2>
+          <h3 className="text-3xl md:text-4xl font-extrabold text-white">
+            Designed for Futuristic Productivity
+          </h3>
+          <p className="text-gray-400 text-md">
+            Leverage bleeding-edge acoustic AI modules built to speed up your everyday workflows instantly.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {features.map((feature, idx) => (
+            <FeatureCard 
+              key={idx}
+              icon={feature.icon}
+              title={feature.title}
+              description={feature.description}
+              delay={feature.delay}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* How it Works / Interactive Demonstration */}
+      <section id="how-it-works" className="py-24 bg-[#141A29]/30 border-y border-white/5 px-6">
+        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          
+          {/* Left Block: Description */}
+          <div className="space-y-8">
+            <div className="space-y-4">
+              <span className="text-xs uppercase tracking-widest text-purple-400 font-bold">
+                Operational Framework
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
+                From Speech to Organized Execution in Seconds
+              </h2>
+              <p className="text-gray-400 leading-relaxed">
+                Our vocal processing models translate simple voice command statements into fully categorized task profiles on your board. Speak, review, and confirm.
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              {[
+                { step: "01", title: "Record Voice Prompt", desc: "Press the microphone trigger on the navigation bar or voice panel and speak your task naturally." },
+                { step: "02", title: "Instant AI Synthesis", desc: "Acoustic models filter background noise, transcribe speech, and summarize notes into tags and titles." },
+                { step: "03", title: "Execution Confirmation", desc: "Review details, modify priorities, and hit confirm to publish to your active Kanban boards." }
+              ].map((item, idx) => (
+                <div key={idx} className="flex gap-4 items-start">
+                  <div className="w-10 h-10 rounded-lg bg-[#141A29] border border-purple-500/20 text-purple-400 font-mono text-sm flex items-center justify-center shrink-0">
+                    {item.step}
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold mb-1">{item.title}</h4>
+                    <p className="text-gray-400 text-sm">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Block: Live UI Preview Showcase */}
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/10 to-teal-500/10 rounded-3xl blur-2xl pointer-events-none" />
+            
+            <div className="relative rounded-3xl border border-white/5 bg-[#141A29]/80 backdrop-blur-xl p-8 shadow-2xl flex flex-col gap-6">
+              
+              {/* Simulated Voice Panel Card UI */}
+              <div className="flex justify-between items-center pb-4 border-b border-white/5">
+                <div className="flex items-center gap-3">
+                  <div className="w-3 h-3 rounded-full bg-teal-400 animate-ping" />
+                  <span className="text-xs font-mono tracking-widest text-teal-400 uppercase">AI Transcript Engine</span>
+                </div>
+                <div className="text-[10px] font-mono text-purple-400">STATUS: INTERPRETING</div>
+              </div>
+
+              {/* Speech transcript display */}
+              <div className="space-y-2">
+                <p className="text-xs text-gray-500 uppercase font-bold tracking-wider">Acoustic Audio Feed</p>
+                <div className="bg-[#0B0F19] rounded-xl p-4 border border-teal-500/10 text-teal-300 font-mono text-sm">
+                  "Create task to draft project layout deck with priority high and deadline this friday afternoon"
+                </div>
+              </div>
+
+              {/* AI output visualization */}
+              <div className="space-y-3 bg-[#0B0F19]/40 border border-white/5 rounded-xl p-5">
+                <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-2">Extracted Parameters</p>
+                <div className="grid grid-cols-2 gap-4 text-xs font-mono">
+                  <div className="space-y-1">
+                    <span className="text-gray-500">TASK TITLE</span>
+                    <p className="text-white font-sans font-bold">Draft project layout deck</p>
+                  </div>
+                  <div className="space-y-1">
+                    <span className="text-gray-500">PRIORITY</span>
+                    <p className="text-red-400 font-bold uppercase">▲ High</p>
+                  </div>
+                  <div className="space-y-1">
+                    <span className="text-gray-500">DUE DATE</span>
+                    <p className="text-purple-400 font-bold">Friday 17:00</p>
+                  </div>
+                  <div className="space-y-1">
+                    <span className="text-gray-500">AI AUTO-TAG</span>
+                    <p className="text-teal-400 font-bold">#presentation</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Confirmation buttons */}
+              <div className="flex gap-4">
+                <Button variant="outline" size="sm" className="flex-1">
+                  Cancel
+                </Button>
+                <Button variant="primary" size="sm" className="flex-1">
+                  Confirm Task
+                </Button>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* CTA / Security Block */}
+      <section className="py-24 px-6 relative max-w-5xl mx-auto text-center space-y-8">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-teal-500/5 rounded-full blur-[100px] pointer-events-none" />
+        
+        <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+          Ready to Upgrade Your Workspace?
+        </h2>
+        <p className="text-gray-400 text-lg max-w-xl mx-auto">
+          Start recording tasks with the power of artificial intelligence. Secure, fast, and completely responsive.
+        </p>
+
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <Link to="/register">
+            <Button variant="primary" size="lg" icon={ChevronRight} iconPosition="right">
+              Get Started Now
+            </Button>
+          </Link>
+          <Link to="/login">
+            <Button variant="outline" size="lg">
+              Login to Console
+            </Button>
+          </Link>
+        </div>
+
+        <div className="flex items-center justify-center gap-2 text-xs text-gray-500 pt-6">
+          <Lock className="w-4 h-4 text-purple-400" />
+          <span>No credit card required. Clean, secure workspace protocols.</span>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <Footer />
+
+    </div>
+  );
+};
+
+export default Landing;
