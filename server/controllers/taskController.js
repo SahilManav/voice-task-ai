@@ -64,7 +64,14 @@ const updateTask = async (req, res) => {
     task.priority = req.body.priority;
     task.dueDate = req.body.dueDate;
     task.completed = req.body.completed;
+    
+    if (req.body.status !== undefined) {
+      task.status = req.body.status;
+    }
 
+    if (req.body.delayedUntil !== undefined) {
+      task.delayedUntil = req.body.delayedUntil;
+    }
     await task.save();
 
     res.json({

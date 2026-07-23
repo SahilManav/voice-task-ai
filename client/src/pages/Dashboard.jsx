@@ -25,6 +25,8 @@ const normalizeTask = (task) => ({
   priority: task.priority ?? "medium",
   dueDate: task.dueDate ?? null,
   completed: Boolean(task.completed),
+  status: task.status ?? "active",
+  delayedUntil: task.delayedUntil ?? null,
   voiceCommand: Boolean(task.voiceCommand),
 });
 
@@ -35,46 +37,169 @@ const buildTaskPayload = (task, completed = task.completed) => ({
   dueDate: task.dueDate ?? null,
   completed,
 });
-const parseVoiceCommand = (text) => {
-  const lower = text.toLowerCase();
 
+const speak = (message) => {
+  if (!("speechSynthesis" in window)) return;
+
+  window.speechSynthesis.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(message);
+  utterance.rate = 1;
+  utterance.pitch = 1;
+  utterance.volume = 1;
+
+  window.speechSynthesis.speak(utterance);
+};
+
+const parseVoiceCommand = (text) => {
+  const original = text.trim();
+  const lower = original.toLowerCase();
+
+  // -----------------------------
   // Detect action
+  // -----------------------------
   let action = "create";
 
-  if (lower.startsWith("complete") || lower.startsWith("mark")) {
+  if (
+    lower.startsWith("complete") ||
+    lower.startsWith("mark")
+  ) {
     action = "complete";
-  } else if (lower.startsWith("delete") || lower.startsWith("remove")) {
+  } else if (
+    lower.startsWith("delete") ||
+    lower.startsWith("remove")
+  ) {
     action = "delete";
+  } else if (
+    lower.startsWith("delay") ||
+    lower.startsWith("postpone")
+  ) {
+    action = "delay";
   }
 
+  // -----------------------------
+  // Priority
+  // -----------------------------
   let priority = "medium";
 
-  if (lower.includes("high")) priority = "high";
-  if (lower.includes("low")) priority = "low";
-
-  let dueDate = null;
-
-  if (lower.includes("tomorrow")) {
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    dueDate = tomorrow.toISOString();
+  if (lower.includes("high priority") || lower.includes("urgent")) {
+    priority = "high";
+  } else if (lower.includes("low priority")) {
+    priority = "low";
   }
 
-  let title = text
-    .replace(/create task/i, "")
-    .replace(/complete/i, "")
-    .replace(/mark/i, "")
-    .replace(/delete/i, "")
-    .replace(/remove/i, "")
-    .replace(/task/i, "")
-    .replace(/tomorrow/i, "")
-    .replace(/high priority/i, "")
-    .replace(/medium priority/i, "")
-    .replace(/low priority/i, "")
-    .replace(/with priority high/i, "")
-    .replace(/with priority medium/i, "")
-    .replace(/with priority low/i, "")
-    .trim();
+  // -----------------------------
+  // Due Date
+  // -----------------------------
+  let dueDate = null;
+  let dueLabel = "None";
+
+  const now = new Date();
+
+  const weekdays = [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+  ];
+
+  // Today
+  if (lower.includes("today")) {
+    dueDate = new Date(now).toISOString();
+    dueLabel = "Today";
+  }
+
+  // Tomorrow
+  else if (lower.includes("tomorrow")) {
+    const tomorrow = new Date(now);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    dueDate = tomorrow.toISOString();
+    dueLabel = "Tomorrow";
+  }
+
+  // Next Week
+  else if (lower.includes("next week")) {
+    const nextWeek = new Date(now);
+    nextWeek.setDate(nextWeek.getDate() + 7);
+
+    dueDate = nextWeek.toISOString();
+    dueLabel = "Next Week";
+  }
+
+  // Weekdays
+  else {
+    for (let i = 0; i < weekdays.length; i++) {
+      const day = weekdays[i];
+
+      if (lower.includes(`next ${day}`) || lower.includes(day)) {
+        const target = new Date(now);
+
+        let diff = i - target.getDay();
+
+        if (diff <= 0) diff += 7;
+
+        if (lower.includes(`next ${day}`)) {
+          diff += 7;
+        }
+
+        target.setDate(target.getDate() + diff);
+
+        dueDate = target.toISOString();
+        dueLabel =
+          lower.includes(`next ${day}`)
+            ? `Next ${day.charAt(0).toUpperCase()}${day.slice(1)}`
+            : day.charAt(0).toUpperCase() + day.slice(1);
+
+        break;
+      }
+    }
+  }
+
+  // -----------------------------
+  // Clean Title
+  // -----------------------------
+  let title = lower;
+
+const removeWords = [
+    "create task",
+    "create",
+    "task",
+    "complete",
+    "mark",
+    "delete",
+    "remove",
+    "delay",
+    "postpone",
+    "until",
+    "to",
+    "remind me to",
+    "i need to",
+    "please",
+    "can you",
+    "today",
+    "tomorrow",
+    "high priority",
+    "medium priority",
+    "low priority",
+    "urgent"
+  ];
+  removeWords.forEach(word => {
+    title = title.replace(word, "");
+  });
+
+  title = title.replace(/\s+/g, " ").trim();
+
+  // Capitalize nicely
+  title = title
+    .split(" ")
+    .map(word =>
+      word.charAt(0).toUpperCase() + word.slice(1)
+    )
+    .join(" ");
 
   return {
     action,
@@ -83,11 +208,11 @@ const parseVoiceCommand = (text) => {
     dueDate,
     preview: `🎯 Action: ${action.toUpperCase()}
 
-📌 Title: ${title}
+📌 Title: ${title || "-"}
 
 🔥 Priority: ${priority.toUpperCase()}
 
-📅 Due: ${dueDate ? "Tomorrow" : "None"}`,
+📅 Due: ${dueLabel}`,
   };
 };
 
@@ -360,70 +485,143 @@ export default function Dashboard() {
       return;
     }
 
-  const parsed = parseVoiceCommand(transcript);
+    const parsed = parseVoiceCommand(transcript);
 
-// Voice Complete
-if (parsed.action === "complete") {
-  const task = tasks.find((t) =>
-    t.title.toLowerCase().includes(parsed.title.toLowerCase())
-  );
+    // Voice Complete
+    if (parsed.action === "complete") {
+      const spokenWords = parsed.title
+        .toLowerCase()
+        .split(" ")
+        .filter(Boolean);
 
-  if (!task) {
-    toast.error("Task not found.");
-    return;
-  }
+      const task = tasks.find((t) => {
+        const title = t.title.toLowerCase();
 
-  await handleTaskComplete(task);
+        return spokenWords.every((word) => title.includes(word));
+      });
 
-  setVoiceHistory((prev) => [
-    {
-      text: transcript,
-      time: "Just now",
-      success: true,
-    },
-    ...prev,
-  ]);
+      if (!task) {
+        toast.error("Task not found.");
+        return;
+      }
 
-  toast.success("Task completed successfully!");
-  handleCancelVoice();
-  return;
-}
+      await handleTaskComplete(task);
 
-// Voice Delete
-if (parsed.action === "delete") {
-  const task = tasks.find((t) =>
-    t.title.toLowerCase().includes(parsed.title.toLowerCase())
-  );
+      setVoiceHistory((prev) => [
+        {
+          text: transcript,
+          time: "Just now",
+          success: true,
+        },
+        ...prev,
+      ]);
 
-  if (!task) {
-    toast.error("Task not found.");
-    return;
-  }
+      toast.success("Task completed successfully!");
+      speak(`${task.title} marked as completed.`);
+      handleCancelVoice();
+      return;
+    }
 
-  await handleTaskDelete(task);
+    // Voice Delete
+    if (parsed.action === "delete") {
+      const spokenWords = parsed.title
+        .toLowerCase()
+        .split(" ")
+        .filter(Boolean);
 
-  setVoiceHistory((prev) => [
-    {
-      text: transcript,
-      time: "Just now",
-      success: true,
-    },
-    ...prev,
-  ]);
+      const task = tasks.find((t) => {
+        const title = t.title.toLowerCase();
 
-  toast.success("Task deleted successfully!");
-  handleCancelVoice();
-  return;
-}
+        return spokenWords.every((word) => title.includes(word));
+      });
 
-// Existing Create Task
-const created = await createTask({
-  title: parsed.title,
-  description: "Created using Voice Assistant",
-  priority: parsed.priority,
-  dueDate: parsed.dueDate,
-  voiceCommand: true,
-});
+      if (!task) {
+        toast.error("Task not found.");
+        return;
+      }
+
+      await handleTaskDelete(task);
+
+      setVoiceHistory((prev) => [
+        {
+          text: transcript,
+          time: "Just now",
+          success: true,
+        },
+        ...prev,
+      ]);
+
+      toast.success("Task deleted successfully!");
+      speak(`${task.title} deleted successfully.`);
+      handleCancelVoice();
+      return;
+    }
+    // Voice Delay
+    if (parsed.action === "delay") {
+      const spokenWords = parsed.title
+        .toLowerCase()
+        .split(" ")
+        .filter(Boolean);
+
+      const task = tasks.find((t) => {
+        const title = t.title.toLowerCase();
+
+        return spokenWords.every((word) => title.includes(word));
+      });
+
+      if (!task) {
+        toast.error("Task not found.");
+        return;
+      }
+
+      try {
+        const res = await api.put(`/tasks/${task._id}`, {
+          ...buildTaskPayload(task),
+          status: "delayed",
+          delayedUntil: parsed.dueDate,
+        });
+
+        if (res.data.success) {
+          setTasks((currentTasks) =>
+            currentTasks.map((t) =>
+              t._id === task._id
+                ? normalizeTask({
+                  ...t,
+                  ...res.data.task,
+                  voiceCommand: t.voiceCommand,
+                })
+                : t
+            )
+          );
+        }
+      } catch (err) {
+        console.error("Failed to delay task:", err);
+        toast.error("Failed to delay task.");
+        return;
+      }
+
+      setVoiceHistory((prev) => [
+        {
+          text: transcript,
+          time: "Just now",
+          success: true,
+        },
+        ...prev,
+      ]);
+
+      toast.success("Task delayed successfully!");
+      speak(`${task.title} has been delayed.`);
+      handleCancelVoice();
+      return;
+    }
+    // Existing Create Task
+    const created = await createTask({
+      title: parsed.title,
+      description: "Created using Voice Assistant",
+      priority: parsed.priority,
+      dueDate: parsed.dueDate,
+      voiceCommand: true,
+    });
 
     if (created) {
       setVoiceHistory((prev) => [
@@ -436,6 +634,7 @@ const created = await createTask({
       ]);
 
       toast.success("Voice task created successfully.");
+      speak(`${parsed.title} created successfully.`);
       handleCancelVoice();
     }
   };
