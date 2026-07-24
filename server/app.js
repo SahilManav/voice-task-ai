@@ -9,7 +9,11 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://voice-task-ai-eight.vercel.app",
+      /\.vercel\.app$/,
+    ],
     credentials: true,
   })
 );
