@@ -1,12 +1,23 @@
-import { ListTodo, Plus } from "lucide-react";
+import { ListTodo, Plus, Mic } from "lucide-react";
 
 import Button from "../common/Button";
 import TaskCard from "./TaskCard";
 
-function EmptyTasksState({ message }) {
+function EmptyTasksState() {
   return (
-    <div className="rounded-2xl border border-white/5 bg-[#141A29] p-6 text-center text-sm text-gray-400">
-      {message}
+    <div className="rounded-2xl border border-white/5 bg-[#141A29] p-10 text-center">
+      <div className="mb-4 flex justify-center">
+        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-cyan-500/10">
+          <Mic className="h-7 w-7 text-cyan-400" />
+        </div>
+      </div>
+      <p className="mb-1 text-base font-semibold text-white">No tasks yet</p>
+      <p className="mb-4 text-sm text-gray-400">
+        Try saying something like:
+      </p>
+      <p className="mx-auto max-w-xs rounded-xl border border-cyan-500/20 bg-cyan-500/5 px-4 py-2 text-sm italic text-cyan-300">
+        "Create task submit the report by tomorrow, high priority"
+      </p>
     </div>
   );
 }
@@ -77,7 +88,7 @@ export default function DashboardTasks({
             ))}
           </div>
         ) : (
-          <EmptyTasksState message="No active tasks yet. Add one to get started." />
+          <EmptyTasksState />
         )}
       </div>
 
