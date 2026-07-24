@@ -1,8 +1,23 @@
 # VoiceDesk — Voice-First AI Task Manager
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20App-violet?style=for-the-badge)](https://voice-task-ai-eight.vercel.app)
+
 A MERN-stack task manager where the primary input method is natural language voice. Speak a command like *"Remind me to submit the quarterly report by next Friday"* and the app extracts structured task data automatically — no forms required.
 
 Built for the Senpiper Engineering Assignment (Option A: Voice-First Task App).
+
+## 🌐 Live Demo
+
+**Frontend:** https://voice-task-ai-eight.vercel.app
+
+**Backend API:** https://voicedesk-api.onrender.com
+
+## 🎯 Demo Account
+```
+Email:    guest@voicedesk.app
+Password: guest123456
+```
+> Login with the demo account to explore a pre-populated dashboard instantly.
 
 ---
 
