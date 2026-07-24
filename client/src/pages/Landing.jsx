@@ -92,7 +92,7 @@ const Landing = () => {
               <span className="relative z-10">How it Works</span>
               <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-500/0 to-purple-500/0 group-hover:from-violet-500/10 group-hover:to-purple-500/10 transition-all duration-300" />
             </a>
-            <a href="#how-it-works" className="relative px-4 py-2 rounded-xl text-gray-300 hover:text-white hover:bg-violet-500/10 hover:border-violet-500/20 border border-transparent transition-all duration-300 group">
+            <a href="#preview" className="relative px-4 py-2 rounded-xl text-gray-300 hover:text-white hover:bg-violet-500/10 hover:border-violet-500/20 border border-transparent transition-all duration-300 group">
               <span className="relative z-10">Interface Preview</span>
               <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-500/0 to-purple-500/0 group-hover:from-violet-500/10 group-hover:to-purple-500/10 transition-all duration-300" />
             </a>
@@ -256,7 +256,7 @@ const Landing = () => {
           </div>
 
           {/* Right Block: Live UI Preview Showcase */}
-          <div className="relative">
+          <div id="preview" className="relative">
             <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/10 to-violet-500/10 rounded-3xl blur-2xl pointer-events-none" />
             
             <div className="relative rounded-3xl border border-white/5 bg-[#141A29]/80 backdrop-blur-xl p-8 shadow-2xl flex flex-col gap-6">
