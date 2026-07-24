@@ -72,15 +72,15 @@ const Landing = () => {
       <header className="fixed top-0 left-0 w-full z-50 bg-[#0B0F19]/60 backdrop-blur-lg border-b border-white/5">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           
-          {/* Logo */}
-          <div className="flex items-center gap-3">
+          {/* Logo — clicking scrolls to top */}
+          <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="flex items-center gap-3 cursor-pointer">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white">
               <Mic className="w-4.5 h-4.5" />
             </div>
-            <span className="font-extrabold text-white tracking-wider text-lg">
+            <span className="font-extrabold text-white tracking-wider text-lg hover:text-violet-300 transition-colors duration-300">
               Voice<span className="text-violet-400">Desk</span>
             </span>
-          </div>
+          </a>
 
           {/* Desktop Navigation Links */}
           <nav className="hidden md:flex items-center gap-2 text-sm font-medium">
@@ -92,7 +92,7 @@ const Landing = () => {
               <span className="relative z-10">How it Works</span>
               <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-500/0 to-purple-500/0 group-hover:from-violet-500/10 group-hover:to-purple-500/10 transition-all duration-300" />
             </a>
-            <a href="#preview" className="relative px-4 py-2 rounded-xl text-gray-300 hover:text-white hover:bg-violet-500/10 hover:border-violet-500/20 border border-transparent transition-all duration-300 group">
+            <a href="#how-it-works" className="relative px-4 py-2 rounded-xl text-gray-300 hover:text-white hover:bg-violet-500/10 hover:border-violet-500/20 border border-transparent transition-all duration-300 group">
               <span className="relative z-10">Interface Preview</span>
               <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-500/0 to-purple-500/0 group-hover:from-violet-500/10 group-hover:to-purple-500/10 transition-all duration-300" />
             </a>
