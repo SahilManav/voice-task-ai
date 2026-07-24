@@ -57,8 +57,8 @@ export default function Login() {
 
   return (
     <div className="relative min-h-screen bg-gray-100 dark:bg-[#0B0F19] flex items-center justify-center px-4 overflow-hidden transition-colors duration-200">
-      {/* Animated Background Orbs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Animated Background Orbs — only in dark mode */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none hidden dark:block">
         <motion.div
           animate={{
             scale: [1, 1.2, 1],
@@ -109,12 +109,12 @@ export default function Login() {
         transition={{ duration: 0.6 }}
         className="relative w-full max-w-md"
       >
-        {/* Glowing Border Effect */}
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-600 to-purple-600 rounded-[32px] blur opacity-30"></div>
+        {/* Glowing Border Effect — dark only */}
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-600 to-purple-600 rounded-[32px] blur opacity-0 dark:opacity-30"></div>
         
         <form
           onSubmit={handleSubmit}
-          className="relative bg-[var(--bg-card)]/90 backdrop-blur-xl rounded-[32px] border border-gray-200 dark:border-white/5 p-8 shadow-2xl transition-colors duration-200"
+          className="relative bg-white dark:bg-[#141A29]/90 backdrop-blur-xl rounded-[32px] border border-gray-200 dark:border-white/10 p-8 shadow-lg dark:shadow-2xl transition-colors duration-200"
         >
           {/* Header with Icon */}
           <div className="text-center mb-8">
@@ -150,7 +150,7 @@ export default function Login() {
               onChange={handleChange}
               required
               placeholder="you@example.com"
-              className="w-full rounded-2xl bg-gray-50 dark:bg-[#0B0F19] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white px-4 py-3.5 text-sm placeholder:text-[var(--text-muted)] outline-none focus:border-violet-500 transition-all duration-300"
+              className="w-full rounded-2xl bg-gray-50 dark:bg-[#0B0F19] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white px-4 py-3.5 text-sm placeholder-gray-400 dark:placeholder-gray-500 outline-none focus:border-violet-500 transition-all duration-300"
             />
           </div>
 
@@ -165,7 +165,7 @@ export default function Login() {
                 onChange={handleChange}
                 required
                 placeholder="Enter your password"
-                className="w-full rounded-2xl bg-gray-50 dark:bg-[#0B0F19] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white px-4 py-3.5 pr-12 text-sm placeholder:text-[var(--text-muted)] outline-none focus:border-violet-500 transition-all duration-300"
+                className="w-full rounded-2xl bg-gray-50 dark:bg-[#0B0F19] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white px-4 py-3.5 pr-12 text-sm placeholder-gray-400 dark:placeholder-gray-500 outline-none focus:border-violet-500 transition-all duration-300"
               />
               <button
                 type="button"
@@ -229,4 +229,5 @@ export default function Login() {
     </div>
   );
 }
+
 

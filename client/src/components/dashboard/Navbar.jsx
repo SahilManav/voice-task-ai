@@ -298,35 +298,37 @@ export default function Navbar({ onMicClick, onLogout, userName = "Alex Mercer",
 
   return (
     <>
-      <header className="sticky top-0 right-0 z-40 flex h-16 w-full items-center justify-between border-b border-gray-200 dark:border-white/5 bg-white/90 dark:bg-[#141A29]/80 border-gray-200 dark:border-white/5 px-4 sm:px-6 transition-colors duration-200">
+      <header className="sticky top-0 right-0 z-40 flex h-16 w-full items-center justify-between border-b border-gray-200 dark:border-white/5 bg-white dark:bg-[#141A29]/90 px-3 sm:px-6 backdrop-blur-md transition-colors duration-200">
         {/* Search */}
-        <div className="relative max-w-md flex-1">
-          <div className={`relative flex items-center rounded-xl border transition-all duration-300 ${searchFocused ? "shadow-[var(--input-shadow)]" : ""}`}
-            style={{ backgroundColor: "var(--bg-input)", borderColor: searchFocused ? "var(--accent)" : "var(--border)" }}
-          >
-            <Search className="absolute left-4 h-4 w-4 text-gray-500 dark:text-gray-400 dark:text-gray-400" />
-            <input type="text" placeholder="Search tasks..." value={searchQuery} onChange={handleSearchChange}
-              onFocus={() => setSearchFocused(true)} onBlur={() => setSearchFocused(false)}
-              className="h-10 w-full bg-transparent pl-11 pr-4 text-sm text-gray-900 dark:text-gray-900 dark:text-white placeholder:text-gray-500 dark:text-gray-400 dark:text-gray-400 dark:text-gray-600 focus:outline-none"
+        <div className="relative flex-1 max-w-xs sm:max-w-md mr-3">
+          <div className={`relative flex items-center rounded-xl border transition-all duration-200 bg-gray-100 dark:bg-[#0B0F19] ${
+            searchFocused ? "border-violet-400 shadow-sm" : "border-gray-200 dark:border-white/10"
+          }`}>
+            <Search className="absolute left-3 h-4 w-4 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search tasks..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+              onFocus={() => setSearchFocused(true)}
+              onBlur={() => setSearchFocused(false)}
+              className="h-9 w-full bg-transparent pl-9 pr-4 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none"
             />
-            {searchQuery && <button onClick={() => { setSearchQuery(""); onSearch?.(""); }} className="absolute right-3 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-900 dark:text-white text-xs">✕</button>}
+            {searchQuery && (
+              <button onClick={() => { setSearchQuery(""); onSearch?.(""); }} className="absolute right-3 text-gray-400 hover:text-gray-700 dark:hover:text-white text-xs">✕</button>
+            )}
           </div>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-3">
           {/* Mic */}
           <motion.button onClick={onMicClick} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-            className="flex items-center justify-center rounded-xl border border-violet-500/30 bg-violet-500/10 p-2.5 text-violet-400 transition-all duration-300 hover:bg-violet-500/20 hover:shadow-[0_0_15px_rgba(139,92,246,0.3)]">
-            <Mic className="h-5 w-5 animate-pulse" />
+            className="flex items-center justify-center rounded-xl border border-violet-400/30 bg-violet-500/10 p-2 sm:p-2.5 text-violet-600 dark:text-violet-400 transition-all hover:bg-violet-500/20">
+            <Mic className="h-4 w-4 sm:h-5 sm:w-5 animate-pulse" />
           </motion.button>
-
-          {/* Theme toggle removed - dark only app */}
-
-          {/* Bell */}
-          <div className="relative">
             <button onClick={() => { setBellOpen(!bellOpen); setProfileDropdownOpen(false); }}
-            className="flex items-center justify-center rounded-xl border border-gray-200 dark:border-white/5 bg-gray-100 dark:bg-[#0B0F19] p-2.5 text-gray-600 dark:text-gray-400 transition-all hover:bg-gray-200 dark:hover:bg-white/10 hover:text-gray-900 dark:hover:text-white">
-              <Bell className="h-5 w-5" />
+            className="flex items-center justify-center rounded-xl border border-gray-200 dark:border-white/10 bg-gray-100 dark:bg-[#0B0F19] p-2 sm:p-2.5 text-gray-600 dark:text-gray-400 transition-all hover:bg-gray-200 dark:hover:bg-white/10">
+              <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
               {upcomingTasks.length > 0 && <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-violet-500" />}
             </button>
             <AnimatePresence>
@@ -356,8 +358,8 @@ export default function Navbar({ onMicClick, onLogout, userName = "Alex Mercer",
           {/* Profile */}
           <div className="relative">
             <button onClick={() => { setProfileDropdownOpen(!profileDropdownOpen); setBellOpen(false); }} className="group flex items-center gap-3 focus:outline-none">
-              <div className="w-9 rounded-xl bg-gradient-to-tr from-violet-500 to-purple-600 p-0.5 shadow-[0_0_10px_rgba(139,92,246,0.15)] transition-all group-hover:shadow-[0_0_15px_rgba(139,92,246,0.3)]">
-                <div className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-white dark:bg-[#141A29] text-sm font-bold text-white">{initials}</div>
+              <div className="w-9 rounded-xl bg-gradient-to-tr from-violet-500 to-purple-600 p-0.5 shadow-[0_0_10px_rgba(139,92,246,0.2)] transition-all group-hover:shadow-[0_0_15px_rgba(139,92,246,0.4)]">
+                <div className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-violet-600 dark:bg-[#141A29] text-sm font-bold text-white">{initials}</div>
               </div>
               <div className="hidden flex-col text-left sm:flex">
                 <span className="text-xs font-bold text-gray-900 dark:text-white group-hover:text-violet-300 transition-colors">{userName}</span>

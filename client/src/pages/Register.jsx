@@ -62,8 +62,8 @@ export default function Register() {
 
   return (
     <div className="relative min-h-screen bg-gray-100 dark:bg-[#0B0F19] flex items-center justify-center px-4 overflow-hidden transition-colors duration-200">
-      {/* Animated Background Orbs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Animated Background Orbs — only in dark mode */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none hidden dark:block">
         <motion.div
           animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
@@ -91,12 +91,12 @@ export default function Register() {
         transition={{ duration: 0.6 }}
         className="relative w-full max-w-md"
       >
-        {/* Glowing Border Effect */}
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-600 to-purple-600 rounded-[32px] blur opacity-30" />
+        {/* Glowing Border Effect — dark only */}
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-600 to-purple-600 rounded-[32px] blur opacity-0 dark:opacity-30" />
 
         <form
           onSubmit={handleSubmit}
-          className="relative bg-[var(--bg-card)]/90 backdrop-blur-xl rounded-[32px] border border-gray-200 dark:border-white/5 p-8 shadow-2xl transition-colors duration-200"
+          className="relative bg-white dark:bg-[#141A29]/90 backdrop-blur-xl rounded-[32px] border border-gray-200 dark:border-white/10 p-8 shadow-lg dark:shadow-2xl transition-colors duration-200"
         >
           {/* Header */}
           <div className="text-center mb-8">
@@ -125,7 +125,7 @@ export default function Register() {
                 onChange={handleChange}
                 required
                 placeholder="Sahil Manav"
-                className={`w-full rounded-2xl bg-gray-50 dark:bg-[#0B0F19] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white px-4 py-3.5 text-sm placeholder:text-[var(--text-muted)] outline-none transition-all duration-300 ${
+                className={`w-full rounded-2xl bg-gray-50 dark:bg-[#0B0F19] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white px-4 py-3.5 text-sm placeholder-gray-400 dark:placeholder-gray-500 outline-none transition-all duration-300 ${
                   errors.name ? "border-red-500/60" : "focus:border-violet-500"
                 }`}
               />
@@ -152,7 +152,7 @@ export default function Register() {
                 onChange={handleChange}
                 required
                 placeholder="you@example.com"
-                className={`w-full rounded-2xl bg-gray-50 dark:bg-[#0B0F19] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white px-4 py-3.5 text-sm placeholder:text-[var(--text-muted)] outline-none transition-all duration-300 ${
+                className={`w-full rounded-2xl bg-gray-50 dark:bg-[#0B0F19] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white px-4 py-3.5 text-sm placeholder-gray-400 dark:placeholder-gray-500 outline-none transition-all duration-300 ${
                   errors.email ? "border-red-500/60" : "focus:border-violet-500"
                 }`}
               />
@@ -180,10 +180,10 @@ export default function Register() {
                   onChange={handleChange}
                   required
                   placeholder="Min 6 characters"
-                  className={`w-full rounded-2xl bg-[#0B0F19]/50 border px-4 py-3.5 pr-12 text-white placeholder-gray-500 outline-none transition-all duration-300 backdrop-blur-sm ${
+                  className={`w-full rounded-2xl bg-gray-50 dark:bg-[#0B0F19]/50 border px-4 py-3.5 pr-12 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none transition-all duration-300 ${
                     errors.password
                       ? "border-red-500/60 focus:border-red-400"
-                      : "border-white/10 focus:border-violet-400 focus:bg-[#0B0F19]/80"
+                      : "border-gray-200 dark:border-white/10 focus:border-violet-500 dark:focus:border-violet-400"
                   }`}
                 />
                 <button
@@ -238,4 +238,5 @@ export default function Register() {
     </div>
   );
 }
+
 
