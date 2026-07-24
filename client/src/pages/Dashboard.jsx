@@ -488,6 +488,39 @@ export default function Dashboard() {
     recognition.start();
   };
 
+  // Fuzzy task matcher — finds best match by word overlap score
+  const findBestMatchingTask = (spokenTitle) => {
+    const stopWords = new Set(["a", "an", "the", "my", "to", "from", "for", "and", "or", "of", "in", "on", "at", "by", "is", "it", "be", "as"]);
+    const spokenWords = spokenTitle
+      .toLowerCase()
+      .split(" ")
+      .filter((w) => w.length > 2 && !stopWords.has(w));
+
+    let bestTask = null;
+    let bestScore = 0;
+
+    tasks.filter((t) => !t.completed).forEach((t) => {
+      const titleWords = t.title
+        .toLowerCase()
+        .split(" ")
+        .filter((w) => w.length > 2 && !stopWords.has(w));
+
+      const matchCount = spokenWords.filter((sw) =>
+        titleWords.some((tw) => tw.includes(sw) || sw.includes(tw))
+      ).length;
+
+      const score = spokenWords.length > 0 ? matchCount / spokenWords.length : 0;
+
+      if (score > bestScore) {
+        bestScore = score;
+        bestTask = t;
+      }
+    });
+
+    // Require at least 30% word match
+    return bestScore >= 0.3 ? bestTask : null;
+  };
+
   const handleConfirmTask = async () => {
     if (!transcript.trim()) {
       toast.error("Please speak a command first.");
@@ -498,16 +531,7 @@ export default function Dashboard() {
 
     // Voice Complete
     if (parsed.action === "complete") {
-      const spokenWords = parsed.title
-        .toLowerCase()
-        .split(" ")
-        .filter(Boolean);
-
-      const task = tasks.find((t) => {
-        const title = t.title.toLowerCase();
-
-        return spokenWords.every((word) => title.includes(word));
-      });
+      const task = findBestMatchingTask(parsed.title);
 
       if (!task) {
         toast.error(`Couldn't find a task matching "${parsed.title}".`);
@@ -534,16 +558,7 @@ export default function Dashboard() {
 
     // Voice Delete
     if (parsed.action === "delete") {
-      const spokenWords = parsed.title
-        .toLowerCase()
-        .split(" ")
-        .filter(Boolean);
-
-      const task = tasks.find((t) => {
-        const title = t.title.toLowerCase();
-
-        return spokenWords.every((word) => title.includes(word));
-      });
+      const task = findBestMatchingTask(parsed.title);
 
       if (!task) {
         toast.error(`Couldn't find a task matching "${parsed.title}".`);
@@ -569,16 +584,7 @@ export default function Dashboard() {
     }
     // Voice Delay
     if (parsed.action === "delay") {
-      const spokenWords = parsed.title
-        .toLowerCase()
-        .split(" ")
-        .filter(Boolean);
-
-      const task = tasks.find((t) => {
-        const title = t.title.toLowerCase();
-
-        return spokenWords.every((word) => title.includes(word));
-      });
+      const task = findBestMatchingTask(parsed.title);
 
       if (!task) {
         toast.error(`Couldn't find a task matching "${parsed.title}".`);
