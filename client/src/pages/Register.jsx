@@ -16,16 +16,35 @@ export default function Register() {
 
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    const newErrors = {};
+    if (form.name.trim().length < 2)
+      newErrors.name = "Name must be at least 2 characters.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
+      newErrors.email = "Please enter a valid email address.";
+    if (form.password.length < 6)
+      newErrors.password = "Password must be at least 6 characters.";
+    return newErrors;
+  };
 
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    setForm({ ...form, [e.target.name]: e.target.value });
+    // Clear error for this field as user types
+    if (errors[e.target.name]) {
+      setErrors({ ...errors, [e.target.name]: "" });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
 
     try {
       setLoading(true);
@@ -64,8 +83,13 @@ export default function Register() {
               value={form.name}
               onChange={handleChange}
               required
-              className="w-full rounded-xl bg-[#0B1120] border border-cyan-500 px-4 py-3 text-white outline-none"
+              className={`w-full rounded-xl bg-[#0B1120] border px-4 py-3 text-white outline-none transition ${
+                errors.name ? "border-red-500" : "border-cyan-500"
+              }`}
             />
+            {errors.name && (
+              <p className="mt-1 text-xs text-red-400">{errors.name}</p>
+            )}
           </div>
 
           <div>
@@ -79,8 +103,13 @@ export default function Register() {
               value={form.email}
               onChange={handleChange}
               required
-              className="w-full rounded-xl bg-[#0B1120] border border-cyan-500 px-4 py-3 text-white outline-none"
+              className={`w-full rounded-xl bg-[#0B1120] border px-4 py-3 text-white outline-none transition ${
+                errors.email ? "border-red-500" : "border-cyan-500"
+              }`}
             />
+            {errors.email && (
+              <p className="mt-1 text-xs text-red-400">{errors.email}</p>
+            )}
           </div>
 
           <div>
@@ -95,7 +124,9 @@ export default function Register() {
                 value={form.password}
                 onChange={handleChange}
                 required
-                className="w-full rounded-xl bg-[#0B1120] border border-cyan-500 px-4 py-3 pr-12 text-white outline-none"
+                className={`w-full rounded-xl bg-[#0B1120] border px-4 py-3 pr-12 text-white outline-none transition ${
+                  errors.password ? "border-red-500" : "border-cyan-500"
+                }`}
               />
               <button
                 type="button"
@@ -105,7 +136,9 @@ export default function Register() {
                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
             </div>
-
+            {errors.password && (
+              <p className="mt-1 text-xs text-red-400">{errors.password}</p>
+            )}
           </div>
 
           <button
