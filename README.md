@@ -69,11 +69,13 @@ voice-task-ai/
 
 Full architecture notes are in [`Architecture.md`](./Architecture.md).
 
-## 🚀 Getting Started (Windows / PowerShell)
+## 🚀 Getting Started (Quick Setup — 5 minutes)
 
 ### Prerequisites
-- Node.js (v18+ recommended)
-- A MongoDB connection string (local MongoDB or [MongoDB Atlas](https://www.mongodb.com/atlas))
+- **Node.js** v18+ ([download here](https://nodejs.org/))
+- **MongoDB** connection string:
+  - **Option 1 (Recommended)**: Free cloud database at [MongoDB Atlas](https://www.mongodb.com/atlas) (no installation needed)
+  - **Option 2**: Local MongoDB installed on your machine
 
 ### 1. Clone the repository
 ```powershell
@@ -87,45 +89,72 @@ cd server
 npm install
 ```
 
-Create a `.env` file inside `server/`:
+Create a **`.env`** file inside **`server/`** folder:
 ```env
 PORT=5000
-MONGODB_URI=your_mongodb_connection_string_here
-JWT_SECRET=your_random_secret_key_here
+MONGODB_URI=mongodb+srv://your_username:your_password@cluster.mongodb.net/voice-task-ai?retryWrites=true&w=majority
+JWT_SECRET=your_super_secret_random_string_here_min_32_chars
 NODE_ENV=development
 ```
 
-> ⚠️ Never commit your `.env` file or share real credentials. Generate a strong random string for `JWT_SECRET` (e.g. `openssl rand -base64 32` or any password generator).
+> 🔑 **Important:**
+> - Replace `MONGODB_URI` with your actual MongoDB connection string
+> - Generate a strong random string for `JWT_SECRET` (at least 32 characters)
+> - Never commit your `.env` file
 
-Start the backend:
+**Start the backend:**
 ```powershell
 npm run dev
 ```
-You should see `MongoDB Connected` and `Server running on http://localhost:5000` in the terminal.
+✅ **Success message:** You should see `MongoDB Connected` and `Server running on http://localhost:5000`
 
 ### 3. Set up the frontend
-Open a **new** PowerShell terminal:
+Open a **new** PowerShell terminal (keep the backend running):
 ```powershell
 cd voice-task-ai\client
 npm install
 ```
 
-Create a `.env` file inside `client/`:
+Create a **`.env`** file inside **`client/`** folder:
 ```env
 VITE_API_URL=http://localhost:5000/api
 ```
 
-Start the frontend:
+**Start the frontend:**
 ```powershell
 npm run dev
 ```
-The app will be available at `http://localhost:5173`.
+✅ **Success:** App available at **`http://localhost:5173`**
 
 ### 4. Use the app
-1. Register a new account at `/register`
-2. Log in
-3. Click the microphone icon and start speaking a task command
-4. Explore the Analytics tab to see your task metrics
+1. Open **Chrome** or **Edge** browser (required for voice features)
+2. Navigate to `http://localhost:5173`
+3. **Register** a new account
+4. **Login** with your credentials
+5. Click the **microphone icon** 🎤 in the Voice Assistant panel
+6. Try saying: *"Create task buy groceries tomorrow high priority"*
+7. Explore the **Analytics** tab to see real-time task metrics
+
+---
+
+## 🐛 Troubleshooting
+
+**Issue: "Cannot connect to MongoDB"**
+- Check your MongoDB Atlas IP whitelist (allow `0.0.0.0/0` for testing)
+- Verify your connection string is correct in `server/.env`
+
+**Issue: "Voice input not working"**
+- Use **Chrome** or **Edge** browser (Firefox/Safari don't support Web Speech API)
+- Allow microphone permissions when prompted
+- Check that your microphone is working in system settings
+
+**Issue: "Port already in use"**
+- Backend: Change `PORT` in `server/.env` to a different number (e.g., 5001)
+- Frontend: Vite usually auto-assigns a new port if 5173 is busy
+
+**Issue: "JWT authentication failed"**
+- Clear browser localStorage and register a new account
+- Verify `JWT_SECRET` is set in `server/.env`
 
 ## 🎙️ Browser Support Note
 Voice input relies on the Web Speech API, which has the best support in **Chrome** and **Edge**. Firefox and Safari have limited or no support for `SpeechRecognition`.
