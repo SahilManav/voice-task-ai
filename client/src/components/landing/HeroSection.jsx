@@ -109,9 +109,9 @@ const HeroSection = () => {
             initial={{ opacity: 0, scaleX: 0 }}
             animate={{ opacity: 1, scaleX: 1 }}
             transition={{ duration: 0.6, delay: 0.45 }}
-            className="w-full flex justify-center mt-3"
+            className="flex w-full justify-center mt-1"
           >
-            <div className="w-56 h-px bg-gradient-to-r from-transparent via-violet-500 to-transparent" />
+            <div className="h-px w-56 bg-gradient-to-r from-transparent via-violet-500 to-transparent" />
           </motion.div>
 
         </motion.div>
