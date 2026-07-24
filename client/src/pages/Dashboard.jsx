@@ -751,11 +751,12 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex min-h-screen w-full overflow-hidden bg-[#0B0F19] font-sans text-white">
+    <div className="flex min-h-screen w-full overflow-hidden theme-bg-base font-sans theme-text theme-transition">
       <Sidebar
         activeTab={activeTab}
         onTabChange={setActiveTab}
         onLogout={handleLogout}
+        onOpenVoice={() => setVoicePanelOpen(true)}
       />
 
       <div className="flex h-screen flex-1 flex-col overflow-hidden">

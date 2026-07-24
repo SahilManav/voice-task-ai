@@ -5,17 +5,15 @@ import TaskCard from "./TaskCard";
 
 function EmptyTasksState() {
   return (
-    <div className="rounded-2xl border border-white/5 bg-[#141A29] p-10 text-center">
+    <div className="rounded-2xl border theme-border p-10 text-center theme-card theme-transition">
       <div className="mb-4 flex justify-center">
         <div className="flex h-14 w-14 items-center justify-center rounded-full bg-violet-500/10">
-          <Mic className="h-7 w-7 text-violet-400" />
+          <Mic className="h-7 w-7 text-violet-500" />
         </div>
       </div>
-      <p className="mb-1 text-base font-semibold text-white">No tasks yet</p>
-      <p className="mb-4 text-sm text-gray-400">
-        Try saying something like:
-      </p>
-      <p className="mx-auto max-w-xs rounded-xl border border-violet-500/20 bg-violet-500/5 px-4 py-2 text-sm italic text-violet-300">
+      <p className="mb-1 text-base font-semibold theme-text">No tasks yet</p>
+      <p className="mb-4 text-sm theme-text-secondary">Try saying something like:</p>
+      <p className="mx-auto max-w-xs rounded-xl border border-violet-500/20 bg-violet-500/5 px-4 py-2 text-sm italic text-violet-500">
         "Create task submit the report by tomorrow, high priority"
       </p>
     </div>
@@ -48,7 +46,7 @@ export default function DashboardTasks({
               <h2 className="text-2xl font-extrabold text-white">{title}</h2>
             )}
             {description && (
-              <p className="text-sm text-gray-400">{description}</p>
+              <p className="text-sm theme-text-secondary">{description}</p>
             )}
           </div>
 
@@ -77,7 +75,7 @@ export default function DashboardTasks({
               <p className="text-[10px] text-violet-300">Your pending tasks</p>
             </div>
             {pendingTasks.length > 0 && (
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-violet-500 text-[11px] font-bold text-white shadow-md">
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-violet-500 text-[11px] font-bold theme-text shadow-md">
                 {pendingTasks.length}
               </span>
             )}
@@ -90,7 +88,7 @@ export default function DashboardTasks({
       {isLoadingTasks ? (
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-2">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="rounded-2xl border border-white/5 bg-[#141A29] p-5 space-y-3 animate-pulse">
+              <div key={i} className="rounded-2xl border theme-border theme-card p-5 space-y-3 animate-pulse">
                 <div className="h-4 w-3/4 rounded bg-white/10" />
                 <div className="h-3 w-1/2 rounded bg-white/5" />
                 <div className="h-3 w-1/3 rounded bg-white/5" />
@@ -116,7 +114,7 @@ export default function DashboardTasks({
 
       {showCompletedSection && completedTasks.length > 0 && (
         <div className="space-y-4 pt-4">
-          <p className="text-xs font-bold uppercase text-gray-500">
+          <p className="text-xs font-bold uppercase theme-text-muted">
             Completed Tasks ({completedTasks.length})
           </p>
 
@@ -136,3 +134,4 @@ export default function DashboardTasks({
     </div>
   );
 }
+

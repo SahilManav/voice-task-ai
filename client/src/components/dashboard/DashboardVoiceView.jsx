@@ -24,7 +24,7 @@ export default function DashboardVoiceView({
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h2 className="text-2xl font-extrabold text-white">Voice Assistant</h2>
-          <p className="text-sm text-gray-400 mt-1">
+          <p className="text-sm theme-text-secondary mt-1">
             Speak naturally — the AI extracts task details automatically
           </p>
         </div>
@@ -39,7 +39,7 @@ export default function DashboardVoiceView({
         <div className="space-y-6 lg:col-span-7">
 
           {/* Live Status Card */}
-          <div className="rounded-3xl border border-white/5 bg-[#141A29] p-6 space-y-5">
+          <div className="rounded-3xl border theme-border theme-card p-6 space-y-5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Sparkles className="h-5 w-5 text-violet-400" />
@@ -48,7 +48,7 @@ export default function DashboardVoiceView({
               <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase border ${
                 isListening
                   ? "border-red-500/30 bg-red-500/10 text-red-400"
-                  : "border-white/10 bg-white/5 text-gray-500"
+                  : "theme-border bg-white/5 theme-text-muted"
               }`}>
                 <motion.span
                   animate={isListening ? { opacity: [1, 0, 1] } : { opacity: 1 }}
@@ -61,13 +61,13 @@ export default function DashboardVoiceView({
 
             {/* Transcript */}
             <div className="space-y-2">
-              <p className="text-[10px] uppercase tracking-wider text-gray-500 font-mono">
+              <p className="text-[10px] uppercase tracking-wider theme-text-muted font-mono">
                 Speech Transcript
               </p>
               <div className={`min-h-[80px] rounded-2xl border px-4 py-3 text-sm transition-all duration-300 ${
                 transcript
                   ? "border-violet-500/20 bg-violet-500/5 text-white"
-                  : "border-white/5 bg-[#0B0F19] text-gray-600"
+                  : "theme-border theme-bg-input text-gray-600"
               }`}>
                 {transcript ? (
                   <p className="leading-relaxed">"{transcript}"</p>
@@ -79,13 +79,13 @@ export default function DashboardVoiceView({
 
             {/* AI Output */}
             <div className="space-y-2">
-              <p className="text-[10px] uppercase tracking-wider text-gray-500 font-mono">
+              <p className="text-[10px] uppercase tracking-wider theme-text-muted font-mono">
                 AI Extraction Output
               </p>
               <div className={`min-h-[80px] rounded-2xl border px-4 py-3 text-sm transition-all duration-300 ${
                 aiResponse
                   ? "border-purple-500/20 bg-purple-500/5 text-white"
-                  : "border-white/5 bg-[#0B0F19] text-gray-600"
+                  : "theme-border theme-bg-input text-gray-600"
               }`}>
                 {aiResponse ? (
                   <p className="leading-relaxed">{aiResponse}</p>
@@ -100,14 +100,14 @@ export default function DashboardVoiceView({
           {recentCommands?.length > 0 ? (
             <RecentCommands commands={recentCommands} />
           ) : (
-            <div className="rounded-3xl border border-white/5 bg-[#141A29] p-6">
+            <div className="rounded-3xl border theme-border theme-card p-6">
               <div className="flex items-center justify-between mb-4">
                 <h4 className="text-sm font-bold text-white">Recent Voice Activity</h4>
                 <Activity className="h-4 w-4 text-purple-400" />
               </div>
               <div className="text-center py-6">
                 <p className="text-4xl mb-2">🎙️</p>
-                <p className="text-sm text-gray-400">No commands yet</p>
+                <p className="text-sm theme-text-secondary">No commands yet</p>
                 <p className="text-xs text-gray-600 mt-1">Your voice history will appear here</p>
               </div>
             </div>
@@ -118,7 +118,7 @@ export default function DashboardVoiceView({
         <div className="space-y-6 lg:col-span-5">
 
           {/* How It Works */}
-          <div className="rounded-3xl border border-white/5 bg-[#141A29] p-6 space-y-5">
+          <div className="rounded-3xl border theme-border theme-card p-6 space-y-5">
             <div className="flex items-center gap-2">
               <Zap className="h-5 w-5 text-violet-400" />
               <h4 className="text-sm font-bold text-white">How It Works</h4>
@@ -135,7 +135,7 @@ export default function DashboardVoiceView({
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-white">{step.label}</p>
-                    <p className="text-xs text-gray-500 mt-0.5">{step.desc}</p>
+                    <p className="text-xs theme-text-muted mt-0.5">{step.desc}</p>
                   </div>
                 </div>
               ))}
@@ -143,7 +143,7 @@ export default function DashboardVoiceView({
           </div>
 
           {/* Example Commands */}
-          <div className="rounded-3xl border border-white/5 bg-[#141A29] p-6 space-y-4">
+          <div className="rounded-3xl border theme-border theme-card p-6 space-y-4">
             <div className="flex items-center gap-2">
               <MessageSquare className="h-5 w-5 text-violet-400" />
               <h4 className="text-sm font-bold text-white">Try These Commands</h4>
@@ -155,7 +155,7 @@ export default function DashboardVoiceView({
                   initial={{ opacity: 0, x: 10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.08 }}
-                  className="flex items-start gap-3 rounded-2xl border border-white/5 bg-[#0B0F19] px-3 py-2.5 cursor-default hover:border-violet-500/20 hover:bg-violet-500/5 transition-all duration-200"
+                  className="flex items-start gap-3 rounded-2xl border theme-border theme-bg-input px-3 py-2.5 cursor-default hover:border-violet-500/20 hover:bg-violet-500/5 transition-all duration-200"
                 >
                   <span className="text-sm shrink-0">{cmd.icon}</span>
                   <p className="text-xs text-gray-300 leading-relaxed">"{cmd.text}"</p>
@@ -164,8 +164,8 @@ export default function DashboardVoiceView({
             </div>
 
             {/* Supported actions */}
-            <div className="pt-2 border-t border-white/5">
-              <p className="text-[10px] uppercase tracking-wider text-gray-500 mb-2">Supported Actions</p>
+            <div className="pt-2 border-t theme-border">
+              <p className="text-[10px] uppercase tracking-wider theme-text-muted mb-2">Supported Actions</p>
               <div className="flex flex-wrap gap-1.5">
                 {["create", "complete", "delete", "delay", "remind"].map((action) => (
                   <span key={action} className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full border border-violet-500/20 bg-violet-500/10 text-violet-400">
@@ -177,14 +177,14 @@ export default function DashboardVoiceView({
           </div>
 
           {/* Supported date formats */}
-          <div className="rounded-3xl border border-white/5 bg-[#141A29] p-5 space-y-3">
+          <div className="rounded-3xl border theme-border theme-card p-5 space-y-3">
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-violet-400" />
-              <h4 className="text-xs font-bold text-white uppercase tracking-wider">Recognized Date Phrases</h4>
+              <h4 className="text-xs font-bold theme-text uppercase tracking-wider">Recognized Date Phrases</h4>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {["today", "tomorrow", "next week", "monday", "friday", "next monday", "this friday"].map((d) => (
-                <span key={d} className="text-[10px] font-mono px-2 py-0.5 rounded-lg border border-white/10 bg-white/5 text-gray-400">
+                <span key={d} className="text-[10px] font-mono px-2 py-0.5 rounded-lg border theme-border bg-white/5 theme-text-secondary">
                   {d}
                 </span>
               ))}
@@ -196,3 +196,4 @@ export default function DashboardVoiceView({
     </div>
   );
 }
+

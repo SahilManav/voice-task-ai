@@ -82,10 +82,8 @@ export default function TaskCard({ task, onComplete, onEdit, onDelete }) {
       layout
       onMouseMove={completed ? undefined : handleMouseMove}
       onMouseLeave={completed ? undefined : handleMouseLeave}
-      className={`relative rounded-2xl border bg-[#141A29] p-5 transition-all duration-200 ${
-        completed
-          ? "border-white/5 opacity-60"
-          : "border-white/5 hover:border-violet-500/30"
+      className={`relative rounded-2xl border theme-card p-4 sm:p-5 transition-all duration-200 theme-transition ${
+        completed ? "opacity-60" : "hover:border-violet-500/30"
       }`}
       style={{ transformStyle: "preserve-3d", willChange: "transform" }}
     >
@@ -117,10 +115,10 @@ export default function TaskCard({ task, onComplete, onEdit, onDelete }) {
       </div>
 
       <div className="mb-4">
-        <h3 className={`mb-1.5 text-base font-bold tracking-tight text-white ${completed ? "text-gray-500 line-through" : ""}`}>
+        <h3 className={`mb-1.5 text-base font-bold tracking-tight theme-text ${completed ? "line-through theme-text-muted" : ""}`}>
           {title}
         </h3>
-        <p className={`text-sm leading-relaxed text-gray-400 ${completed ? "text-gray-600 line-through" : ""}`}>
+        <p className={`text-sm leading-relaxed theme-text-secondary ${completed ? "line-through" : ""}`}>
           {displayDescription}
         </p>
       </div>

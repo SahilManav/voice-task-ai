@@ -27,13 +27,13 @@ function PriorityBreakdown({ tasks }) {
   ];
 
   return (
-    <div className="rounded-3xl border border-white/5 bg-[#141A29] p-6 space-y-5">
+    <div className="rounded-3xl border theme-border theme-card p-6 space-y-5">
       <div className="flex items-center justify-between">
         <div>
           <h4 className="text-base font-bold text-white">Priority Breakdown</h4>
-          <p className="text-xs text-gray-500 mt-0.5">Distribution across all tasks</p>
+          <p className="text-xs theme-text-muted mt-0.5">Distribution across all tasks</p>
         </div>
-        <span className="text-xs font-mono text-gray-500 border border-white/10 px-2 py-1 rounded-lg">
+        <span className="text-xs font-mono theme-text-muted border theme-border px-2 py-1 rounded-lg">
           {tasks.length} total
         </span>
       </div>
@@ -42,8 +42,8 @@ function PriorityBreakdown({ tasks }) {
         {bars.map((bar) => (
           <div key={bar.label} className="space-y-1.5">
             <div className="flex items-center justify-between text-xs">
-              <span className="text-gray-400 font-medium">{bar.label}</span>
-              <span className="font-mono text-gray-500">{bar.count} tasks · {bar.pct}%</span>
+              <span className="theme-text-secondary font-medium">{bar.label}</span>
+              <span className="font-mono theme-text-muted">{bar.count} tasks · {bar.pct}%</span>
             </div>
             <div className="h-2 w-full rounded-full bg-white/5 overflow-hidden">
               <motion.div
@@ -79,10 +79,10 @@ function StatusDonut({ tasks }) {
   let offset = 0;
 
   return (
-    <div className="rounded-3xl border border-white/5 bg-[#141A29] p-6 space-y-5">
+    <div className="rounded-3xl border theme-border theme-card p-6 space-y-5">
       <div>
         <h4 className="text-base font-bold text-white">Task Status Overview</h4>
-        <p className="text-xs text-gray-500 mt-0.5">Visual breakdown by status</p>
+        <p className="text-xs theme-text-muted mt-0.5">Visual breakdown by status</p>
       </div>
 
       <div className="flex items-center gap-8">
@@ -127,7 +127,7 @@ function StatusDonut({ tasks }) {
             <div key={seg.label} className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="h-2.5 w-2.5 rounded-full" style={{ background: seg.color }} />
-                <span className="text-xs text-gray-400">{seg.label}</span>
+                <span className="text-xs theme-text-secondary">{seg.label}</span>
               </div>
               <span className="text-xs font-mono font-bold text-white">{seg.count}</span>
             </div>
@@ -150,7 +150,7 @@ export default function DashboardAnalyticsView({ tasks }) {
       {/* Header */}
       <div>
         <h2 className="text-2xl font-extrabold text-white">Advanced Insights</h2>
-        <p className="text-sm text-gray-400 mt-1">Real-time analytics computed from your task data</p>
+        <p className="text-sm theme-text-secondary mt-1">Real-time analytics computed from your task data</p>
       </div>
 
       {/* KPI Cards */}
@@ -193,3 +193,4 @@ export default function DashboardAnalyticsView({ tasks }) {
     </div>
   );
 }
+

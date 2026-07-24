@@ -5,16 +5,19 @@ import { Toaster } from "react-hot-toast";
 
 import App from "./App";
 import AuthProvider from "./context/AuthContext";
+import ThemeProvider from "./context/ThemeContext";
 
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-        <Toaster position="top-right" />
-        <App />
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <Toaster position="top-right" />
+          <App />
+        </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

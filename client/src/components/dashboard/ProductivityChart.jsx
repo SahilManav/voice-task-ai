@@ -37,20 +37,20 @@ const getWeeklyData = (tasks) => {
 export default function ProductivityChart({ tasks = [] }) {
   const weeklyData = getWeeklyData(tasks);
   return (
-    <div className="space-y-6 rounded-3xl border border-white/5 bg-[#141A29] p-6">
+    <div className="space-y-6 rounded-3xl border theme-border theme-card p-6 theme-transition">
       <div className="flex items-center justify-between">
         <div>
-          <h4 className="text-base font-bold text-white">
+          <h4 className="text-base font-bold theme-text">
             Weekly Productivity Graph
           </h4>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs theme-text-muted">
             Output trends and task completion indices.
           </p>
         </div>
         <TrendingUp className="h-5 w-5 text-violet-400" />
       </div>
 
-      <div className="relative flex h-48 w-full flex-col justify-between rounded-2xl border border-white/5 bg-[#0B0F19] p-4">
+      <div className="relative flex h-48 w-full flex-col justify-between rounded-2xl border theme-border theme-bg-input p-4">
         <div className="pointer-events-none absolute inset-0 flex flex-col justify-between px-4 py-6 opacity-20">
           <div className="h-px bg-white" />
           <div className="h-px bg-white" />
@@ -73,7 +73,7 @@ export default function ProductivityChart({ tasks = [] }) {
                 transition={{ duration: 0.8, delay: index * 0.05 }}
                 className="w-8 rounded-t-lg bg-gradient-to-t from-purple-500/20 to-violet-400 shadow-[0_0_10px_rgba(139,92,246,0.15)] transition-all duration-300 group-hover:to-violet-300 group-hover:shadow-[0_0_15px_rgba(139,92,246,0.3)]"
               />
-              <span className="font-mono text-[10px] font-bold uppercase text-gray-500">
+              <span className="font-mono text-[10px] font-bold uppercase theme-text-muted">
                 {data.day}
               </span>
             </div>
