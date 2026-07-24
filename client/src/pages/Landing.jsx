@@ -218,12 +218,10 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* How it Works / Interactive Demonstration */}
+      {/* How it Works */}
       <section id="how-it-works" className="py-24 bg-[#141A29]/30 border-y border-white/5 px-6">
-        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          
-          {/* Left Block: Description */}
-          <div className="space-y-8">
+        <div className="max-w-7xl mx-auto w-full">
+          <div className="space-y-8 max-w-xl">
             <div className="space-y-4">
               <span className="text-xs uppercase tracking-widest text-purple-400 font-bold">
                 Operational Framework
@@ -240,7 +238,7 @@ const Landing = () => {
               {[
                 { step: "01", title: "Record Voice Prompt", desc: "Press the microphone trigger on the navigation bar or voice panel and speak your task naturally." },
                 { step: "02", title: "Instant AI Synthesis", desc: "Acoustic models filter background noise, transcribe speech, and summarize notes into tags and titles." },
-                { step: "03", title: "Execution Confirmation", desc: "Review details, modify priorities, and hit confirm to publish to your active Kanban boards." }
+                { step: "03", title: "Execution Confirmation", desc: "Review details, modify priorities, and hit confirm to publish to your active task board." }
               ].map((item, idx) => (
                 <div key={idx} className="flex gap-4 items-start">
                   <div className="w-10 h-10 rounded-lg bg-[#141A29] border border-purple-500/20 text-purple-400 font-mono text-sm flex items-center justify-center shrink-0">
@@ -254,31 +252,37 @@ const Landing = () => {
               ))}
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Right Block: Live UI Preview Showcase */}
-          <div id="preview" className="relative">
+      {/* Interface Preview */}
+      <section id="preview" className="py-24 bg-[#0B0F19] px-6">
+        <div className="max-w-7xl mx-auto w-full">
+          <div className="text-center mb-12 space-y-3">
+            <span className="text-xs uppercase tracking-widest text-violet-400 font-bold">Live Demo</span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white">See It In Action</h2>
+            <p className="text-gray-400 max-w-xl mx-auto">This is exactly what happens when you speak a command — AI extracts every detail automatically.</p>
+          </div>
+
+          <div className="max-w-3xl mx-auto relative">
             <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/10 to-violet-500/10 rounded-3xl blur-2xl pointer-events-none" />
-            
             <div className="relative rounded-3xl border border-white/5 bg-[#141A29]/80 backdrop-blur-xl p-8 shadow-2xl flex flex-col gap-6">
-              
-              {/* Simulated Voice Panel Card UI */}
+
               <div className="flex justify-between items-center pb-4 border-b border-white/5">
                 <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 rounded-full bg-violet-400 animate-ping" />
+                  <motion.div animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 1.5, repeat: Infinity }} className="w-3 h-3 rounded-full bg-violet-400" />
                   <span className="text-xs font-mono tracking-widest text-violet-400 uppercase">AI Transcript Engine</span>
                 </div>
                 <div className="text-[10px] font-mono text-purple-400">STATUS: INTERPRETING</div>
               </div>
 
-              {/* Speech transcript display */}
               <div className="space-y-2">
-                <p className="text-xs text-gray-500 uppercase font-bold tracking-wider">Acoustic Audio Feed</p>
+                <p className="text-xs text-gray-500 uppercase font-bold tracking-wider">Voice Input</p>
                 <div className="bg-[#0B0F19] rounded-xl p-4 border border-violet-500/10 text-violet-300 font-mono text-sm">
                   "Create task to draft project layout deck with priority high and deadline this friday afternoon"
                 </div>
               </div>
 
-              {/* AI output visualization */}
               <div className="space-y-3 bg-[#0B0F19]/40 border border-white/5 rounded-xl p-5">
                 <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-2">Extracted Parameters</p>
                 <div className="grid grid-cols-2 gap-4 text-xs font-mono">
@@ -301,19 +305,12 @@ const Landing = () => {
                 </div>
               </div>
 
-              {/* Confirmation buttons */}
               <div className="flex gap-4">
-                <Button variant="outline" size="sm" className="flex-1">
-                  Cancel
-                </Button>
-                <Button variant="primary" size="sm" className="flex-1">
-                  Confirm Task
-                </Button>
+                <button className="flex-1 rounded-2xl border border-white/10 bg-white/5 py-2.5 text-sm text-gray-400 hover:text-white transition-colors">Cancel</button>
+                <button className="flex-1 rounded-2xl bg-gradient-to-r from-violet-500 to-purple-600 py-2.5 text-sm font-bold text-white shadow-lg shadow-violet-500/20">✓ Confirm Task</button>
               </div>
-
             </div>
           </div>
-
         </div>
       </section>
 
