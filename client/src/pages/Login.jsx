@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
-import { Eye, EyeOff, Sparkles } from "lucide-react";
+import { Eye, EyeOff, Sparkles, User } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
@@ -111,7 +112,7 @@ export default function Login() {
       >
         {/* Glowing Border Effect — dark only */}
         <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-600 to-purple-600 rounded-[32px] blur opacity-0 dark:opacity-30"></div>
-        
+
         <form
           onSubmit={handleSubmit}
           className="relative bg-white dark:bg-[#141A29]/90 backdrop-blur-xl rounded-[32px] border border-gray-200 dark:border-white/10 p-8 shadow-lg dark:shadow-2xl transition-colors duration-200"
@@ -199,10 +200,12 @@ export default function Login() {
           </motion.button>
 
           {/* Divider */}
-          <div className="flex items-center gap-3 my-4">
-            <div className="flex-1 h-px bg-white/10" />
-            <span className="text-xs text-gray-500">or</span>
-            <div className="flex-1 h-px bg-white/10" />
+          <div className="flex items-center gap-3 my-5">
+            <div className="flex-1 h-px bg-gray-200 dark:bg-white/10" />
+            <span className="text-xs text-gray-500 uppercase tracking-widest">
+              or
+            </span>
+            <div className="flex-1 h-px bg-gray-200 dark:bg-white/10" />
           </div>
 
           {/* Guest Button */}
@@ -210,12 +213,19 @@ export default function Login() {
             type="button"
             onClick={handleGuestLogin}
             disabled={loading}
-            whileHover={{ scale: loading ? 1 : 1.02 }}
+            whileHover={{
+              scale: loading ? 1 : 1.02,
+              y: loading ? 0 : -2,
+            }}
             whileTap={{ scale: loading ? 1 : 0.98 }}
-            className="w-full flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 py-3.5 text-sm font-semibold text-gray-300 hover:text-white transition-all duration-300 disabled:opacity-50"
+            className="group w-full flex items-center justify-center gap-3 rounded-2xl border border-violet-500/15 bg-violet-500/5 hover:bg-violet-500/10 hover:border-violet-500/30 py-3.5 text-sm font-semibold text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-300 transition-all duration-300 disabled:opacity-50"
           >
-            <span className="text-lg">👤</span>
-            Continue as Guest
+            <User
+              size={18}
+              className="transition-all duration-300 group-hover:scale-110"
+            />
+
+            <span>Continue as Guest</span>
           </motion.button>
 
           <p className="text-center text-gray-500 dark:text-gray-400 mt-5 text-sm">

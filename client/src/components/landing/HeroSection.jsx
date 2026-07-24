@@ -1,17 +1,41 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Mic, ArrowRight, Activity, CheckCircle, Zap, Clock } from 'lucide-react';
+import { ArrowRight, CheckCircle, Zap, Clock } from 'lucide-react';
 
 const HeroSection = () => {
   const words = ["Create", "Complete", "Delay", "Delete"];
   const [wordIndex, setWordIndex] = React.useState(0);
+
+  const demoText =
+    'Remind me to submit the quarterly report by next Friday, high priority';
+
+  const [typedText, setTypedText] = React.useState("");
 
   React.useEffect(() => {
     const interval = setInterval(() => {
       setWordIndex((i) => (i + 1) % words.length);
     }, 2000);
     return () => clearInterval(interval);
+  }, []);
+  React.useEffect(() => {
+    let index = 0;
+
+    const type = () => {
+      if (index <= demoText.length) {
+        setTypedText(demoText.slice(0, index));
+        index++;
+        setTimeout(type, 38);
+      } else {
+        setTimeout(() => {
+          setTypedText("");
+          index = 0;
+          type();
+        }, 2500);
+      }
+    };
+
+    type();
   }, []);
 
   return (
@@ -67,17 +91,29 @@ const HeroSection = () => {
           className="flex flex-wrap items-center justify-center gap-2 text-lg sm:text-2xl font-semibold text-gray-300"
         >
           <span>Say it to</span>
+
           <motion.span
             key={wordIndex}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
-            className="text-violet-400 inline-block min-w-[110px] text-center px-3 py-0.5 rounded-lg bg-violet-500/10 border border-violet-500/20"
+            className="text-violet-400 inline-block min-w-[110px] text-center font-bold"
           >
             {words[wordIndex]}
           </motion.span>
+
           <span>tasks instantly</span>
+
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            transition={{ duration: 0.6, delay: 0.45 }}
+            className="w-full flex justify-center mt-3"
+          >
+            <div className="w-56 h-px bg-gradient-to-r from-transparent via-violet-500 to-transparent" />
+          </motion.div>
+
         </motion.div>
 
         {/* Subtitle */}
@@ -87,7 +123,7 @@ const HeroSection = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-gray-400 text-lg md:text-xl leading-relaxed max-w-2xl"
         >
-          VoiceDesk turns your natural speech into structured tasks with title, priority, and due date — 
+          VoiceDesk turns your natural speech into structured tasks with title, priority, and due date —
           all extracted automatically. No typing, no forms, just your voice.
         </motion.p>
 
@@ -175,19 +211,28 @@ const HeroSection = () => {
               <div className="space-y-3">
                 <p className="text-[10px] uppercase tracking-wider text-gray-500 font-mono">🎤 You said</p>
                 <div className="rounded-2xl border border-violet-500/20 bg-violet-500/5 px-4 py-3 text-sm text-violet-200 font-mono leading-relaxed">
-                  "Remind me to submit the quarterly report by next Friday, high priority"
+                  <>
+                    <span>{typedText}</span>
+
+                    <motion.span
+                      animate={{ opacity: [1, 0, 1] }}
+                      transition={{ duration: 0.8, repeat: Infinity }}
+                      className="inline-block ml-0.5 text-violet-300"
+                    >
+                      |
+                    </motion.span>
+                  </>
                 </div>
 
                 {/* Waveform animation */}
-                <div className="flex items-center gap-1 h-8">
-                  {[3,5,8,6,10,7,4,9,5,7,3,6,8,5,4,7,9,6,3,5].map((h, i) => (
-                    <motion.div
-                      key={i}
-                      animate={{ height: [`${h * 2}px`, `${h * 4}px`, `${h * 2}px`] }}
-                      transition={{ duration: 0.8 + i * 0.05, repeat: Infinity, ease: "easeInOut" }}
-                      className="w-1 rounded-full bg-gradient-to-t from-violet-600 to-purple-400"
-                    />
-                  ))}
+                <div className="flex items-end justify-center gap-1.5 h-14 w-full mt-4">                {[3, 5, 8, 6, 10, 7, 4, 9, 5, 7, 3, 6, 8, 5, 4, 7, 9, 6, 3, 5].map((h, i) => (
+                  <motion.div
+                    key={i}
+                    animate={{ height: [`${h * 2}px`, `${h * 4}px`, `${h * 2}px`] }}
+                    transition={{ duration: 0.8 + i * 0.05, repeat: Infinity, ease: "easeInOut" }}
+                    className="w-1 rounded-full bg-gradient-to-t from-violet-600 to-purple-400"
+                  />
+                ))}
                 </div>
               </div>
 
@@ -244,7 +289,7 @@ const HeroSection = () => {
         </motion.div>
 
       </div>
-    </section>
+    </section >
   );
 };
 

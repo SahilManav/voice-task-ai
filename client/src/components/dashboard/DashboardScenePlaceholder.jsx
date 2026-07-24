@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 // Node positions for the neural network (percentage-based)
 const NODES = [
-  { id: 0, x: 50, y: 50, size: 10, label: "VOXAI" },   // center
+  { id: 0, x: 50, y: 50, size: 10, label: "VoiceDesk" },   // center
   { id: 1, x: 20, y: 25, size: 6, label: "Voice" },
   { id: 2, x: 75, y: 20, size: 6, label: "Tasks" },
   { id: 3, x: 15, y: 65, size: 6, label: "NLP" },

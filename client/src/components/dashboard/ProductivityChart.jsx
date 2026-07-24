@@ -65,11 +65,11 @@ export default function ProductivityChart({ tasks = [] }) {
               className="group flex cursor-pointer flex-col items-center gap-2"
             >
               <span className="font-mono text-[10px] text-violet-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                {data.value}
+                {data.value} {data.value === 1 ? "task" : "tasks"}
               </span>
               <motion.div
                 initial={{ height: 0 }}
-               animate={{ height: `${Math.min(data.value * 20, 160)}px` }}
+                animate={{ height: `${Math.min(data.value * 20, 160)}px` }}
                 transition={{ duration: 0.8, delay: index * 0.05 }}
                 className="w-8 rounded-t-lg bg-gradient-to-t from-purple-500/20 to-violet-400 shadow-[0_0_10px_rgba(139,92,246,0.15)] transition-all duration-300 group-hover:to-violet-300 group-hover:shadow-[0_0_15px_rgba(139,92,246,0.3)]"
               />

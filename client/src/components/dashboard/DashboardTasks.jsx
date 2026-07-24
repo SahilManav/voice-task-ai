@@ -13,18 +13,31 @@ const VOICE_EXAMPLES = [
 
 function EmptyTasksState() {
   const [exampleIndex, setExampleIndex] = useState(0);
-  const [visible, setVisible] = useState(true);
+  const [typedText, setTypedText] = useState("");
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setVisible(false);
-      setTimeout(() => {
-        setExampleIndex((i) => (i + 1) % VOICE_EXAMPLES.length);
-        setVisible(true);
-      }, 400);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
+    let timeout;
+
+    const current = VOICE_EXAMPLES[exampleIndex];
+    let charIndex = 0;
+
+    const type = () => {
+      setTypedText(current.slice(0, charIndex));
+      charIndex++;
+
+      if (charIndex <= current.length) {
+        timeout = setTimeout(type, 45);
+      } else {
+        timeout = setTimeout(() => {
+          setExampleIndex((prev) => (prev + 1) % VOICE_EXAMPLES.length);
+        }, 1800);
+      }
+    };
+
+    timeout = setTimeout(type, 150);
+
+    return () => clearTimeout(timeout);
+  }, [exampleIndex]);
 
   return (
     <div className="rounded-2xl border border-gray-200 dark:border-white/5 p-10 text-center bg-white dark:bg-[#141A29] transition-colors duration-200">
@@ -33,14 +46,19 @@ function EmptyTasksState() {
           <Mic className="h-7 w-7 text-violet-500" />
         </div>
       </div>
-      <p className="mb-1 text-base font-semibold text-gray-900 dark:text-white">No tasks yet</p>
-      <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">Try saying something like:</p>
-      <div className="mx-auto max-w-xs rounded-xl border border-violet-500/20 bg-violet-500/5 px-4 py-2.5 min-h-[48px] flex items-center justify-center">
-        <p
-          className="text-sm italic text-violet-600 dark:text-violet-400 text-center transition-opacity duration-400"
-          style={{ opacity: visible ? 1 : 0 }}
-        >
-          "{VOICE_EXAMPLES[exampleIndex]}"
+
+      <p className="mb-1 text-base font-semibold text-gray-900 dark:text-white">
+        No tasks yet
+      </p>
+
+      <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">
+        Try saying something like:
+      </p>
+
+      <div className="mx-auto max-w-md rounded-xl border border-violet-500/20 bg-violet-500/5 px-5 py-3 min-h-[72px] flex items-center justify-center">
+        <p className="text-sm italic text-violet-600 dark:text-violet-400 text-center leading-relaxed">
+          "{typedText}"
+          <span className="animate-pulse text-violet-500">|</span>
         </p>
       </div>
     </div>
@@ -83,6 +101,7 @@ export default function DashboardTasks({
               size="sm"
               icon={Plus}
               onClick={onAddTask}
+              className="gap-2 justify-center"
             >
               Add Manual Task
             </Button>
@@ -112,7 +131,7 @@ export default function DashboardTasks({
           </span>
         </div>
 
-      {isLoadingTasks ? (
+        {isLoadingTasks ? (
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-2">
             {[1, 2, 3, 4].map((i) => (
               <div key={i} className="rounded-2xl border border-gray-200 dark:border-gray-200 dark:border-white/5 bg-white dark:bg-white dark:bg-[#141A29] border-gray-200 dark:border-gray-200 dark:border-white/5 p-5 space-y-3 animate-pulse">
