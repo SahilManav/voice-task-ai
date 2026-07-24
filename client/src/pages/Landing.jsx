@@ -208,6 +208,7 @@ const Landing = () => {
           {features.map((feature, idx) => (
             <FeatureCard 
               key={idx}
+              index={idx}
               icon={feature.icon}
               title={feature.title}
               description={feature.description}
