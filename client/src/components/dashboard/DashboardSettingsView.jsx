@@ -32,18 +32,18 @@ export default function DashboardSettingsView({
   const [defaultPriority, setDefaultPriority] = useState("medium");
   const [notifications, setNotifications] = useState(true);
 
-  const sectionClass = "space-y-4 rounded-3xl border theme-border theme-card p-6 theme-transition";
-  const labelClass = "text-sm font-bold theme-text";
-  const sublabelClass = "text-xs theme-text-secondary";
-  const headerClass = "text-[10px] font-mono uppercase tracking-wider theme-text-muted";
-  const rowClass = "flex items-center justify-between border-t theme-border pt-4";
+  const sectionClass = "space-y-4 rounded-3xl border border-gray-200 dark:border-white/5 bg-white dark:bg-[#141A29] border-gray-200 dark:border-white/5 p-6 transition-colors duration-200";
+  const labelClass = "text-sm font-bold text-gray-900 dark:text-white";
+  const sublabelClass = "text-xs text-gray-500 dark:text-gray-400";
+  const headerClass = "text-[10px] font-mono uppercase tracking-wider text-gray-400 dark:text-gray-600";
+  const rowClass = "flex items-center justify-between border-t border-gray-200 dark:border-white/5 pt-4";
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
       {/* Header */}
       <div className="space-y-1 text-center">
         {Icon && <Icon className="mx-auto h-10 w-10 text-violet-400" />}
-        <h3 className="text-xl font-bold theme-text">{title}</h3>
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white">{title}</h3>
         <p className={`text-sm ${sublabelClass}`}>{description}</p>
       </div>
 
@@ -93,7 +93,7 @@ export default function DashboardSettingsView({
           <select
             value={defaultPriority}
             onChange={(e) => setDefaultPriority(e.target.value)}
-            className="rounded-xl border theme-border theme-bg-input theme-text px-3 py-1.5 text-xs font-bold uppercase focus:outline-none focus:ring-2 focus:ring-violet-500/30"
+            className="rounded-xl border border-gray-200 dark:border-white/5 bg-gray-50 dark:bg-[#0B0F19] text-gray-900 dark:text-white px-3 py-1.5 text-xs font-bold uppercase focus:outline-none focus:ring-2 focus:ring-violet-500/30"
             style={{
               backgroundColor: "var(--bg-input)",
               color: "var(--text-primary)",
@@ -144,3 +144,4 @@ export default function DashboardSettingsView({
     </div>
   );
 }
+

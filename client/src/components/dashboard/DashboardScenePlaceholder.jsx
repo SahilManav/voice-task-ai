@@ -81,13 +81,13 @@ export default function DashboardScenePlaceholder() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h4 className="text-base font-bold theme-text">AI Cognitive Map</h4>
+        <h4 className="text-base font-bold text-gray-900 dark:text-white">AI Cognitive Map</h4>
         <span className="text-[10px] font-mono uppercase tracking-widest text-violet-400 border border-violet-500/20 bg-violet-500/10 px-2 py-0.5 rounded-full">
           Live Neural Graph
         </span>
       </div>
 
-      <div className="relative overflow-hidden rounded-3xl border theme-border theme-card shadow-xl"
+      <div className="relative overflow-hidden rounded-3xl border border-gray-200 dark:border-white/5 bg-white dark:bg-[#141A29] border-gray-200 dark:border-white/5 shadow-xl"
         style={{ height: "340px" }}
       >
         {/* Radial gradient background */}
@@ -204,3 +204,4 @@ export default function DashboardScenePlaceholder() {
     </div>
   );
 }
+

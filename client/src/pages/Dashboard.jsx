@@ -751,7 +751,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex min-h-screen w-full overflow-hidden theme-bg-base font-sans theme-text theme-transition">
+    <div className="flex min-h-screen w-full overflow-hidden bg-gray-100 dark:bg-[#0B0F19] font-sans text-gray-900 dark:text-white">
       <Sidebar
         activeTab={activeTab}
         onTabChange={setActiveTab}

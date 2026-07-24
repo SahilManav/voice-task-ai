@@ -67,7 +67,7 @@ const AnalyticsCard = ({
         duration: 0.25,
         ease: "easeOut",
       }}
-      className="relative overflow-hidden rounded-2xl border theme-card p-4 sm:p-5 flex items-center justify-between shadow-xl group theme-transition"
+      className="relative overflow-hidden rounded-2xl border bg-white dark:bg-[#141A29] border-gray-200 dark:border-white/5 p-4 sm:p-5 flex items-center justify-between shadow-xl group transition-colors duration-200"
     >
       {/* Decorative background glow */}
       <div
@@ -83,10 +83,10 @@ const AnalyticsCard = ({
 
       {/* Text Info */}
       <div className="space-y-2">
-        <span className="text-xs theme-text-muted uppercase font-mono tracking-wider">
+        <span className="text-xs text-gray-400 dark:text-gray-600 uppercase font-mono tracking-wider">
           {title}
         </span>
-        <h3 className="text-2xl sm:text-3xl font-extrabold theme-text tracking-tight">
+        <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">
           {value}
         </h3>
 
@@ -153,3 +153,4 @@ const AnalyticsCard = ({
 };
 
 export default AnalyticsCard;
+

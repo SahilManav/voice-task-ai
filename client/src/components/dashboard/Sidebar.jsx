@@ -18,10 +18,10 @@ const Sidebar = ({ activeTab, onTabChange, onLogout, onOpenVoice }) => {
       <motion.aside
         animate={{ width: isCollapsed ? '72px' : '260px' }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
-        className="hidden md:flex flex-col h-screen theme-sidebar relative z-30 shrink-0 theme-transition"
+        className="hidden md:flex flex-col h-screen bg-white dark:bg-[#141A29] border-gray-200 dark:border-white/5 relative z-30 shrink-0 transition-colors duration-200"
       >
         {/* Brand */}
-        <div className="h-16 flex items-center justify-between px-5 border-b theme-border">
+        <div className="h-16 flex items-center justify-between px-5 border-b border-gray-200 dark:border-white/5">
           {!isCollapsed && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}
               className="flex items-center gap-2.5"
@@ -29,7 +29,7 @@ const Sidebar = ({ activeTab, onTabChange, onLogout, onOpenVoice }) => {
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white">
                 <Mic className="w-4 h-4" />
               </div>
-              <span className="font-extrabold theme-text tracking-wider text-base">
+              <span className="font-extrabold text-gray-900 dark:text-white tracking-wider text-base">
                 Voice<span className="text-violet-500">Desk</span>
               </span>
             </motion.div>
@@ -41,7 +41,7 @@ const Sidebar = ({ activeTab, onTabChange, onLogout, onOpenVoice }) => {
           )}
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className="absolute -right-3 top-20 w-6 h-6 rounded-full theme-card border theme-border flex items-center justify-center theme-text-secondary hover:theme-text transition-colors shadow-md focus:outline-none"
+            className="absolute -right-3 top-20 w-6 h-6 rounded-full bg-white dark:bg-[#141A29] border-gray-200 dark:border-white/5 border border-gray-200 dark:border-white/5 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:text-white transition-colors shadow-md focus:outline-none"
           >
             {isCollapsed ? <ChevronRight className="w-3.5 h-3.5" /> : <ChevronLeft className="w-3.5 h-3.5" />}
           </button>
@@ -59,7 +59,7 @@ const Sidebar = ({ activeTab, onTabChange, onLogout, onOpenVoice }) => {
                 className={`w-full flex items-center rounded-xl p-3 text-sm font-semibold transition-all duration-200 group focus:outline-none relative ${
                   isActive
                     ? 'bg-violet-500/10 border border-violet-500/20 text-violet-600 dark:text-violet-300'
-                    : 'theme-text-secondary border border-transparent hover:theme-bg-hover hover:theme-text'
+                    : 'text-gray-500 dark:text-gray-400 border border-transparent hover:bg-gray-100 dark:bg-white/5 hover:text-gray-900 dark:text-white'
                 }`}
               >
                 {isActive && (
@@ -92,7 +92,7 @@ const Sidebar = ({ activeTab, onTabChange, onLogout, onOpenVoice }) => {
         </nav>
 
         {/* Logout */}
-        <div className="p-3 border-t theme-border">
+        <div className="p-3 border-t border-gray-200 dark:border-white/5">
           <button
             onClick={onLogout}
             className="w-full flex items-center rounded-xl p-3 text-sm font-semibold text-red-500 hover:bg-red-500/10 transition-all duration-200 focus:outline-none"
@@ -110,7 +110,7 @@ const Sidebar = ({ activeTab, onTabChange, onLogout, onOpenVoice }) => {
       </motion.aside>
 
       {/* ── Mobile Bottom Navigation ─────────────────── */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 theme-bottom-nav">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 dark:bg-[#141A29]/95 border-gray-200 dark:border-white/5">
         {/* Floating Voice Button — centered above nav */}
         <div className="flex justify-center -translate-y-5">
           <motion.button
@@ -141,12 +141,12 @@ const Sidebar = ({ activeTab, onTabChange, onLogout, onOpenVoice }) => {
                   />
                 )}
                 <div className={`p-1.5 rounded-xl transition-all duration-200 ${
-                  isActive ? 'bg-violet-500/15 text-violet-600' : 'theme-text-muted'
+                  isActive ? 'bg-violet-500/15 text-violet-600' : 'text-gray-400 dark:text-gray-600'
                 }`}>
                   <Icon className="w-5 h-5" />
                 </div>
                 <span className={`text-[10px] font-semibold ${
-                  isActive ? 'text-violet-600' : 'theme-text-muted'
+                  isActive ? 'text-violet-600' : 'text-gray-400 dark:text-gray-600'
                 }`}>
                   {item.label}
                 </span>
@@ -174,3 +174,4 @@ const Sidebar = ({ activeTab, onTabChange, onLogout, onOpenVoice }) => {
 };
 
 export default Sidebar;
+

@@ -298,7 +298,7 @@ export default function Navbar({ onMicClick, onLogout, userName = "Alex Mercer",
 
   return (
     <>
-      <header className="sticky top-0 right-0 z-40 flex h-16 w-full items-center justify-between border-b theme-border theme-navbar px-4 sm:px-6 theme-transition">
+      <header className="sticky top-0 right-0 z-40 flex h-16 w-full items-center justify-between border-b border-gray-200 dark:border-white/5 bg-white/90 dark:bg-[#141A29]/80 border-gray-200 dark:border-white/5 px-4 sm:px-6 transition-colors duration-200">
         {/* Search */}
         <div className="relative max-w-md flex-1">
           <div className={`relative flex items-center rounded-xl border transition-all duration-300 ${searchFocused ? "shadow-[var(--input-shadow)]" : ""}`}
@@ -307,7 +307,7 @@ export default function Navbar({ onMicClick, onLogout, userName = "Alex Mercer",
             <Search className="absolute left-4 h-4 w-4 text-gray-400" />
             <input type="text" placeholder="Search tasks..." value={searchQuery} onChange={handleSearchChange}
               onFocus={() => setSearchFocused(true)} onBlur={() => setSearchFocused(false)}
-              className="h-10 w-full bg-transparent pl-11 pr-4 text-sm theme-text placeholder:theme-text-muted focus:outline-none"
+              className="h-10 w-full bg-transparent pl-11 pr-4 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 dark:text-gray-600 focus:outline-none"
             />
             {searchQuery && <button onClick={() => { setSearchQuery(""); onSearch?.(""); }} className="absolute right-3 text-gray-500 hover:text-white text-xs">✕</button>}
           </div>
@@ -333,7 +333,7 @@ export default function Navbar({ onMicClick, onLogout, userName = "Alex Mercer",
               {bellOpen && (
                 <><div className="fixed inset-0 z-30" onClick={() => setBellOpen(false)} />
                 <motion.div initial={{ opacity: 0, y: 10, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 10, scale: 0.95 }} transition={{ duration: 0.15 }}
-                  className="absolute right-0 z-40 mt-3 w-72 rounded-2xl border theme-border theme-card p-3 shadow-2xl theme-transition">
+                  className="absolute right-0 z-40 mt-3 w-72 rounded-2xl border border-gray-200 dark:border-white/5 bg-white dark:bg-[#141A29] border-gray-200 dark:border-white/5 p-3 shadow-2xl transition-colors duration-200">
                   <div className="border-b border-white/5 pb-2 mb-2"><p className="text-sm font-bold text-white">Notifications</p></div>
                   {upcomingTasks.length > 0 ? (
                     <div className="space-y-2">{upcomingTasks.map((task) => {
@@ -369,7 +369,7 @@ export default function Navbar({ onMicClick, onLogout, userName = "Alex Mercer",
               {profileDropdownOpen && (
                 <><div className="fixed inset-0 z-30" onClick={() => setProfileDropdownOpen(false)} />
                 <motion.div initial={{ opacity: 0, y: 10, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 10, scale: 0.95 }} transition={{ duration: 0.15 }}
-                  className="absolute right-0 z-40 mt-3 w-56 rounded-2xl border theme-border theme-card p-2 shadow-2xl theme-transition">
+                  className="absolute right-0 z-40 mt-3 w-56 rounded-2xl border border-gray-200 dark:border-white/5 bg-white dark:bg-[#141A29] border-gray-200 dark:border-white/5 p-2 shadow-2xl transition-colors duration-200">
                   <div className="border-b border-white/5 p-3">
                     <p className="text-sm font-bold text-white">{userName}</p>
                     <p className="text-xs text-gray-500">{userEmail}</p>
@@ -408,3 +408,4 @@ export default function Navbar({ onMicClick, onLogout, userName = "Alex Mercer",
     </>
   );
 }
+

@@ -65,7 +65,7 @@ export default function CreateTaskModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 z-50 flex items-center justify-center theme-bg-input/80 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-gray-50 dark:bg-[#0B0F19]/80 p-4 backdrop-blur-sm"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -73,9 +73,9 @@ export default function CreateTaskModal({
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", duration: 0.4 }}
             onClick={(event) => event.stopPropagation()}
-            className="w-full max-w-2xl rounded-3xl border theme-border theme-card p-6 shadow-2xl"
+            className="w-full max-w-2xl rounded-3xl border border-gray-200 dark:border-white/5 bg-white dark:bg-[#141A29] border-gray-200 dark:border-white/5 p-6 shadow-2xl"
           >
-            <div className="mb-6 flex items-start justify-between gap-4 border-b theme-border pb-4">
+            <div className="mb-6 flex items-start justify-between gap-4 border-b border-gray-200 dark:border-white/5 pb-4">
               <div>
                 <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-violet-500/20 bg-violet-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-violet-300">
                   <PlusSquare className="h-3.5 w-3.5" />
@@ -84,7 +84,7 @@ export default function CreateTaskModal({
                 <h2 className="text-2xl font-extrabold text-white">
                   {task ? "Edit Task" : "Add a new task"}
                 </h2>
-                <p className="mt-1 text-sm theme-text-secondary">
+                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                   {task
                     ? "Update the task details below."
                     : "Capture a task with a title, optional notes, and a deadline."}
@@ -93,7 +93,7 @@ export default function CreateTaskModal({
 
               <button
                 onClick={onClose}
-                className="rounded-xl border theme-border theme-bg-input p-2 theme-text-secondary transition-colors duration-300 hover:text-white"
+                className="rounded-xl border border-gray-200 dark:border-white/5 bg-gray-50 dark:bg-[#0B0F19] p-2 text-gray-500 dark:text-gray-400 transition-colors duration-300 hover:text-white"
                 aria-label="Close create task modal"
               >
                 <X className="h-5 w-5" />
@@ -114,7 +114,7 @@ export default function CreateTaskModal({
                     onChange={handleChange}
                     required
                     placeholder="Finish engineering assignment"
-                    className="h-12 w-full rounded-2xl border theme-border theme-bg-input px-4 text-sm theme-text placeholder-gray-500 outline-none transition-colors duration-300 focus:border-violet-400"
+                    className="h-12 w-full rounded-2xl border border-gray-200 dark:border-white/5 bg-gray-50 dark:bg-[#0B0F19] px-4 text-sm text-gray-900 dark:text-white placeholder-gray-500 outline-none transition-colors duration-300 focus:border-violet-400"
                   />
                 </label>
 
@@ -129,7 +129,7 @@ export default function CreateTaskModal({
                     onChange={handleChange}
                     rows={4}
                     placeholder="Add extra context or notes for this task..."
-                    className="w-full rounded-2xl border theme-border theme-bg-input px-4 py-3 text-sm theme-text placeholder-gray-500 outline-none transition-colors duration-300 focus:border-violet-400"
+                    className="w-full rounded-2xl border border-gray-200 dark:border-white/5 bg-gray-50 dark:bg-[#0B0F19] px-4 py-3 text-sm text-gray-900 dark:text-white placeholder-gray-500 outline-none transition-colors duration-300 focus:border-violet-400"
                   />
                 </label>
 
@@ -142,7 +142,7 @@ export default function CreateTaskModal({
                     name="priority"
                     value={form.priority}
                     onChange={handleChange}
-                    className="h-12 w-full rounded-2xl border theme-border theme-bg-input px-4 text-sm theme-text outline-none transition-colors duration-300 focus:border-violet-400"
+                    className="h-12 w-full rounded-2xl border border-gray-200 dark:border-white/5 bg-gray-50 dark:bg-[#0B0F19] px-4 text-sm text-gray-900 dark:text-white outline-none transition-colors duration-300 focus:border-violet-400"
                   >
                     <option value="low">Low</option>
                     <option value="medium">Medium</option>
@@ -160,12 +160,12 @@ export default function CreateTaskModal({
                     name="dueDate"
                     value={form.dueDate}
                     onChange={handleChange}
-                    className="h-12 w-full rounded-2xl border theme-border theme-bg-input px-4 text-sm theme-text outline-none transition-colors duration-300 focus:border-violet-400"
+                    className="h-12 w-full rounded-2xl border border-gray-200 dark:border-white/5 bg-gray-50 dark:bg-[#0B0F19] px-4 text-sm text-gray-900 dark:text-white outline-none transition-colors duration-300 focus:border-violet-400"
                   />
                 </label>
               </div>
 
-              <div className="flex flex-col gap-3 border-t theme-border pt-4 sm:flex-row sm:justify-end">
+              <div className="flex flex-col gap-3 border-t border-gray-200 dark:border-white/5 pt-4 sm:flex-row sm:justify-end">
                 <Button
                   variant="ghost"
                   className="sm:min-w-32"
@@ -196,4 +196,5 @@ export default function CreateTaskModal({
     </AnimatePresence>
   );
 }
+
 

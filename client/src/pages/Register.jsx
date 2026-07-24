@@ -61,7 +61,7 @@ export default function Register() {
   };
 
   return (
-    <div className="relative min-h-screen theme-bg-base flex items-center justify-center px-4 overflow-hidden theme-transition">
+    <div className="relative min-h-screen bg-gray-100 dark:bg-[#0B0F19] flex items-center justify-center px-4 overflow-hidden transition-colors duration-200">
       {/* Animated Background Orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
@@ -96,7 +96,7 @@ export default function Register() {
 
         <form
           onSubmit={handleSubmit}
-          className="relative bg-[var(--bg-card)]/90 backdrop-blur-xl rounded-[32px] border theme-border p-8 shadow-2xl theme-transition"
+          className="relative bg-[var(--bg-card)]/90 backdrop-blur-xl rounded-[32px] border border-gray-200 dark:border-white/5 p-8 shadow-2xl transition-colors duration-200"
         >
           {/* Header */}
           <div className="text-center mb-8">
@@ -108,8 +108,8 @@ export default function Register() {
             >
               <Mic className="w-8 h-8 text-white" />
             </motion.div>
-            <h1 className="text-4xl font-bold theme-text mb-2">Get Started</h1>
-            <p className="theme-text-secondary text-sm">Create your voice-powered workspace</p>
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">Get Started</h1>
+            <p className="text-gray-500 dark:text-gray-400 text-sm">Create your voice-powered workspace</p>
           </div>
 
           <div className="space-y-5">
@@ -125,7 +125,7 @@ export default function Register() {
                 onChange={handleChange}
                 required
                 placeholder="Sahil Manav"
-                className={`w-full rounded-2xl theme-input px-4 py-3.5 text-sm placeholder:text-[var(--text-muted)] outline-none transition-all duration-300 ${
+                className={`w-full rounded-2xl bg-gray-50 dark:bg-[#0B0F19] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white px-4 py-3.5 text-sm placeholder:text-[var(--text-muted)] outline-none transition-all duration-300 ${
                   errors.name ? "border-red-500/60" : "focus:border-violet-500"
                 }`}
               />
@@ -152,7 +152,7 @@ export default function Register() {
                 onChange={handleChange}
                 required
                 placeholder="you@example.com"
-                className={`w-full rounded-2xl theme-input px-4 py-3.5 text-sm placeholder:text-[var(--text-muted)] outline-none transition-all duration-300 ${
+                className={`w-full rounded-2xl bg-gray-50 dark:bg-[#0B0F19] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white px-4 py-3.5 text-sm placeholder:text-[var(--text-muted)] outline-none transition-all duration-300 ${
                   errors.email ? "border-red-500/60" : "focus:border-violet-500"
                 }`}
               />
@@ -227,7 +227,7 @@ export default function Register() {
             )}
           </motion.button>
 
-          <p className="text-center theme-text-secondary mt-6 text-sm">
+          <p className="text-center text-gray-500 dark:text-gray-400 mt-6 text-sm">
             Already have an account?{" "}
             <Link to="/login" className="text-violet-500 hover:text-violet-400 font-semibold transition-colors duration-300">
               Sign in
@@ -238,3 +238,4 @@ export default function Register() {
     </div>
   );
 }
+

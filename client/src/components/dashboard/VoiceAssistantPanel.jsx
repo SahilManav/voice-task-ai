@@ -17,17 +17,17 @@ const VoiceAssistantPanel = ({
   className = ""
 }) => {
   return (
-    <div className={`p-6 rounded-3xl theme-card border theme-border shadow-2xl flex flex-col justify-between h-full ${className}`}>
+    <div className={`p-6 rounded-3xl bg-white dark:bg-[#141A29] border-gray-200 dark:border-white/5 border border-gray-200 dark:border-white/5 shadow-2xl flex flex-col justify-between h-full ${className}`}>
 
       {/* Head section */}
-      <div className="flex items-center justify-between pb-4 border-b theme-border">
+      <div className="flex items-center justify-between pb-4 border-b border-gray-200 dark:border-white/5">
         <div className="flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-violet-400" />
           <span className="text-xs font-bold uppercase tracking-wider text-white">Voice Synthesizer</span>
         </div>
 
         {/* Status indicator */}
-        <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full theme-bg-input border theme-border text-[9px] font-mono font-bold tracking-widest uppercase">
+        <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-gray-50 dark:bg-[#0B0F19] border border-gray-200 dark:border-white/5 text-[9px] font-mono font-bold tracking-widest uppercase">
           <span className={`w-1.5 h-1.5 rounded-full ${isListening ? 'bg-red-400 animate-pulse' : 'bg-gray-600'}`} />
           {isListening ? 'Listening' : 'Standby'}
         </div>
@@ -95,12 +95,12 @@ const VoiceAssistantPanel = ({
 
         {/* Transcript Box */}
         <div className="space-y-1.5">
-          <span className="text-[10px] theme-text-muted font-mono uppercase tracking-wider">Speech Transcript Feed</span>
-          <div className="theme-bg-input rounded-xl p-3 border theme-border text-sm text-gray-300 min-h-[50px] font-sans">
+          <span className="text-[10px] text-gray-400 dark:text-gray-600 font-mono uppercase tracking-wider">Speech Transcript Feed</span>
+          <div className="bg-gray-50 dark:bg-[#0B0F19] rounded-xl p-3 border border-gray-200 dark:border-white/5 text-sm text-gray-300 min-h-[50px] font-sans">
             {transcript ? (
               transcript
             ) : (
-              <div className="space-y-2 theme-text-muted text-sm">
+              <div className="space-y-2 text-gray-400 dark:text-gray-600 text-sm">
                 <p className="italic">Try saying:</p>
 
                 <p>🎤 Create task submit assignment tomorrow</p>
@@ -115,12 +115,12 @@ const VoiceAssistantPanel = ({
 
         {/* AI Parameter extraction output */}
         <div className="space-y-1.5">
-          <span className="text-[10px] theme-text-muted font-mono uppercase tracking-wider">AI Categorization Details</span>
-          <div className="theme-bg-input/50 rounded-xl p-4 border theme-border text-sm font-sans min-h-[60px]">
+          <span className="text-[10px] text-gray-400 dark:text-gray-600 font-mono uppercase tracking-wider">AI Categorization Details</span>
+          <div className="bg-gray-50 dark:bg-[#0B0F19]/50 rounded-xl p-4 border border-gray-200 dark:border-white/5 text-sm font-sans min-h-[60px]">
             {parsedCommand ? (
               <div className="space-y-3">
                 <div>
-                  <p className="mb-1 text-[9px] font-mono uppercase tracking-wider theme-text-muted">
+                  <p className="mb-1 text-[9px] font-mono uppercase tracking-wider text-gray-400 dark:text-gray-600">
                     Last Voice Command
                   </p>
                   <p className="text-sm font-bold text-white">
@@ -128,9 +128,9 @@ const VoiceAssistantPanel = ({
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3 border-t theme-border pt-3">
+                <div className="grid grid-cols-2 gap-3 border-t border-gray-200 dark:border-white/5 pt-3">
                   <div>
-                    <p className="text-[9px] font-mono uppercase tracking-wider theme-text-muted">
+                    <p className="text-[9px] font-mono uppercase tracking-wider text-gray-400 dark:text-gray-600">
                       Status
                     </p>
                     <p className="flex items-center gap-1 text-xs font-bold text-violet-400">
@@ -139,7 +139,7 @@ const VoiceAssistantPanel = ({
                   </div>
 
                   <div>
-                    <p className="text-[9px] font-mono uppercase tracking-wider theme-text-muted">
+                    <p className="text-[9px] font-mono uppercase tracking-wider text-gray-400 dark:text-gray-600">
                       Action
                     </p>
                     <p className="text-xs font-bold uppercase text-white">
@@ -148,7 +148,7 @@ const VoiceAssistantPanel = ({
                   </div>
 
                   <div>
-                    <p className="text-[9px] font-mono uppercase tracking-wider theme-text-muted">
+                    <p className="text-[9px] font-mono uppercase tracking-wider text-gray-400 dark:text-gray-600">
                       Priority
                     </p>
                     <p className="text-xs font-bold capitalize text-white">
@@ -157,7 +157,7 @@ const VoiceAssistantPanel = ({
                   </div>
 
                   <div>
-                    <p className="text-[9px] font-mono uppercase tracking-wider theme-text-muted">
+                    <p className="text-[9px] font-mono uppercase tracking-wider text-gray-400 dark:text-gray-600">
                       Due
                     </p>
                     <p className="text-xs font-bold text-white">
@@ -206,4 +206,5 @@ const VoiceAssistantPanel = ({
 };
 
 export default VoiceAssistantPanel;
+
 

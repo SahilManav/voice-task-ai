@@ -82,7 +82,7 @@ export default function TaskCard({ task, onComplete, onEdit, onDelete }) {
       layout
       onMouseMove={completed ? undefined : handleMouseMove}
       onMouseLeave={completed ? undefined : handleMouseLeave}
-      className={`relative rounded-2xl border theme-card p-4 sm:p-5 transition-all duration-200 theme-transition ${
+      className={`relative rounded-2xl border bg-white dark:bg-[#141A29] border-gray-200 dark:border-white/5 p-4 sm:p-5 transition-all duration-200 transition-colors duration-200 ${
         completed ? "opacity-60" : "hover:border-violet-500/30"
       }`}
       style={{ transformStyle: "preserve-3d", willChange: "transform" }}
@@ -115,10 +115,10 @@ export default function TaskCard({ task, onComplete, onEdit, onDelete }) {
       </div>
 
       <div className="mb-4">
-        <h3 className={`mb-1.5 text-base font-bold tracking-tight theme-text ${completed ? "line-through theme-text-muted" : ""}`}>
+        <h3 className={`mb-1.5 text-base font-bold tracking-tight text-gray-900 dark:text-white ${completed ? "line-through text-gray-400 dark:text-gray-600" : ""}`}>
           {title}
         </h3>
-        <p className={`text-sm leading-relaxed theme-text-secondary ${completed ? "line-through" : ""}`}>
+        <p className={`text-sm leading-relaxed text-gray-500 dark:text-gray-400 ${completed ? "line-through" : ""}`}>
           {displayDescription}
         </p>
       </div>
@@ -160,3 +160,4 @@ export default function TaskCard({ task, onComplete, onEdit, onDelete }) {
     </motion.div>
   );
 }
+

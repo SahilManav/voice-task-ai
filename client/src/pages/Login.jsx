@@ -56,7 +56,7 @@ export default function Login() {
   };
 
   return (
-    <div className="relative min-h-screen theme-bg-base flex items-center justify-center px-4 overflow-hidden theme-transition">
+    <div className="relative min-h-screen bg-gray-100 dark:bg-[#0B0F19] flex items-center justify-center px-4 overflow-hidden transition-colors duration-200">
       {/* Animated Background Orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
@@ -114,7 +114,7 @@ export default function Login() {
         
         <form
           onSubmit={handleSubmit}
-          className="relative bg-[var(--bg-card)]/90 backdrop-blur-xl rounded-[32px] border theme-border p-8 shadow-2xl theme-transition"
+          className="relative bg-[var(--bg-card)]/90 backdrop-blur-xl rounded-[32px] border border-gray-200 dark:border-white/5 p-8 shadow-2xl transition-colors duration-200"
         >
           {/* Header with Icon */}
           <div className="text-center mb-8">
@@ -126,8 +126,8 @@ export default function Login() {
             >
               <Sparkles className="w-8 h-8 text-white" />
             </motion.div>
-            <h1 className="text-4xl font-bold theme-text mb-2">Welcome Back</h1>
-            <p className="theme-text-secondary text-sm">Sign in to your voice-powered workspace</p>
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">Welcome Back</h1>
+            <p className="text-gray-500 dark:text-gray-400 text-sm">Sign in to your voice-powered workspace</p>
           </div>
 
           {error && (
@@ -142,7 +142,7 @@ export default function Login() {
 
           {/* Email Field */}
           <div className="mb-5">
-            <label className="block theme-text-secondary mb-2 text-sm font-medium">Email Address</label>
+            <label className="block text-gray-500 dark:text-gray-400 mb-2 text-sm font-medium">Email Address</label>
             <input
               type="email"
               name="email"
@@ -150,13 +150,13 @@ export default function Login() {
               onChange={handleChange}
               required
               placeholder="you@example.com"
-              className="w-full rounded-2xl theme-input px-4 py-3.5 text-sm placeholder:text-[var(--text-muted)] outline-none focus:border-violet-500 transition-all duration-300"
+              className="w-full rounded-2xl bg-gray-50 dark:bg-[#0B0F19] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white px-4 py-3.5 text-sm placeholder:text-[var(--text-muted)] outline-none focus:border-violet-500 transition-all duration-300"
             />
           </div>
 
           {/* Password Field */}
           <div className="mb-6">
-            <label className="block theme-text-secondary mb-2 text-sm font-medium">Password</label>
+            <label className="block text-gray-500 dark:text-gray-400 mb-2 text-sm font-medium">Password</label>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
@@ -165,7 +165,7 @@ export default function Login() {
                 onChange={handleChange}
                 required
                 placeholder="Enter your password"
-                className="w-full rounded-2xl theme-input px-4 py-3.5 pr-12 text-sm placeholder:text-[var(--text-muted)] outline-none focus:border-violet-500 transition-all duration-300"
+                className="w-full rounded-2xl bg-gray-50 dark:bg-[#0B0F19] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white px-4 py-3.5 pr-12 text-sm placeholder:text-[var(--text-muted)] outline-none focus:border-violet-500 transition-all duration-300"
               />
               <button
                 type="button"
@@ -218,7 +218,7 @@ export default function Login() {
             Continue as Guest
           </motion.button>
 
-          <p className="text-center theme-text-secondary mt-5 text-sm">
+          <p className="text-center text-gray-500 dark:text-gray-400 mt-5 text-sm">
             Don't have an account?{" "}
             <Link to="/register" className="text-violet-500 hover:text-violet-400 font-semibold transition-colors duration-300">
               Create one
@@ -229,3 +229,4 @@ export default function Login() {
     </div>
   );
 }
+

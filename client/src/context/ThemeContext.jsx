@@ -4,6 +4,11 @@ const ThemeContext = createContext();
 
 export const useTheme = () => useContext(ThemeContext);
 
+// Apply theme class immediately on load to prevent flash
+const stored = localStorage.getItem("theme");
+const initialDark = stored ? stored === "dark" : true;
+document.documentElement.classList.add(initialDark ? "dark" : "light");
+
 export default function ThemeProvider({ children }) {
   const [isDark, setIsDark] = useState(() => {
     const stored = localStorage.getItem("theme");
@@ -12,12 +17,13 @@ export default function ThemeProvider({ children }) {
 
   useEffect(() => {
     localStorage.setItem("theme", isDark ? "dark" : "light");
+    const html = document.documentElement;
     if (isDark) {
-      document.documentElement.classList.add("dark");
-      document.documentElement.classList.remove("light");
+      html.classList.add("dark");
+      html.classList.remove("light");
     } else {
-      document.documentElement.classList.add("light");
-      document.documentElement.classList.remove("dark");
+      html.classList.remove("dark");
+      html.classList.add("light");
     }
   }, [isDark]);
 
