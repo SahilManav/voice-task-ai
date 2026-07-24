@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Bell, LogOut, Mic, Moon, Search, Settings, Sun, User } from "lucide-react";
+import toast from "react-hot-toast";
 
 const getInitials = (name) => {
-  if (!name) {
-    return "AM";
-  }
-
+  if (!name) return "AM";
   return name
     .split(" ")
     .filter(Boolean)
@@ -20,19 +18,49 @@ export default function Navbar({
   onLogout,
   userName = "Alex Mercer",
   userEmail = "alex.mercer@vox.ai",
+  tasks = [],
+  onSearch,
 }) {
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const [bellOpen, setBellOpen] = useState(false);
   const [isDark, setIsDark] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
   const initials = getInitials(userName);
 
+  // Get upcoming tasks (due within 3 days)
+  const upcomingTasks = tasks.filter((t) => {
+    if (!t.dueDate || t.completed) return false;
+    const diff = (new Date(t.dueDate) - new Date()) / (1000 * 60 * 60 * 24);
+    return diff >= 0 && diff <= 3;
+  });
+
+  const handleSearchChange = (e) => {
+    const val = e.target.value;
+    setSearchQuery(val);
+    onSearch?.(val);
+  };
+
+  const handleThemeToggle = () => {
+    setIsDark(!isDark);
+    toast("Light mode coming soon! The app is currently dark-mode only.", {
+      icon: "🌙",
+      style: {
+        background: "#141A29",
+        color: "#fff",
+        border: "1px solid rgba(139,92,246,0.3)",
+      },
+    });
+  };
+
   return (
     <header className="sticky top-0 right-0 z-40 flex h-16 w-full items-center justify-between border-b border-white/5 bg-[#141A29]/80 px-6 backdrop-blur-md">
+      {/* Search Bar */}
       <div className="relative max-w-md flex-1">
         <div
           className={`relative flex items-center rounded-xl border bg-[#0B0F19] transition-all duration-300 ${
             searchFocused
-              ? "border-teal-500/50 shadow-[0_0_15px_rgba(94,234,212,0.15)]"
+              ? "border-violet-500/50 shadow-[0_0_15px_rgba(139,92,246,0.15)]"
               : "border-white/5"
           }`}
         >
@@ -40,27 +68,40 @@ export default function Navbar({
           <input
             type="text"
             placeholder="Search tasks, tags, or voice transcripts..."
+            value={searchQuery}
+            onChange={handleSearchChange}
             onFocus={() => setSearchFocused(true)}
             onBlur={() => setSearchFocused(false)}
             className="h-10 w-full bg-transparent pl-11 pr-4 text-sm text-white placeholder-gray-500 focus:outline-none"
           />
+          {searchQuery && (
+            <button
+              onClick={() => { setSearchQuery(""); onSearch?.(""); }}
+              className="absolute right-3 text-gray-500 hover:text-white text-xs"
+            >
+              ✕
+            </button>
+          )}
         </div>
       </div>
 
       <div className="flex items-center gap-4">
+        {/* Mic Button */}
         <motion.button
           onClick={onMicClick}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="flex items-center justify-center rounded-xl border border-teal-500/30 bg-teal-500/10 p-2.5 text-teal-400 transition-all duration-300 hover:bg-teal-500/20 hover:text-teal-300 hover:shadow-[0_0_15px_rgba(94,234,212,0.3)]"
-          title="Open Voice Assistant Panel"
+          className="flex items-center justify-center rounded-xl border border-violet-500/30 bg-violet-500/10 p-2.5 text-violet-400 transition-all duration-300 hover:bg-violet-500/20 hover:text-violet-300 hover:shadow-[0_0_15px_rgba(139,92,246,0.3)]"
+          title="Open Voice Assistant"
         >
           <Mic className="h-5 w-5 animate-pulse" />
         </motion.button>
 
+        {/* Dark/Light Mode Toggle */}
         <button
-          onClick={() => setIsDark(!isDark)}
+          onClick={handleThemeToggle}
           className="flex items-center justify-center rounded-xl border border-white/5 bg-[#0B0F19] p-2.5 text-gray-400 transition-all duration-300 hover:bg-white/5 hover:text-white"
+          title="Toggle theme"
         >
           {isDark ? (
             <Moon className="h-5 w-5" />
@@ -69,27 +110,81 @@ export default function Navbar({
           )}
         </button>
 
+        {/* Bell / Notifications */}
         <div className="relative">
-          <button className="flex items-center justify-center rounded-xl border border-white/5 bg-[#0B0F19] p-2.5 text-gray-400 transition-all duration-300 hover:bg-white/5 hover:text-white">
+          <button
+            onClick={() => { setBellOpen(!bellOpen); setProfileDropdownOpen(false); }}
+            className="flex items-center justify-center rounded-xl border border-white/5 bg-[#0B0F19] p-2.5 text-gray-400 transition-all duration-300 hover:bg-white/5 hover:text-white"
+            title="Notifications"
+          >
             <Bell className="h-5 w-5" />
-            <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-purple-500" />
+            {upcomingTasks.length > 0 && (
+              <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-violet-500" />
+            )}
           </button>
+
+          <AnimatePresence>
+            {bellOpen && (
+              <>
+                <div className="fixed inset-0 z-30" onClick={() => setBellOpen(false)} />
+                <motion.div
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute right-0 z-40 mt-3 w-72 rounded-2xl border border-white/5 bg-[#141A29] p-3 shadow-2xl"
+                >
+                  <div className="border-b border-white/5 pb-2 mb-2">
+                    <p className="text-sm font-bold text-white">Notifications</p>
+                  </div>
+
+                  {upcomingTasks.length > 0 ? (
+                    <div className="space-y-2">
+                      {upcomingTasks.map((task) => {
+                        const daysLeft = Math.ceil(
+                          (new Date(task.dueDate) - new Date()) / (1000 * 60 * 60 * 24)
+                        );
+                        return (
+                          <div
+                            key={task._id}
+                            className="rounded-xl bg-violet-500/10 border border-violet-500/20 px-3 py-2"
+                          >
+                            <p className="text-xs font-semibold text-white truncate">{task.title}</p>
+                            <p className="text-[10px] text-violet-400 mt-0.5">
+                              Due in {daysLeft === 0 ? "today" : `${daysLeft} day${daysLeft > 1 ? "s" : ""}`}
+                            </p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div className="py-4 text-center">
+                      <p className="text-2xl mb-1">🎉</p>
+                      <p className="text-sm text-gray-400">All caught up!</p>
+                      <p className="text-xs text-gray-600 mt-0.5">No tasks due in the next 3 days</p>
+                    </div>
+                  )}
+                </motion.div>
+              </>
+            )}
+          </AnimatePresence>
         </div>
 
         <div className="h-6 w-px bg-white/10" />
 
+        {/* Profile Dropdown */}
         <div className="relative">
           <button
-            onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+            onClick={() => { setProfileDropdownOpen(!profileDropdownOpen); setBellOpen(false); }}
             className="group flex items-center gap-3 focus:outline-none"
           >
-            <div className="w-9 rounded-xl bg-gradient-to-tr from-teal-400 to-purple-600 p-0.5 shadow-[0_0_10px_rgba(94,234,212,0.15)] transition-all duration-300 group-hover:shadow-[0_0_15px_rgba(139,92,246,0.3)]">
+            <div className="w-9 rounded-xl bg-gradient-to-tr from-violet-500 to-purple-600 p-0.5 shadow-[0_0_10px_rgba(139,92,246,0.15)] transition-all duration-300 group-hover:shadow-[0_0_15px_rgba(139,92,246,0.3)]">
               <div className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-[#141A29] text-sm font-bold text-white">
                 {initials}
               </div>
             </div>
             <div className="hidden flex-col text-left sm:flex">
-              <span className="text-xs font-bold text-white transition-colors duration-300 group-hover:text-teal-300">
+              <span className="text-xs font-bold text-white transition-colors duration-300 group-hover:text-violet-300">
                 {userName}
               </span>
               <span className="text-[10px] text-gray-500">Workspace Owner</span>
@@ -99,11 +194,7 @@ export default function Navbar({
           <AnimatePresence>
             {profileDropdownOpen && (
               <>
-                <div
-                  className="fixed inset-0 z-30"
-                  onClick={() => setProfileDropdownOpen(false)}
-                />
-
+                <div className="fixed inset-0 z-30" onClick={() => setProfileDropdownOpen(false)} />
                 <motion.div
                   initial={{ opacity: 0, y: 10, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -118,7 +209,7 @@ export default function Navbar({
 
                   <div className="space-y-1 py-2">
                     <button className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-gray-400 transition-colors duration-300 hover:bg-white/5 hover:text-white">
-                      <User className="h-4 w-4 text-teal-400" />
+                      <User className="h-4 w-4 text-violet-400" />
                       My Profile
                     </button>
                     <button className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-gray-400 transition-colors duration-300 hover:bg-white/5 hover:text-white">

@@ -233,6 +233,7 @@ export default function Dashboard() {
   const [speechRate, setSpeechRate] = useState(1);
   const [tasks, setTasks] = useState([]);
   const [isLoadingTasks, setIsLoadingTasks] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
   const [voiceHistory, setVoiceHistory] = useState(initialVoiceHistory);
 
   useEffect(() => {
@@ -714,7 +715,7 @@ export default function Dashboard() {
         return (
           <DashboardOverview
             userName={user?.name}
-            tasks={tasks}
+            tasks={searchQuery ? tasks.filter(t => t.title.toLowerCase().includes(searchQuery.toLowerCase())) : tasks}
             isLoadingTasks={isLoadingTasks}
             recentCommands={voiceHistory}
             onOpenVoice={() => setVoicePanelOpen(true)}
@@ -741,6 +742,8 @@ export default function Dashboard() {
           onLogout={handleLogout}
           userName={user?.name}
           userEmail={user?.email}
+          tasks={tasks}
+          onSearch={(q) => setSearchQuery(q)}
         />
 
         <main className="relative flex-1 overflow-y-auto px-6 py-8">
