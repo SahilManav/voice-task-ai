@@ -40,12 +40,12 @@ export default function DashboardHeader({
         <motion.h2
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
-          className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white md:text-3xl"
+          className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-gray-900 dark:text-white md:text-3xl"
         >
           {getGreeting()}, {getGreetingName(userName)}
         </motion.h2>
         <div className="mt-2 space-y-2">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-400">
             {getCurrentDate()}
           </p>
           <div className="inline-flex items-center rounded-full border border-violet-500/20 bg-violet-500/10 px-3 py-1 text-xs font-medium text-violet-500">
@@ -76,4 +76,5 @@ export default function DashboardHeader({
     </div>
   );
 }
+
 

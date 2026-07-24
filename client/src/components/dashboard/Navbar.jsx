@@ -327,39 +327,55 @@ export default function Navbar({ onMicClick, onLogout, userName = "Alex Mercer",
             className="flex items-center justify-center rounded-xl border border-violet-400/30 bg-violet-500/10 p-2 sm:p-2.5 text-violet-600 dark:text-violet-400 transition-all hover:bg-violet-500/20">
             <Mic className="h-4 w-4 sm:h-5 sm:w-5 animate-pulse" />
           </motion.button>
+
+          {/* Bell */}
+          <div className="relative">
             <button onClick={() => { setBellOpen(!bellOpen); setProfileDropdownOpen(false); }}
-            className="flex items-center justify-center rounded-xl border border-gray-200 dark:border-white/10 bg-gray-100 dark:bg-[#0B0F19] p-2 sm:p-2.5 text-gray-600 dark:text-gray-400 transition-all hover:bg-gray-200 dark:hover:bg-white/10">
+              className="flex items-center justify-center rounded-xl border border-gray-200 dark:border-white/10 bg-gray-100 dark:bg-[#0B0F19] p-2 sm:p-2.5 text-gray-600 dark:text-gray-400 transition-all hover:bg-gray-200 dark:hover:bg-white/10">
               <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
-              {upcomingTasks.length > 0 && <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-violet-500" />}
+              {upcomingTasks.length > 0 && <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-violet-500" />}
             </button>
             <AnimatePresence>
               {bellOpen && (
-                <><div className="fixed inset-0 z-30" onClick={() => setBellOpen(false)} />
-                <motion.div initial={{ opacity: 0, y: 10, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 10, scale: 0.95 }} transition={{ duration: 0.15 }}
-                  className="absolute right-0 z-40 mt-3 w-72 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#141A29] p-3 shadow-xl dark:shadow-2xl">
-                  <div className="border-b border-gray-100 dark:border-white/5 pb-2 mb-2"><p className="text-sm font-bold text-gray-900 dark:text-white">Notifications</p></div>
-                  {upcomingTasks.length > 0 ? (
-                    <div className="space-y-2">{upcomingTasks.map((task) => {
-                      const d = Math.ceil((new Date(task.dueDate) - new Date()) / (1000 * 60 * 60 * 24));
-                      return <div key={task._id} className="rounded-xl bg-violet-500/10 border border-violet-500/20 px-3 py-2">
-                        <p className="text-xs font-semibold text-gray-900 dark:text-white truncate">{task.title}</p>
-                        <p className="text-[10px] text-violet-400 mt-0.5">Due {d === 0 ? "today" : `in ${d} day${d > 1 ? "s" : ""}`}</p>
-                      </div>;
-                    })}</div>
-                  ) : (
-                    <div className="py-4 text-center"><p className="text-2xl mb-1">🎉</p><p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-400">All caught up!</p><p className="text-xs text-gray-600 mt-0.5">No tasks due in the next 3 days</p></div>
-                  )}
-                </motion.div></>
+                <>
+                  <div className="fixed inset-0 z-30" onClick={() => setBellOpen(false)} />
+                  <motion.div initial={{ opacity: 0, y: 10, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 10, scale: 0.95 }} transition={{ duration: 0.15 }}
+                    className="absolute right-0 z-40 mt-3 w-72 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#141A29] p-3 shadow-xl dark:shadow-2xl">
+                    <div className="border-b border-gray-100 dark:border-white/5 pb-2 mb-2">
+                      <p className="text-sm font-bold text-gray-900 dark:text-white">Notifications</p>
+                    </div>
+                    {upcomingTasks.length > 0 ? (
+                      <div className="space-y-2">
+                        {upcomingTasks.map((task) => {
+                          const d = Math.ceil((new Date(task.dueDate) - new Date()) / (1000 * 60 * 60 * 24));
+                          return (
+                            <div key={task._id} className="rounded-xl bg-violet-500/10 border border-violet-500/20 px-3 py-2">
+                              <p className="text-xs font-semibold text-gray-900 dark:text-white truncate">{task.title}</p>
+                              <p className="text-[10px] text-violet-500 mt-0.5">Due {d === 0 ? "today" : `in ${d} day${d > 1 ? "s" : ""}`}</p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      <div className="py-4 text-center">
+                        <p className="text-2xl mb-1">🎉</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">All caught up!</p>
+                        <p className="text-xs text-gray-400 mt-0.5">No tasks due in next 3 days</p>
+                      </div>
+                    )}
+                  </motion.div>
+                </>
               )}
             </AnimatePresence>
           </div>
 
+          {/* Divider */}
           <div className="h-6 w-px bg-gray-200 dark:bg-white/10" />
 
           {/* Profile */}
           <div className="relative">
             <button onClick={() => { setProfileDropdownOpen(!profileDropdownOpen); setBellOpen(false); }} className="group flex items-center gap-2 focus:outline-none">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-sm font-bold text-white shadow-md">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-sm font-bold text-white shadow-md flex-shrink-0">
                 {initials}
               </div>
               <div className="hidden flex-col text-left sm:flex">
@@ -396,7 +412,7 @@ export default function Navbar({ onMicClick, onLogout, userName = "Alex Mercer",
                     <div className="my-1 h-px bg-gray-100 dark:bg-white/5" />
                     <div className="p-1">
                       <button onClick={() => { setProfileDropdownOpen(false); onLogout?.(); }}
-                        className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 transition-colors">
+                        className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors">
                         <LogOut className="h-4 w-4" /> Logout Session
                       </button>
                     </div>
