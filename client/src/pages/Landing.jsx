@@ -83,28 +83,49 @@ const Landing = () => {
           </div>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
-            <a href="#features" className="hover:text-violet-300 transition-colors duration-300">Features</a>
-            <a href="#how-it-works" className="hover:text-violet-300 transition-colors duration-300">How it Works</a>
-            <a href="#preview" className="hover:text-violet-300 transition-colors duration-300">Interface Preview</a>
+          <nav className="hidden md:flex items-center gap-2 text-sm font-medium">
+            <a href="#features" className="relative px-4 py-2 rounded-xl text-gray-300 hover:text-white hover:bg-violet-500/10 hover:border-violet-500/20 border border-transparent transition-all duration-300 group">
+              <span className="relative z-10">Features</span>
+              <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-500/0 to-purple-500/0 group-hover:from-violet-500/10 group-hover:to-purple-500/10 transition-all duration-300" />
+            </a>
+            <a href="#how-it-works" className="relative px-4 py-2 rounded-xl text-gray-300 hover:text-white hover:bg-violet-500/10 hover:border-violet-500/20 border border-transparent transition-all duration-300 group">
+              <span className="relative z-10">How it Works</span>
+              <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-500/0 to-purple-500/0 group-hover:from-violet-500/10 group-hover:to-purple-500/10 transition-all duration-300" />
+            </a>
+            <a href="#preview" className="relative px-4 py-2 rounded-xl text-gray-300 hover:text-white hover:bg-violet-500/10 hover:border-violet-500/20 border border-transparent transition-all duration-300 group">
+              <span className="relative z-10">Interface Preview</span>
+              <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-500/0 to-purple-500/0 group-hover:from-violet-500/10 group-hover:to-purple-500/10 transition-all duration-300" />
+            </a>
           </nav>
 
           {/* Desktop Action Buttons */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-3">
             <Link to="/login">
-              <Button variant="ghost" size="sm">
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="px-4 py-2 rounded-xl text-sm font-semibold text-violet-300 border border-violet-500/30 bg-violet-500/10 hover:bg-violet-500/20 hover:border-violet-400/50 hover:text-white transition-all duration-300"
+              >
                 Login
-              </Button>
+              </motion.button>
             </Link>
             <Link to="/register">
-              <Button variant="outline" size="sm">
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="px-4 py-2 rounded-xl text-sm font-semibold text-purple-300 border border-purple-500/30 bg-purple-500/10 hover:bg-purple-500/20 hover:border-purple-400/50 hover:text-white transition-all duration-300"
+              >
                 Register
-              </Button>
+              </motion.button>
             </Link>
             <Link to="/dashboard">
-              <Button variant="primary" size="sm">
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="px-4 py-2 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-400 hover:to-purple-500 shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 transition-all duration-300"
+              >
                 Dashboard
-              </Button>
+              </motion.button>
             </Link>
           </div>
 
