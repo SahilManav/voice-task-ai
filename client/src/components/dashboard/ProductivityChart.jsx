@@ -47,7 +47,7 @@ export default function ProductivityChart({ tasks = [] }) {
             Output trends and task completion indices.
           </p>
         </div>
-        <TrendingUp className="h-5 w-5 text-teal-400" />
+        <TrendingUp className="h-5 w-5 text-violet-400" />
       </div>
 
       <div className="relative flex h-48 w-full flex-col justify-between rounded-2xl border border-white/5 bg-[#0B0F19] p-4">
@@ -64,14 +64,14 @@ export default function ProductivityChart({ tasks = [] }) {
               key={data.day}
               className="group flex cursor-pointer flex-col items-center gap-2"
             >
-              <span className="font-mono text-[10px] text-teal-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <span className="font-mono text-[10px] text-violet-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                 {data.value}
               </span>
               <motion.div
                 initial={{ height: 0 }}
                animate={{ height: `${Math.min(data.value * 20, 160)}px` }}
                 transition={{ duration: 0.8, delay: index * 0.05 }}
-                className="w-8 rounded-t-lg bg-gradient-to-t from-purple-500/20 to-teal-400 shadow-[0_0_10px_rgba(94,234,212,0.15)] transition-all duration-300 group-hover:to-teal-300 group-hover:shadow-[0_0_15px_rgba(94,234,212,0.3)]"
+                className="w-8 rounded-t-lg bg-gradient-to-t from-purple-500/20 to-violet-400 shadow-[0_0_10px_rgba(139,92,246,0.15)] transition-all duration-300 group-hover:to-violet-300 group-hover:shadow-[0_0_15px_rgba(139,92,246,0.3)]"
               />
               <span className="font-mono text-[10px] font-bold uppercase text-gray-500">
                 {data.day}

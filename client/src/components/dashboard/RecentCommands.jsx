@@ -21,7 +21,7 @@ export default function RecentCommands({ commands }) {
               <span>{command.time}</span>
               <span
                 className={
-                  command.success ? "text-teal-400" : "text-red-400"
+                  command.success ? "text-violet-400" : "text-red-400"
                 }
               >
                 {command.success ? "SUCCESS" : "FAILED"}
