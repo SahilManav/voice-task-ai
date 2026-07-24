@@ -27,13 +27,13 @@ function PriorityBreakdown({ tasks }) {
   ];
 
   return (
-    <div className="rounded-3xl border border-gray-200 dark:border-gray-200 dark:border-white/5 bg-white dark:bg-white dark:bg-[#141A29] border-gray-200 dark:border-gray-200 dark:border-white/5 p-6 space-y-5">
+    <div className="rounded-3xl border border-gray-200 dark:border-white/5 bg-white dark:bg-[#141A29] p-6 space-y-5">
       <div className="flex items-center justify-between">
         <div>
           <h4 className="text-base font-bold text-gray-900 dark:text-white">Priority Breakdown</h4>
-          <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-400 dark:text-gray-600 mt-0.5">Distribution across all tasks</p>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Distribution across all tasks</p>
         </div>
-        <span className="text-xs font-mono text-gray-500 dark:text-gray-400 dark:text-gray-400 dark:text-gray-600 border border-gray-200 dark:border-gray-200 dark:border-white/5 px-2 py-1 rounded-lg">
+        <span className="text-xs font-mono text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-white/10 px-2 py-1 rounded-lg">
           {tasks.length} total
         </span>
       </div>
@@ -42,15 +42,15 @@ function PriorityBreakdown({ tasks }) {
         {bars.map((bar) => (
           <div key={bar.label} className="space-y-1.5">
             <div className="flex items-center justify-between text-xs">
-              <span className="text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-400 font-medium">{bar.label}</span>
-              <span className="font-mono text-gray-500 dark:text-gray-400 dark:text-gray-400 dark:text-gray-600">{bar.count} tasks · {bar.pct}%</span>
+              <span className="text-gray-600 dark:text-gray-400 font-medium">{bar.label}</span>
+              <span className="font-mono text-gray-500 dark:text-gray-400">{bar.count} tasks · {bar.pct}%</span>
             </div>
-            <div className="h-2 w-full rounded-full bg-white/5 overflow-hidden">
+            <div className="h-2.5 w-full rounded-full bg-gray-100 dark:bg-white/5 overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${bar.pct}%` }}
                 transition={{ duration: 1, ease: "easeOut" }}
-                className={`h-full rounded-full ${bar.color} opacity-80`}
+                className={`h-full rounded-full ${bar.color}`}
               />
             </div>
           </div>
@@ -79,17 +79,17 @@ function StatusDonut({ tasks }) {
   let offset = 0;
 
   return (
-    <div className="rounded-3xl border border-gray-200 dark:border-gray-200 dark:border-white/5 bg-white dark:bg-white dark:bg-[#141A29] border-gray-200 dark:border-gray-200 dark:border-white/5 p-6 space-y-5">
+    <div className="rounded-3xl border border-gray-200 dark:border-white/5 bg-white dark:bg-[#141A29] p-6 space-y-5">
       <div>
         <h4 className="text-base font-bold text-gray-900 dark:text-white">Task Status Overview</h4>
-        <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-400 dark:text-gray-600 mt-0.5">Visual breakdown by status</p>
+        <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Visual breakdown by status</p>
       </div>
 
-      <div className="flex items-center gap-8">
-        {/* Donut */}
+      <div className="flex items-center gap-6">
+        {/* Donut — larger */}
         <div className="relative shrink-0">
-          <svg width="100" height="100" viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r={radius} fill="none" stroke="#1E293B" strokeWidth="10" />
+          <svg width="120" height="120" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r={radius} fill="none" stroke="#e5e7eb" className="dark:stroke-[#1E293B]" strokeWidth="10" />
             {segments.map((seg, i) => {
               const pct = seg.count / total;
               const dash = pct * circumference;
@@ -112,10 +112,10 @@ function StatusDonut({ tasks }) {
                 />
               );
             })}
-            <text x="50" y="46" textAnchor="middle" fontSize="13" fontWeight="bold" fill="white" fontFamily="monospace">
+            <text x="50" y="47" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#111827" className="dark:fill-white" fontFamily="monospace">
               {Math.round((completed / total) * 100)}%
             </text>
-            <text x="50" y="58" textAnchor="middle" fontSize="7" fill="#6B7280" fontFamily="monospace">
+            <text x="50" y="59" textAnchor="middle" fontSize="7" fill="#6B7280" fontFamily="monospace">
               DONE
             </text>
           </svg>
@@ -126,10 +126,10 @@ function StatusDonut({ tasks }) {
           {segments.map((seg) => (
             <div key={seg.label} className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="h-2.5 w-2.5 rounded-full" style={{ background: seg.color }} />
-                <span className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-400">{seg.label}</span>
+                <div className="h-3 w-3 rounded-full" style={{ background: seg.color }} />
+                <span className="text-sm text-gray-600 dark:text-gray-400">{seg.label}</span>
               </div>
-              <span className="text-xs font-mono font-bold text-gray-900 dark:text-white">{seg.count}</span>
+              <span className="text-sm font-bold text-gray-900 dark:text-white">{seg.count}</span>
             </div>
           ))}
         </div>

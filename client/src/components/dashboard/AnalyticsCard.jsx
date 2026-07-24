@@ -92,14 +92,14 @@ const AnalyticsCard = ({
 
         {/* Trend Indicator or Subtext */}
         {trend ? (
-          <div className="flex items-center gap-1 text-xs">
-            <span className={trend.isPositive ? 'text-emerald-400' : 'text-red-400'}>
+          <div className="flex flex-wrap items-center gap-1 text-xs">
+            <span className={trend.isPositive ? 'text-emerald-500 font-semibold' : 'text-red-500 font-semibold'}>
               {trend.value}
             </span>
-            <span className="text-gray-500">{subtext}</span>
+            {subtext && <span className="text-gray-500 dark:text-gray-400">{subtext}</span>}
           </div>
         ) : (
-          subtext && <p className="text-xs text-gray-500 font-medium">{subtext}</p>
+          subtext && <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">{subtext}</p>
         )}
       </div>
 
@@ -114,7 +114,8 @@ const AnalyticsCard = ({
                 cx="32"
                 cy="32"
                 r={radius}
-                stroke="#1E293B"
+                stroke="currentColor"
+                className="text-gray-200 dark:text-[#1E293B]"
                 strokeWidth={strokeWidth}
                 fill="transparent"
               />
@@ -132,7 +133,7 @@ const AnalyticsCard = ({
                 transition={{ duration: 1, ease: 'easeOut' }}
               />
             </svg>
-            <span className="absolute text-[10px] font-bold text-white font-mono">
+            <span className="absolute text-[10px] font-bold text-gray-900 dark:text-white font-mono">
               {progress}%
             </span>
           </div>
