@@ -67,19 +67,22 @@ export default function DashboardTasks({
 
       <div className="space-y-4">
         {/* Active Queue Header — highlighted with glow */}
-        <div className="flex items-center justify-between rounded-2xl border border-violet-500/30 bg-violet-500/5 px-4 py-3">
-          <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-violet-500/20">
-              <ListTodo className="h-4 w-4 text-violet-400" />
+        <div className="flex items-center justify-between rounded-2xl border border-violet-500/40 bg-gradient-to-r from-violet-500/15 to-purple-500/10 px-4 py-3 shadow-[0_0_20px_rgba(139,92,246,0.1)]">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 shadow-lg shadow-violet-500/30">
+              <ListTodo className="h-4 w-4 text-white" />
             </div>
-            <h3 className="text-base font-bold text-white">Active Queue</h3>
+            <div>
+              <h3 className="text-sm font-bold text-white">Active Queue</h3>
+              <p className="text-[10px] text-violet-300">Your pending tasks</p>
+            </div>
             {pendingTasks.length > 0 && (
-              <span className="ml-1 flex h-5 w-5 items-center justify-center rounded-full bg-violet-500 text-[10px] font-bold text-white">
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-violet-500 text-[11px] font-bold text-white shadow-md">
                 {pendingTasks.length}
               </span>
             )}
           </div>
-          <span className="text-xs font-bold uppercase text-violet-400">
+          <span className="text-xs font-bold text-violet-300 bg-violet-500/20 px-2.5 py-1 rounded-full border border-violet-500/30">
             {pendingTasks.length} Pending
           </span>
         </div>

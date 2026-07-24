@@ -301,7 +301,7 @@ export default function Navbar({ onMicClick, onLogout, userName = "Alex Mercer",
       <header className="sticky top-0 right-0 z-40 flex h-16 w-full items-center justify-between border-b border-white/5 bg-[#141A29]/80 px-6 backdrop-blur-md">
         {/* Search */}
         <div className="relative max-w-md flex-1">
-          <div className={`relative flex items-center rounded-xl border bg-[#0B0F19] transition-all duration-300 ${searchFocused ? "border-violet-500/50 shadow-[0_0_15px_rgba(139,92,246,0.15)]" : "border-white/5"}`}>
+          <div className={`relative flex items-center rounded-xl border transition-all duration-300 ${searchFocused ? "border-violet-500/50 bg-[#1a2035] shadow-[0_0_15px_rgba(139,92,246,0.15)]" : "border-white/10 bg-[#0d1220]"}`}>
             <Search className="absolute left-4 h-4 w-4 text-gray-400" />
             <input type="text" placeholder="Search tasks, tags, or voice transcripts..." value={searchQuery} onChange={handleSearchChange}
               onFocus={() => setSearchFocused(true)} onBlur={() => setSearchFocused(false)}
@@ -318,10 +318,7 @@ export default function Navbar({ onMicClick, onLogout, userName = "Alex Mercer",
             <Mic className="h-5 w-5 animate-pulse" />
           </motion.button>
 
-          {/* Theme toggle */}
-          <button onClick={handleThemeToggle} className="flex items-center justify-center rounded-xl border border-white/5 bg-[#0B0F19] p-2.5 text-gray-400 transition-all hover:bg-white/5 hover:text-white">
-            {isDark ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5 text-yellow-400" />}
-          </button>
+          {/* Theme toggle removed - dark only app */}
 
           {/* Bell */}
           <div className="relative">
