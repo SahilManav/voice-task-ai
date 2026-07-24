@@ -56,11 +56,10 @@ const Sidebar = ({ activeTab, onTabChange, onLogout, onOpenVoice }) => {
               <button
                 key={item.id}
                 onClick={() => onTabChange(item.id)}
-                className={`w-full flex items-center rounded-xl p-3 text-sm font-semibold transition-all duration-200 group focus:outline-none relative ${
-                  isActive
-                    ? 'bg-violet-500/10 border border-violet-500/20 text-violet-600 dark:text-violet-300'
-                    : 'text-gray-500 dark:text-gray-400 border border-transparent hover:bg-gray-100 dark:bg-white/5 hover:text-gray-900 dark:text-white'
-                }`}
+                className={`w-full flex items-center rounded-xl p-3 text-sm font-semibold transition-all duration-200 group focus:outline-none relative ${isActive
+                  ? 'bg-violet-500/10 border border-violet-500/20 text-violet-600 dark:text-violet-300'
+                  : 'text-gray-500 dark:text-gray-400 border border-transparent hover:bg-gray-100 dark:bg-white/5 hover:text-gray-900 dark:text-white'
+                  }`}
               >
                 {isActive && (
                   <motion.div layoutId="activeIndicator"
@@ -110,21 +109,20 @@ const Sidebar = ({ activeTab, onTabChange, onLogout, onOpenVoice }) => {
       </motion.aside>
 
       {/* ── Mobile Bottom Navigation ─────────────────── */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 dark:bg-[#141A29]/95 border-gray-200 dark:border-white/5">
-        {/* Floating Voice Button — centered above nav */}
-        <div className="flex justify-center -translate-y-5">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 pt-2 z-50 bg-white/95 dark:bg-[#141A29]/95">
+        <div className="relative flex justify-center">
           <motion.button
             onClick={onOpenVoice}
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.94 }}
-            className="flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 shadow-xl shadow-violet-500/40 border-4 border-white dark:border-[#0B0F19]"
+            className="relative -top-3 flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 shadow-xl shadow-violet-500/40 border-4 border-white dark:border-[#0B0F19]"
           >
             <Mic className="w-6 h-6 text-white" />
           </motion.button>
         </div>
 
         {/* Bottom Nav Items */}
-        <nav className="flex items-center justify-around px-2 pb-safe" style={{ marginTop: '-16px' }}>
+        <nav className="flex items-center justify-around px-2 pb-safe" style={{ marginTop: '-10px' }}>
           {menuItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -140,14 +138,12 @@ const Sidebar = ({ activeTab, onTabChange, onLogout, onOpenVoice }) => {
                     className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-violet-500"
                   />
                 )}
-                <div className={`p-1.5 rounded-xl transition-all duration-200 ${
-                  isActive ? 'bg-violet-500/15 text-violet-600' : 'text-gray-400 dark:text-gray-600'
-                }`}>
+                <div className={`p-1.5 rounded-xl transition-all duration-200 ${isActive ? 'bg-violet-500/15 text-violet-600' : 'text-gray-400 dark:text-gray-600'
+                  }`}>
                   <Icon className="w-5 h-5" />
                 </div>
-                <span className={`text-[10px] font-semibold ${
-                  isActive ? 'text-violet-600' : 'text-gray-400 dark:text-gray-600'
-                }`}>
+                <span className={`text-[10px] font-semibold ${isActive ? 'text-violet-600' : 'text-gray-400 dark:text-gray-600'
+                  }`}>
                   {item.label}
                 </span>
               </button>

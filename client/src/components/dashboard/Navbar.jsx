@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Bell, Camera, Eye, EyeOff, Lock, LogOut, Mic, Moon, Save, Search, Settings, Sun, User, X } from "lucide-react";
+import { Bell, Camera, Eye, EyeOff, Lock, LogOut, Mic, Save, Search, Settings, User, X } from "lucide-react";
 import toast from "react-hot-toast";
 import { useAuth } from "../../context/AuthContext";
 import { updateProfile } from "../../services/api";
@@ -110,7 +110,7 @@ function ProfileModal({ userName, userEmail, onClose }) {
               className="flex-1 flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-500 to-purple-600 py-3 text-sm font-bold text-gray-900 dark:text-white shadow-lg shadow-violet-500/30 disabled:opacity-50"
             >
               {saving ? (
-                <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+                <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>
               ) : <Save className="h-4 w-4" />}
               {saving ? "Saving..." : "Save Changes"}
             </motion.button>
@@ -122,7 +122,7 @@ function ProfileModal({ userName, userEmail, onClose }) {
 }
 
 // ─── Account Settings Modal (Change Password) ───────────────────────
-function AccountSettingsModal({ userName, userEmail, onClose, onLogout, onNavigate }) {
+function AccountSettingsModal({ userName, userEmail, onClose, onLogout }) {
   const [form, setForm] = useState({ currentPassword: "", newPassword: "", confirmPassword: "" });
   const [showCurrent, setShowCurrent] = useState(false);
   const [showNew, setShowNew] = useState(false);
@@ -253,7 +253,7 @@ function AccountSettingsModal({ userName, userEmail, onClose, onLogout, onNaviga
               whileHover={{ scale: saving ? 1 : 1.02 }} whileTap={{ scale: saving ? 1 : 0.98 }}
               className="flex-1 flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-500 to-purple-600 py-3 text-sm font-bold text-gray-900 dark:text-white shadow-lg shadow-violet-500/30 disabled:opacity-50"
             >
-              {saving ? <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg> : <Save className="h-4 w-4" />}
+              {saving ? <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg> : <Save className="h-4 w-4" />}
               {saving ? "Saving..." : "Update Password"}
             </motion.button>
           </div>
@@ -278,9 +278,27 @@ export default function Navbar({ onMicClick, onLogout, userName = "Alex Mercer",
   const [bellOpen, setBellOpen] = useState(false);
   const [profileModalOpen, setProfileModalOpen] = useState(false);
   const [accountModalOpen, setAccountModalOpen] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [isDark, setIsDark] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
+  const profileRef = useRef(null);
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(event.target)
+      ) {
+        setProfileDropdownOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   const initials = getInitials(userName);
 
   const upcomingTasks = tasks.filter((t) => {
@@ -291,19 +309,14 @@ export default function Navbar({ onMicClick, onLogout, userName = "Alex Mercer",
 
   const handleSearchChange = (e) => { const v = e.target.value; setSearchQuery(v); onSearch?.(v); };
 
-  const handleThemeToggle = () => {
-    setIsDark(!isDark);
-    toast("Light mode coming soon!", { icon: "🌙", style: { background: "#141A29", color: "#fff", border: "1px solid rgba(139,92,246,0.3)" } });
-  };
 
   return (
     <>
       <header className="sticky top-0 right-0 z-40 flex h-16 w-full items-center justify-between border-b border-gray-200 dark:border-white/5 bg-white dark:bg-[#141A29]/90 px-3 sm:px-6 backdrop-blur-md transition-colors duration-200">
         {/* Search */}
         <div className="relative flex-1 max-w-xs sm:max-w-md">
-          <div className={`relative flex items-center rounded-xl border transition-all duration-200 bg-gray-100 dark:bg-[#0B0F19] ${
-            searchFocused ? "border-violet-400 shadow-sm" : "border-gray-200 dark:border-white/10"
-          }`}>
+          <div className={`relative flex items-center rounded-xl border transition-all duration-200 bg-gray-100 dark:bg-[#0B0F19] ${searchFocused ? "border-violet-400 shadow-sm" : "border-gray-200 dark:border-white/10"
+            }`}>
             <Search className="absolute left-3 h-4 w-4 text-gray-400" />
             <input
               type="text"
@@ -373,7 +386,10 @@ export default function Navbar({ onMicClick, onLogout, userName = "Alex Mercer",
           <div className="h-6 w-px bg-gray-200 dark:bg-white/10" />
 
           {/* Profile */}
-          <div className="relative">
+          <div
+            ref={profileRef}
+            className="relative"
+          >
             <button onClick={() => { setProfileDropdownOpen(!profileDropdownOpen); setBellOpen(false); }} className="group flex items-center gap-2 focus:outline-none">
               <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-sm font-bold text-white shadow-md flex-shrink-0">
                 {initials}
@@ -387,7 +403,6 @@ export default function Navbar({ onMicClick, onLogout, userName = "Alex Mercer",
             <AnimatePresence>
               {profileDropdownOpen && (
                 <>
-                  <div className="fixed inset-0 z-30" onClick={() => setProfileDropdownOpen(false)} />
                   <motion.div
                     initial={{ opacity: 0, y: 10, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}

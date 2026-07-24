@@ -17,6 +17,23 @@ import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 
 const initialVoiceHistory = [];
+const showTaskAddedToast = () => {
+  toast.success("Added to Active Queue", {
+    duration: 1800,
+    icon: "✨",
+    style: {
+      background: "#141A29",
+      color: "#fff",
+      border: "1px solid rgba(139,92,246,0.18)",
+      borderRadius: "12px",
+      padding: "8px 12px",
+      fontSize: "13px",
+      fontWeight: "600",
+      minHeight: "44px",
+      boxShadow: "0 8px 20px rgba(0,0,0,0.22)",
+    },
+  });
+};
 
 const normalizeTask = (task) => ({
   _id: task._id ?? task.id ?? crypto.randomUUID(),
@@ -234,6 +251,16 @@ export default function Dashboard() {
   const [tasks, setTasks] = useState([]);
   const [isLoadingTasks, setIsLoadingTasks] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  // eslint-disable-next-line no-unused-vars
+  const filteredTasks = tasks.filter((task) => {
+    const query = searchQuery.toLowerCase();
+
+    return (
+      task.title.toLowerCase().includes(query) ||
+      task.description.toLowerCase().includes(query) ||
+      task.priority.toLowerCase().includes(query)
+    );
+  });
   const [voiceHistory, setVoiceHistory] = useState(initialVoiceHistory);
 
   useEffect(() => {
@@ -355,15 +382,7 @@ export default function Dashboard() {
       });
 
       if (success) {
-        toast.success("Task added to Active Queue! 👇 Scroll down to see it.", {
-          duration: 4000,
-          style: {
-            background: "#141A29",
-            color: "#fff",
-            border: "1px solid rgba(139,92,246,0.4)",
-          },
-          icon: "📋",
-        });
+        showTaskAddedToast();
       }
     }
 
@@ -659,15 +678,7 @@ export default function Dashboard() {
         ...prev,
       ]);
 
-      toast.success("Task added to Active Queue! 👇 Scroll down to see it.", {
-        duration: 4000,
-        style: {
-          background: "#141A29",
-          color: "#fff",
-          border: "1px solid rgba(139,92,246,0.4)",
-        },
-        icon: "📋",
-      });
+showTaskAddedToast();
       speak(`${parsed.title} created successfully.`);
       handleCancelVoice();
     }
@@ -696,7 +707,7 @@ export default function Dashboard() {
           <DashboardTasks
             title="Active Tasks Board"
             description="Review, prioritize, and structure your workspace tasks."
-            tasks={tasks}
+            tasks={filteredTasks}
             onAddTask={handleManualTaskAdd}
             onComplete={handleTaskComplete}
             onEdit={handleTaskEdit}
@@ -707,7 +718,7 @@ export default function Dashboard() {
           />
         );
 
- case "settings":
+      case "settings":
         return (
           <DashboardSettingsView
             icon={Settings}

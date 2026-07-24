@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ListTodo, Plus, Mic } from "lucide-react";
+import { ListTodo, Mic } from "lucide-react";
 import Button from "../common/Button";
 import TaskCard from "./TaskCard";
 
@@ -85,26 +85,24 @@ export default function DashboardTasks({
   return (
     <div className="space-y-6">
       {showHeader && (
-        <div className="flex items-center justify-between gap-4">
-          <div>
-            {title && (
-              <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white">{title}</h2>
-            )}
-            {description && (
-              <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-400">{description}</p>
-            )}
-          </div>
+        <div className="flex items-start justify-between gap-4">          <div>
+          {title && (
+            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white">{title}</h2>
+          )}
+          {description && (
+            <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500 dark:text-gray-400 dark:text-gray-400">{description}</p>
+          )}
+        </div>
 
           {showAddButton && (
-            <Button
-              variant="primary"
-              size="sm"
-              icon={Plus}
-              onClick={onAddTask}
-              className="gap-2 justify-center"
-            >
-              Add Manual Task
-            </Button>
+           <Button
+  variant="primary"
+  size="md"
+  onClick={onAddTask}
+  className="mt-1 whitespace-nowrap px-5 py-3 font-semibold self-start"
+>
+  + Add Task
+</Button>
           )}
         </div>
       )}

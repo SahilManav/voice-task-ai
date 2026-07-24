@@ -8,14 +8,12 @@ const ToggleSwitch = ({ checked, onChange }) => (
     role="switch"
     aria-checked={checked}
     onClick={() => onChange(!checked)}
-    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 ${
-      checked ? "bg-violet-500" : "bg-gray-300 dark:bg-white/10"
-    }`}
+    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 ${checked ? "bg-violet-500" : "bg-gray-300 dark:bg-white/10"
+      }`}
   >
     <span
-      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-300 ${
-        checked ? "translate-x-6" : "translate-x-1"
-      }`}
+      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-300 ${checked ? "translate-x-6" : "translate-x-1"
+        }`}
     />
   </button>
 );
@@ -32,11 +30,14 @@ export default function DashboardSettingsView({
   const [defaultPriority, setDefaultPriority] = useState("medium");
   const [notifications, setNotifications] = useState(true);
 
-  const sectionClass = "space-y-4 rounded-3xl border border-gray-200 dark:border-white/5 bg-white dark:bg-[#141A29] border-gray-200 dark:border-white/5 p-6 transition-colors duration-200";
-  const labelClass = "text-sm font-bold text-gray-900 dark:text-white";
-  const sublabelClass = "text-xs text-gray-500 dark:text-gray-400";
-  const headerClass = "text-[10px] font-mono uppercase tracking-wider text-gray-400 dark:text-gray-600";
-  const rowClass = "flex items-center justify-between border-t border-gray-200 dark:border-white/5 pt-4";
+  const sectionClass =
+    "space-y-4 rounded-3xl border border-gray-200 dark:border-white/5 bg-white dark:bg-[#141A29] p-6 transition-all duration-300 hover:border-violet-300 dark:hover:border-violet-500/30 hover:shadow-lg hover:shadow-violet-500/10";
+  const labelClass =
+    "text-[15px] font-semibold text-gray-900 dark:text-white";
+  const sublabelClass =
+    "mt-1 text-sm leading-relaxed text-gray-500 dark:text-gray-400";
+  const headerClass =
+    "text-xs font-bold uppercase tracking-[0.18em] text-violet-600 dark:text-violet-400"; const rowClass = "flex items-center justify-between border-t border-gray-200 dark:border-white/5 pt-4";
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
@@ -49,8 +50,9 @@ export default function DashboardSettingsView({
 
       {/* Voice Preferences */}
       <div className={sectionClass}>
-        <h4 className={headerClass}>Voice Preferences</h4>
-
+        <h4 className={`${headerClass} mb-1`}>
+          Voice Preferences
+        </h4>
         <div className={rowClass}>
           <div>
             <p className={labelClass}>Voice Enabled</p>
