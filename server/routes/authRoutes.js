@@ -7,6 +7,7 @@ const {
   login,
   logout,
   getMe,
+  updateProfile,
 } = require("../controllers/authController");
 
 const {
@@ -36,5 +37,7 @@ router.post(
 router.post("/logout", logout);
 
 router.get("/me", protect, getMe);
+
+router.put("/profile", protect, updateProfile);
 
 module.exports = router;

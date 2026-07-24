@@ -6,3 +6,6 @@ const api = axios.create({
 });
 
 export default api;
+
+// Update user profile (name, email, password)
+export const updateProfile = (data) => api.put("/auth/profile", data);
