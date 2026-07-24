@@ -7,7 +7,7 @@ const ToggleSwitch = ({ checked, onChange }) => (
     aria-checked={checked}
     onClick={() => onChange(!checked)}
     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 ${
-      checked ? "bg-teal-500" : "bg-white/10"
+      checked ? "bg-violet-500" : "bg-white/10"
     }`}
   >
     <span
@@ -68,9 +68,9 @@ export default function DashboardSettingsView({
               step="0.1"
               value={speechRate}
               onChange={(e) => onSpeechRateChange?.(Number(e.target.value))}
-              className="w-32 accent-teal-400"
+              className="w-32 accent-violet-400"
             />
-            <span className="w-10 text-right font-mono text-xs text-teal-400">
+            <span className="w-10 text-right font-mono text-xs text-violet-400">
               {speechRate.toFixed(1)}x
             </span>
           </div>
@@ -92,7 +92,7 @@ export default function DashboardSettingsView({
           <select
             value={defaultPriority}
             onChange={(e) => setDefaultPriority(e.target.value)}
-            className="rounded-lg border border-white/10 bg-[#0B0F19] px-3 py-1.5 text-xs font-bold uppercase text-white focus:border-teal-500/50 focus:outline-none"
+            className="rounded-lg border border-white/10 bg-[#0B0F19] px-3 py-1.5 text-xs font-bold uppercase text-white focus:border-violet-500/50 focus:outline-none"
           >
             <option value="low">Low</option>
             <option value="medium">Medium</option>

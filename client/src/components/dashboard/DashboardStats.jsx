@@ -60,7 +60,7 @@ export default function DashboardStats({ tasks }) {
         title="Today's Progress"
         value={`${completionRate}%`}
         subtext="Overall completion rate"
-        accent="cyan"
+        accent="violet"
         progress={completionRate}
       />
 

@@ -7,15 +7,15 @@ function EmptyTasksState() {
   return (
     <div className="rounded-2xl border border-white/5 bg-[#141A29] p-10 text-center">
       <div className="mb-4 flex justify-center">
-        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-cyan-500/10">
-          <Mic className="h-7 w-7 text-cyan-400" />
+        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-violet-500/10">
+          <Mic className="h-7 w-7 text-violet-400" />
         </div>
       </div>
       <p className="mb-1 text-base font-semibold text-white">No tasks yet</p>
       <p className="mb-4 text-sm text-gray-400">
         Try saying something like:
       </p>
-      <p className="mx-auto max-w-xs rounded-xl border border-cyan-500/20 bg-cyan-500/5 px-4 py-2 text-sm italic text-cyan-300">
+      <p className="mx-auto max-w-xs rounded-xl border border-violet-500/20 bg-violet-500/5 px-4 py-2 text-sm italic text-violet-300">
         "Create task submit the report by tomorrow, high priority"
       </p>
     </div>
@@ -68,7 +68,7 @@ export default function DashboardTasks({
       <div className="space-y-6">
         <div className="flex items-center justify-between border-b border-white/5 pb-3">
           <div className="flex items-center gap-2">
-            <ListTodo className="h-5 w-5 text-teal-400" />
+            <ListTodo className="h-5 w-5 text-violet-400" />
             <h3 className="text-lg font-bold text-white">Active Queue</h3>
           </div>
           <span className="text-xs font-bold uppercase text-gray-500">

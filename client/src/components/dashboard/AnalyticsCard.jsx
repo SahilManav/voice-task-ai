@@ -10,7 +10,7 @@ const AnalyticsCard = ({
   value,
   subtext,
   icon: Icon,
-  accent = 'cyan', // 'cyan', 'purple', 'emerald', 'danger'
+  accent = 'violet', // 'violet', 'purple', 'emerald', 'danger'
   progress = null,  // Number 0-100 for progress indicator circle
   trend = null     // Object: { value: '+12%', isPositive: true }
 }) => {
@@ -18,10 +18,16 @@ const AnalyticsCard = ({
   // Custom styling tokens based on accent color
   const accentClasses = {
     cyan: {
-      text: 'text-cyan-400',
-      bg: 'bg-cyan-500/10 border-cyan-500/20',
-      stroke: '#5EEAD4',
-      shadow: 'shadow-[0_0_15px_rgba(94,234,212,0.15)]'
+      text: 'text-violet-400',
+      bg: 'bg-violet-500/10 border-violet-500/20',
+      stroke: '#8B5CF6',
+      shadow: 'shadow-[0_0_15px_rgba(139,92,246,0.15)]'
+    },
+    violet: {
+      text: 'text-violet-400',
+      bg: 'bg-violet-500/10 border-violet-500/20',
+      stroke: '#8B5CF6',
+      shadow: 'shadow-[0_0_15px_rgba(139,92,246,0.15)]'
     },
     purple: {
       text: 'text-purple-400',
@@ -43,7 +49,7 @@ const AnalyticsCard = ({
     }
   };
 
-  const currentAccent = accentClasses[accent] || accentClasses.cyan;
+  const currentAccent = accentClasses[accent] || accentClasses.violet;
 
   // SVG Progress Ring calculations
   const radius = 24;
@@ -65,8 +71,8 @@ const AnalyticsCard = ({
     >
       {/* Decorative background glow */}
       <div
-        className={`absolute -top-6 -right-6 h-32 w-32 rounded-full blur-3xl opacity-0 transition-all duration-500 group-hover:opacity-20 ${accent === "cyan"
-          ? "bg-cyan-500"
+        className={`absolute -top-6 -right-6 h-32 w-32 rounded-full blur-3xl opacity-0 transition-all duration-500 group-hover:opacity-20 ${accent === "cyan" || accent === "violet"
+          ? "bg-violet-500"
           : accent === "emerald"
             ? "bg-emerald-500"
             : accent === "danger"

@@ -49,7 +49,7 @@ export default function DashboardHeader({
             {getCurrentDate()}
           </p>
 
-          <div className="inline-flex items-center rounded-full border border-cyan-500/20 bg-cyan-500/10 px-3 py-1 text-xs font-medium text-cyan-400">
+          <div className="inline-flex items-center rounded-full border border-violet-500/20 bg-violet-500/10 px-3 py-1 text-xs font-medium text-violet-400">
             ⚡ Voice Assistant Ready
           </div>
         </div>
@@ -69,7 +69,7 @@ export default function DashboardHeader({
           size="md"
           icon={Mic}
           onClick={onOpenVoice}
-          className="shadow-[0_0_15px_rgba(94,234,212,0.25)]"
+          className="shadow-[0_0_15px_rgba(139,92,246,0.25)]"
         >
           Start Recording
         </Button>

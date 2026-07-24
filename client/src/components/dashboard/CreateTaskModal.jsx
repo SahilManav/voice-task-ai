@@ -77,7 +77,7 @@ export default function CreateTaskModal({
           >
             <div className="mb-6 flex items-start justify-between gap-4 border-b border-white/5 pb-4">
               <div>
-                <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-teal-500/20 bg-teal-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-teal-300">
+                <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-violet-500/20 bg-violet-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-violet-300">
                   <PlusSquare className="h-3.5 w-3.5" />
                   {task ? "Edit Task" : "Create Task"}
                 </div>
@@ -104,7 +104,7 @@ export default function CreateTaskModal({
               <div className="grid gap-5 md:grid-cols-2">
                 <label className="space-y-2 md:col-span-2">
                   <span className="flex items-center gap-2 text-sm font-semibold text-white">
-                    <Type className="h-4 w-4 text-teal-400" />
+                    <Type className="h-4 w-4 text-violet-400" />
                     Task title
                   </span>
                   <input
@@ -114,7 +114,7 @@ export default function CreateTaskModal({
                     onChange={handleChange}
                     required
                     placeholder="Finish engineering assignment"
-                    className="h-12 w-full rounded-2xl border border-white/10 bg-[#0B0F19] px-4 text-sm text-white placeholder-gray-500 outline-none transition-colors duration-300 focus:border-teal-400"
+                    className="h-12 w-full rounded-2xl border border-white/10 bg-[#0B0F19] px-4 text-sm text-white placeholder-gray-500 outline-none transition-colors duration-300 focus:border-violet-400"
                   />
                 </label>
 
@@ -129,7 +129,7 @@ export default function CreateTaskModal({
                     onChange={handleChange}
                     rows={4}
                     placeholder="Add extra context or notes for this task..."
-                    className="w-full rounded-2xl border border-white/10 bg-[#0B0F19] px-4 py-3 text-sm text-white placeholder-gray-500 outline-none transition-colors duration-300 focus:border-teal-400"
+                    className="w-full rounded-2xl border border-white/10 bg-[#0B0F19] px-4 py-3 text-sm text-white placeholder-gray-500 outline-none transition-colors duration-300 focus:border-violet-400"
                   />
                 </label>
 
@@ -142,7 +142,7 @@ export default function CreateTaskModal({
                     name="priority"
                     value={form.priority}
                     onChange={handleChange}
-                    className="h-12 w-full rounded-2xl border border-white/10 bg-[#0B0F19] px-4 text-sm text-white outline-none transition-colors duration-300 focus:border-teal-400"
+                    className="h-12 w-full rounded-2xl border border-white/10 bg-[#0B0F19] px-4 text-sm text-white outline-none transition-colors duration-300 focus:border-violet-400"
                   >
                     <option value="low">Low</option>
                     <option value="medium">Medium</option>
@@ -152,7 +152,7 @@ export default function CreateTaskModal({
 
                 <label className="space-y-2">
                   <span className="flex items-center gap-2 text-sm font-semibold text-white">
-                    <Calendar className="h-4 w-4 text-cyan-400" />
+                    <Calendar className="h-4 w-4 text-violet-400" />
                     Due date
                   </span>
                   <input
@@ -160,7 +160,7 @@ export default function CreateTaskModal({
                     name="dueDate"
                     value={form.dueDate}
                     onChange={handleChange}
-                    className="h-12 w-full rounded-2xl border border-white/10 bg-[#0B0F19] px-4 text-sm text-white outline-none transition-colors duration-300 focus:border-teal-400"
+                    className="h-12 w-full rounded-2xl border border-white/10 bg-[#0B0F19] px-4 text-sm text-white outline-none transition-colors duration-300 focus:border-violet-400"
                   />
                 </label>
               </div>

@@ -84,7 +84,7 @@ export default function Register() {
               onChange={handleChange}
               required
               className={`w-full rounded-xl bg-[#0B1120] border px-4 py-3 text-white outline-none transition ${
-                errors.name ? "border-red-500" : "border-cyan-500"
+                errors.name ? "border-red-500" : "border-violet-500"
               }`}
             />
             {errors.name && (
@@ -104,7 +104,7 @@ export default function Register() {
               onChange={handleChange}
               required
               className={`w-full rounded-xl bg-[#0B1120] border px-4 py-3 text-white outline-none transition ${
-                errors.email ? "border-red-500" : "border-cyan-500"
+                errors.email ? "border-red-500" : "border-violet-500"
               }`}
             />
             {errors.email && (
@@ -125,13 +125,13 @@ export default function Register() {
                 onChange={handleChange}
                 required
                 className={`w-full rounded-xl bg-[#0B1120] border px-4 py-3 pr-12 text-white outline-none transition ${
-                  errors.password ? "border-red-500" : "border-cyan-500"
+                  errors.password ? "border-red-500" : "border-violet-500"
                 }`}
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-cyan-400 transition"
+                className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-violet-400 transition"
               >
                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
@@ -144,7 +144,7 @@ export default function Register() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-cyan-500 hover:bg-cyan-600 transition rounded-xl py-3 font-semibold"
+            className="w-full bg-violet-500 hover:bg-violet-600 transition rounded-xl py-3 font-semibold text-white"
           >
             {loading ? "Creating..." : "Register"}
           </button>
@@ -155,7 +155,7 @@ export default function Register() {
           Already have an account?{" "}
           <Link
             to="/login"
-            className="text-cyan-400 font-semibold"
+            className="text-violet-400 font-semibold"
           >
             Login
           </Link>

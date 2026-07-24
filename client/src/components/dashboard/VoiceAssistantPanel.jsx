@@ -22,7 +22,7 @@ const VoiceAssistantPanel = ({
       {/* Head section */}
       <div className="flex items-center justify-between pb-4 border-b border-white/5">
         <div className="flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-teal-400" />
+          <Sparkles className="w-4 h-4 text-violet-400" />
           <span className="text-xs font-bold uppercase tracking-wider text-white">Voice Synthesizer</span>
         </div>
 
@@ -59,7 +59,7 @@ const VoiceAssistantPanel = ({
             whileTap={{ scale: 0.95 }}
             className={`w-20 h-20 rounded-full flex items-center justify-center shadow-lg border relative z-10 transition-colors duration-300 ${isListening
               ? 'bg-red-500/20 border-red-500/40 text-red-400 shadow-[0_0_20px_rgba(239,68,68,0.25)]'
-              : 'bg-teal-500/10 border-teal-500/30 text-teal-400 hover:bg-teal-500/20 shadow-[0_0_20px_rgba(94,234,212,0.15)]'
+              : 'bg-violet-500/10 border-violet-500/30 text-violet-400 hover:bg-violet-500/20 shadow-[0_0_20px_rgba(139,92,246,0.15)]'
               }`}
           >
             {isListening ? <MicOff className="w-8 h-8" /> : <Mic className="w-8 h-8" />}
@@ -75,7 +75,7 @@ const VoiceAssistantPanel = ({
                 key={i}
                 animate={{ height: [`${h / 3}px`, `${h}px`, `${h / 3}px`] }}
                 transition={{ repeat: Infinity, duration: 0.8 + (i % 3) * 0.1, ease: 'easeInOut' }}
-                className={`w-1 rounded-full ${i % 2 === 0 ? 'bg-teal-400' : 'bg-purple-500'}`}
+                className={`w-1 rounded-full ${i % 2 === 0 ? 'bg-violet-400' : 'bg-purple-500'}`}
               />
             ))
           ) : (
@@ -133,7 +133,7 @@ const VoiceAssistantPanel = ({
                     <p className="text-[9px] font-mono uppercase tracking-wider text-gray-500">
                       Status
                     </p>
-                    <p className="flex items-center gap-1 text-xs font-bold text-teal-400">
+                    <p className="flex items-center gap-1 text-xs font-bold text-violet-400">
                       <Check className="h-3 w-3" /> Parsed
                     </p>
                   </div>

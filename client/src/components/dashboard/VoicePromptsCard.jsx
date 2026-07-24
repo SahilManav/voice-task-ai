@@ -5,7 +5,7 @@ import Button from "../common/Button";
 export default function VoicePromptsCard({ onOpenVoice }) {
   return (
     <div className="space-y-4 rounded-2xl border border-white/5 bg-[#141A29] p-5">
-      <div className="flex items-center gap-2 text-teal-400">
+      <div className="flex items-center gap-2 text-violet-400">
         <Volume2 className="h-5 w-5" />
         <h4 className="text-sm font-bold text-white">Voice Command Prompts</h4>
       </div>

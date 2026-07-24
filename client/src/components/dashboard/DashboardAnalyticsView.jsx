@@ -44,7 +44,7 @@ export default function DashboardAnalyticsView({ tasks }) {
           title="Pending Tasks"
           value={pendingCount.toString()}
           subtext="Tasks still in progress"
-          accent="cyan"
+          accent="violet"
         />
         <AnalyticsCard
           title="Delayed Tasks"

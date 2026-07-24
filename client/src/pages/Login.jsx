@@ -68,7 +68,7 @@ export default function Login() {
             value={form.email}
             onChange={handleChange}
             required
-            className="w-full rounded-xl bg-[#0B0F19] border border-white/10 px-4 py-3 text-white outline-none focus:border-cyan-400"
+            className="w-full rounded-xl bg-[#0B0F19] border border-white/10 px-4 py-3 text-white outline-none focus:border-violet-400"
           />
         </div>
 
@@ -84,13 +84,13 @@ export default function Login() {
               value={form.password}
               onChange={handleChange}
               required
-              className="w-full rounded-xl bg-[#0B0F19] border border-white/10 px-4 py-3 pr-12 text-white outline-none focus:border-cyan-400"
+              className="w-full rounded-xl bg-[#0B0F19] border border-white/10 px-4 py-3 pr-12 text-white outline-none focus:border-violet-400"
             />
 
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-cyan-400 transition"
+              className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-violet-400 transition"
             >
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
@@ -100,7 +100,7 @@ export default function Login() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-cyan-500 hover:bg-cyan-400 transition rounded-xl py-3 text-black font-bold"
+          className="w-full bg-violet-500 hover:bg-violet-400 transition rounded-xl py-3 text-white font-bold"
         >
           {loading ? "Logging in..." : "Login"}
         </button>
@@ -109,7 +109,7 @@ export default function Login() {
           Don't have an account?{" "}
           <Link
             to="/register"
-            className="text-cyan-400 hover:underline"
+            className="text-violet-400 hover:underline"
           >
             Register
           </Link>
