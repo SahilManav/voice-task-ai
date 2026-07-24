@@ -355,7 +355,15 @@ export default function Dashboard() {
       });
 
       if (success) {
-        toast.success("Task created successfully.");
+        toast.success("Task added to Active Queue! 👇 Scroll down to see it.", {
+          duration: 4000,
+          style: {
+            background: "#141A29",
+            color: "#fff",
+            border: "1px solid rgba(139,92,246,0.4)",
+          },
+          icon: "📋",
+        });
       }
     }
 
@@ -651,7 +659,15 @@ export default function Dashboard() {
         ...prev,
       ]);
 
-      toast.success("Voice task created successfully.");
+      toast.success("Task added to Active Queue! 👇 Scroll down to see it.", {
+        duration: 4000,
+        style: {
+          background: "#141A29",
+          color: "#fff",
+          border: "1px solid rgba(139,92,246,0.4)",
+        },
+        icon: "📋",
+      });
       speak(`${parsed.title} created successfully.`);
       handleCancelVoice();
     }
@@ -753,7 +769,7 @@ export default function Dashboard() {
           onNavigate={setActiveTab}
         />
 
-        <main className="relative flex-1 overflow-y-auto px-6 py-8">
+        <main className="relative flex-1 overflow-y-auto px-4 sm:px-6 py-6 sm:py-8 pb-24 md:pb-8">
           <div className="mx-auto w-full max-w-7xl">{renderContentView()}</div>
 
           <CreateTaskModal

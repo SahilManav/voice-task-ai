@@ -67,7 +67,7 @@ const AnalyticsCard = ({
         duration: 0.25,
         ease: "easeOut",
       }}
-      className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#161D2E] via-[#141A29] to-[#101522] p-6 flex items-center justify-between shadow-xl backdrop-blur-xl group"
+      className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#161D2E] via-[#141A29] to-[#101522] p-4 sm:p-6 flex items-center justify-between shadow-xl backdrop-blur-xl group"
     >
       {/* Decorative background glow */}
       <div
@@ -86,7 +86,7 @@ const AnalyticsCard = ({
         <span className="text-xs text-gray-500 uppercase font-mono tracking-wider">
           {title}
         </span>
-        <h3 className="text-3xl font-extrabold text-white tracking-tight">
+        <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
           {value}
         </h3>
 
@@ -140,7 +140,7 @@ const AnalyticsCard = ({
           /* Large Glowing Icon wrapper */
           Icon && (
             <div
-              className={`flex items-center justify-center rounded-2xl border p-4 transition-all duration-300 group-hover:scale-110 ${currentAccent.bg} ${currentAccent.shadow} ${currentAccent.text}`}
+            className={`flex items-center justify-center rounded-xl sm:rounded-2xl border p-2.5 sm:p-4 transition-all duration-300 group-hover:scale-110 ${currentAccent.bg} ${currentAccent.shadow} ${currentAccent.text}`}
             >
             <Icon className="w-6 h-6" />
             </div>

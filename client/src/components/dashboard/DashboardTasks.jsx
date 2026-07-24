@@ -65,13 +65,21 @@ export default function DashboardTasks({
         </div>
       )}
 
-      <div className="space-y-6">
-        <div className="flex items-center justify-between border-b border-white/5 pb-3">
+      <div className="space-y-4">
+        {/* Active Queue Header — highlighted with glow */}
+        <div className="flex items-center justify-between rounded-2xl border border-violet-500/30 bg-violet-500/5 px-4 py-3">
           <div className="flex items-center gap-2">
-            <ListTodo className="h-5 w-5 text-violet-400" />
-            <h3 className="text-lg font-bold text-white">Active Queue</h3>
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-violet-500/20">
+              <ListTodo className="h-4 w-4 text-violet-400" />
+            </div>
+            <h3 className="text-base font-bold text-white">Active Queue</h3>
+            {pendingTasks.length > 0 && (
+              <span className="ml-1 flex h-5 w-5 items-center justify-center rounded-full bg-violet-500 text-[10px] font-bold text-white">
+                {pendingTasks.length}
+              </span>
+            )}
           </div>
-          <span className="text-xs font-bold uppercase text-gray-500">
+          <span className="text-xs font-bold uppercase text-violet-400">
             {pendingTasks.length} Pending
           </span>
         </div>

@@ -64,7 +64,7 @@ const HeroSection = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="flex items-center gap-3 text-xl sm:text-2xl font-semibold text-gray-300"
+          className="flex flex-wrap items-center justify-center gap-2 text-lg sm:text-2xl font-semibold text-gray-300"
         >
           <span>Say it to</span>
           <motion.span
@@ -73,7 +73,7 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
-            className="text-violet-400 min-w-[120px] text-left"
+            className="text-violet-400 inline-block min-w-[110px] text-center px-3 py-0.5 rounded-lg bg-violet-500/10 border border-violet-500/20"
           >
             {words[wordIndex]}
           </motion.span>
