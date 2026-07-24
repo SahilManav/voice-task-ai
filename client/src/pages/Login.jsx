@@ -17,7 +17,18 @@ export default function Login() {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleChange = (e) => {
+  const handleGuestLogin = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      await login({ email: "guest@voicedesk.app", password: "guest123456" });
+      navigate("/dashboard");
+    } catch (err) {
+      setError("Guest account not available yet. Please register.");
+    } finally {
+      setLoading(false);
+    }
+  };
     setForm({
       ...form,
       [e.target.name]: e.target.value,
@@ -193,8 +204,28 @@ export default function Login() {
             )}
           </motion.button>
 
+          {/* Divider */}
+          <div className="flex items-center gap-3 my-4">
+            <div className="flex-1 h-px bg-white/10" />
+            <span className="text-xs text-gray-500">or</span>
+            <div className="flex-1 h-px bg-white/10" />
+          </div>
+
+          {/* Guest Button */}
+          <motion.button
+            type="button"
+            onClick={handleGuestLogin}
+            disabled={loading}
+            whileHover={{ scale: loading ? 1 : 1.02 }}
+            whileTap={{ scale: loading ? 1 : 0.98 }}
+            className="w-full flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 py-3.5 text-sm font-semibold text-gray-300 hover:text-white transition-all duration-300 disabled:opacity-50"
+          >
+            <span className="text-lg">👤</span>
+            Continue as Guest
+          </motion.button>
+
           {/* Footer Link */}
-          <p className="text-center text-gray-400 mt-6 text-sm">
+          <p className="text-center text-gray-400 mt-5 text-sm">
             Don't have an account?{" "}
             <Link
               to="/register"
