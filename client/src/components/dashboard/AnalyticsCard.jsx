@@ -5,16 +5,16 @@ import { motion } from 'framer-motion';
  * Reusable AnalyticsCard component.
  * Displays statistics, progress indicators, or trend scores using a sleek glassmorphic card design.
  */
-const AnalyticsCard = ({ 
-  title, 
-  value, 
-  subtext, 
-  icon: Icon, 
+const AnalyticsCard = ({
+  title,
+  value,
+  subtext,
+  icon: Icon,
   accent = 'cyan', // 'cyan', 'purple', 'emerald', 'danger'
   progress = null,  // Number 0-100 for progress indicator circle
   trend = null     // Object: { value: '+12%', isPositive: true }
 }) => {
-  
+
   // Custom styling tokens based on accent color
   const accentClasses = {
     cyan: {
@@ -53,11 +53,27 @@ const AnalyticsCard = ({
 
   return (
     <motion.div
-      whileHover={{ y: -4 }}
-      className="p-6 rounded-2xl bg-[#141A29] border border-white/5 flex items-center justify-between shadow-lg relative overflow-hidden group"
+      whileHover={{
+        y: -6,
+        scale: 1.02,
+      }}
+      transition={{
+        duration: 0.25,
+        ease: "easeOut",
+      }}
+      className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#161D2E] via-[#141A29] to-[#101522] p-6 flex items-center justify-between shadow-xl backdrop-blur-xl group"
     >
       {/* Decorative background glow */}
-      <div className={`absolute top-0 right-0 w-24 h-24 rounded-full blur-3xl opacity-0 group-hover:opacity-10 transition-opacity duration-500 ${accent === 'cyan' ? 'bg-cyan-500' : 'bg-purple-500'}`} />
+      <div
+        className={`absolute -top-6 -right-6 h-32 w-32 rounded-full blur-3xl opacity-0 transition-all duration-500 group-hover:opacity-20 ${accent === "cyan"
+          ? "bg-cyan-500"
+          : accent === "emerald"
+            ? "bg-emerald-500"
+            : accent === "danger"
+              ? "bg-red-500"
+              : "bg-purple-500"
+          }`}
+      />
 
       {/* Text Info */}
       <div className="space-y-2">
@@ -67,7 +83,7 @@ const AnalyticsCard = ({
         <h3 className="text-3xl font-extrabold text-white tracking-tight">
           {value}
         </h3>
-        
+
         {/* Trend Indicator or Subtext */}
         {trend ? (
           <div className="flex items-center gap-1 text-xs">
@@ -117,8 +133,10 @@ const AnalyticsCard = ({
         ) : (
           /* Large Glowing Icon wrapper */
           Icon && (
-            <div className={`p-3.5 rounded-xl border flex items-center justify-center text-teal-400 ${currentAccent.bg} ${currentAccent.shadow} ${currentAccent.text}`}>
-              <Icon className="w-6 h-6" />
+            <div
+              className={`flex items-center justify-center rounded-2xl border p-4 transition-all duration-300 group-hover:scale-110 ${currentAccent.bg} ${currentAccent.shadow} ${currentAccent.text}`}
+            >
+            <Icon className="w-6 h-6" />
             </div>
           )
         )}

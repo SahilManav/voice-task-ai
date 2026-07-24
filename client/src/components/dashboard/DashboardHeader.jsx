@@ -4,11 +4,29 @@ import { Mic, Plus } from "lucide-react";
 import Button from "../common/Button";
 
 const getGreetingName = (userName) => {
+
   if (!userName) {
     return "Alex";
   }
 
   return userName.split(" ")[0];
+};
+const getGreeting = () => {
+  const hour = new Date().getHours();
+
+  console.log("Current Hour:", hour);
+
+  if (hour < 12) return "Good Morning";
+  if (hour < 18) return "Good Afternoon";
+  return "Good Evening";
+};
+
+const getCurrentDate = () => {
+  return new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  });
 };
 
 export default function DashboardHeader({
@@ -24,11 +42,17 @@ export default function DashboardHeader({
           animate={{ opacity: 1, x: 0 }}
           className="text-2xl font-extrabold tracking-tight text-white md:text-3xl"
         >
-          Hello, {getGreetingName(userName)}
+          {getGreeting()}, {getGreetingName(userName)}
         </motion.h2>
-        <p className="mt-1 text-sm text-gray-400">
-          Let&apos;s tackle your priorities today. Ready for voice directives.
-        </p>
+        <div className="mt-2 space-y-2">
+          <p className="text-sm text-gray-400">
+            {getCurrentDate()}
+          </p>
+
+          <div className="inline-flex items-center rounded-full border border-cyan-500/20 bg-cyan-500/10 px-3 py-1 text-xs font-medium text-cyan-400">
+            ⚡ Voice Assistant Ready
+          </div>
+        </div>
       </div>
 
       <div className="flex gap-3">

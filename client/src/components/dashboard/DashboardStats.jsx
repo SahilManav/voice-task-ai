@@ -1,25 +1,42 @@
-import { CheckCircle, Clock } from "lucide-react";
+import {
+  CheckCircle,
+  Mic,
+  AlertTriangle,
+} from "lucide-react";
 
 import AnalyticsCard from "./AnalyticsCard";
 
-const getProductivityScore = (completionRate, voiceTaskCount) => {
-  if (completionRate === 0 && voiceTaskCount === 0) {
-    return 0;
-  }
-
-  return Math.min(100, Math.round(completionRate * 0.8 + voiceTaskCount * 6));
-};
-
 export default function DashboardStats({ tasks }) {
   const completedCount = tasks.filter((task) => task.completed).length;
+
   const pendingCount = tasks.filter((task) => !task.completed).length;
+
   const voiceTaskCount = tasks.filter((task) => task.voiceCommand).length;
+
+  const manualTaskCount = tasks.length - voiceTaskCount;
+
+  const highPriorityCount = tasks.filter(
+    (task) => task.priority === "high"
+  ).length;
+
+  const dueTodayCount = tasks.filter((task) => {
+    if (!task.dueDate) return false;
+
+    const today = new Date();
+
+    const due = new Date(task.dueDate);
+
+    return (
+      due.getDate() === today.getDate() &&
+      due.getMonth() === today.getMonth() &&
+      due.getFullYear() === today.getFullYear()
+    );
+  }).length;
+
   const completionRate =
-    tasks.length > 0 ? Math.round((completedCount / tasks.length) * 100) : 0;
-  const productivityScore = getProductivityScore(
-    completionRate,
-    voiceTaskCount
-  );
+    tasks.length > 0
+      ? Math.round((completedCount / tasks.length) * 100)
+      : 0;
 
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -30,13 +47,15 @@ export default function DashboardStats({ tasks }) {
         accent="emerald"
         icon={CheckCircle}
       />
+
       <AnalyticsCard
-        title="Pending Tasks"
-        value={pendingCount.toString()}
-        subtext="Awaiting verification"
+        title="Voice Tasks"
+        value={voiceTaskCount.toString()}
+        subtext={`${manualTaskCount} manual tasks`}
         accent="purple"
-        icon={Clock}
+        icon={Mic}
       />
+
       <AnalyticsCard
         title="Today's Progress"
         value={`${completionRate}%`}
@@ -44,14 +63,19 @@ export default function DashboardStats({ tasks }) {
         accent="cyan"
         progress={completionRate}
       />
+
       <AnalyticsCard
-        title="Productivity Score"
-        value={productivityScore.toString()}
-        subtext="System efficiency score"
-        accent="purple"
+        title="High Priority"
+        value={highPriorityCount.toString()}
+        subtext={`${dueTodayCount} due today`}
+        accent="amber"
+        icon={AlertTriangle}
         trend={{
-          value: `${voiceTaskCount} voice tasks`,
-          isPositive: voiceTaskCount > 0,
+          value:
+            highPriorityCount > 0
+              ? "Needs attention"
+              : "All caught up",
+          isPositive: highPriorityCount === 0,
         }}
       />
     </div>
