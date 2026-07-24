@@ -27,6 +27,7 @@ const normalizeTask = (task) => ({
   completed: Boolean(task.completed),
   status: task.status ?? "active",
   delayedUntil: task.delayedUntil ?? null,
+  updatedAt: task.updatedAt ?? null,
   voiceCommand: Boolean(task.voiceCommand),
 });
 
@@ -164,7 +165,7 @@ const parseVoiceCommand = (text) => {
   // -----------------------------
   let title = lower;
 
-const removeWords = [
+  const removeWords = [
     "create task",
     "create",
     "task",
@@ -228,6 +229,7 @@ export default function Dashboard() {
   const [isTaskSubmitting, setIsTaskSubmitting] = useState(false);
   const [transcript, setTranscript] = useState("");
   const [aiResponse, setAiResponse] = useState("");
+  const [parsedCommand, setParsedCommand] = useState(null);
   const [tasks, setTasks] = useState([]);
   const [voiceHistory, setVoiceHistory] = useState(initialVoiceHistory);
 
@@ -474,6 +476,7 @@ export default function Dashboard() {
 
       setTranscript(finalTranscript);
       setAiResponse(parsed.preview);
+      setParsedCommand(parsed);
     };
 
     recognition.start();
@@ -501,7 +504,8 @@ export default function Dashboard() {
       });
 
       if (!task) {
-        toast.error("Task not found.");
+        toast.error(`Couldn't find a task matching "${parsed.title}".`);
+        speak(`I couldn't find a task called ${parsed.title}.`);
         return;
       }
 
@@ -536,7 +540,8 @@ export default function Dashboard() {
       });
 
       if (!task) {
-        toast.error("Task not found.");
+        toast.error(`Couldn't find a task matching "${parsed.title}".`);
+        speak(`I couldn't find a task called ${parsed.title}.`);
         return;
       }
 
@@ -570,7 +575,8 @@ export default function Dashboard() {
       });
 
       if (!task) {
-        toast.error("Task not found.");
+        toast.error(`Couldn't find a task matching "${parsed.title}".`);
+        speak(`I couldn't find a task called ${parsed.title}.`);
         return;
       }
 
@@ -642,6 +648,7 @@ export default function Dashboard() {
     setIsListening(false);
     setTranscript("");
     setAiResponse("");
+    setParsedCommand(null);
     setVoicePanelOpen(false);
   };
 
@@ -761,6 +768,7 @@ export default function Dashboard() {
                     onMicToggle={handleMicToggle}
                     transcript={transcript}
                     aiResponse={aiResponse}
+                    parsedCommand={parsedCommand}
                     onConfirm={handleConfirmTask}
                     onCancel={handleCancelVoice}
                   />
