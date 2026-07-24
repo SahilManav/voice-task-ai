@@ -10,10 +10,17 @@ export default function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   const checkAuth = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setUser(null);
+      setLoading(false);
+      return;
+    }
     try {
       const res = await api.get("/auth/me");
       setUser(res.data.user);
     } catch {
+      localStorage.removeItem("token");
       setUser(null);
     } finally {
       setLoading(false);
@@ -26,19 +33,27 @@ export default function AuthProvider({ children }) {
 
   const login = async (data) => {
     const res = await api.post("/auth/login", data);
+    localStorage.setItem("token", res.data.token);
     setUser(res.data.user);
     return res.data;
   };
 
   const register = async (data) => {
     const res = await api.post("/auth/register", data);
+    localStorage.setItem("token", res.data.token);
     setUser(res.data.user);
     return res.data;
   };
 
   const logout = async () => {
-    await api.post("/auth/logout");
-    setUser(null);
+    try {
+      await api.post("/auth/logout");
+    } catch {
+      // ignore logout errors
+    } finally {
+      localStorage.removeItem("token");
+      setUser(null);
+    }
   };
 
   return (
