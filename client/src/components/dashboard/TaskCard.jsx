@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import { Calendar, CheckCircle, Edit3, Trash2, Volume2 } from "lucide-react";
 
@@ -13,8 +14,8 @@ const priorityStyles = {
     label: "Medium Priority",
   },
   low: {
-    bg: "bg-teal-500/10 border-teal-500/30 text-teal-400",
-    dot: "bg-teal-400",
+    bg: "bg-violet-500/10 border-violet-500/30 text-violet-400",
+    dot: "bg-violet-400",
     label: "Low Priority",
   },
 };
@@ -25,28 +26,20 @@ const delayedStyle = {
 };
 
 const formatDueDate = (value) => {
-  if (!value) {
-    return "No deadline";
-  }
-
+  if (!value) return "No deadline";
   const rawValue = String(value);
   const parsedDate = new Date(rawValue);
-
-  if (Number.isNaN(parsedDate.getTime())) {
-    return rawValue;
-  }
-
+  if (Number.isNaN(parsedDate.getTime())) return rawValue;
   return parsedDate.toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
-    year:
-      parsedDate.getFullYear() === new Date().getFullYear()
-        ? undefined
-        : "numeric",
+    year: parsedDate.getFullYear() === new Date().getFullYear() ? undefined : "numeric",
   });
 };
 
 export default function TaskCard({ task, onComplete, onEdit, onDelete }) {
+  const cardRef = useRef(null);
+
   const {
     title,
     description,
@@ -58,39 +51,64 @@ export default function TaskCard({ task, onComplete, onEdit, onDelete }) {
     delayedUntil,
   } = task;
 
-  const currentPriority =
-    priorityStyles[priority?.toLowerCase()] ?? priorityStyles.low;
-  const displayDescription =
-    description || "No description provided yet.";
+  const currentPriority = priorityStyles[priority?.toLowerCase()] ?? priorityStyles.low;
+  const displayDescription = description || "No description provided yet.";
+
+  // 3D tilt on mouse move
+  const handleMouseMove = (e) => {
+    const card = cardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+    const rotateX = ((y - cy) / cy) * -6;
+    const rotateY = ((x - cx) / cx) * 6;
+    card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+    card.style.boxShadow = `0 20px 40px rgba(139,92,246,0.12), 0 0 20px rgba(139,92,246,0.06)`;
+  };
+
+  const handleMouseLeave = () => {
+    const card = cardRef.current;
+    if (!card) return;
+    card.style.transform = "perspective(600px) rotateX(0deg) rotateY(0deg) translateY(0px)";
+    card.style.boxShadow = "none";
+  };
 
   return (
     <motion.div
+      ref={cardRef}
       layout
-      whileHover={{ y: -4 }}
-      className={`relative rounded-2xl border bg-[#141A29] p-5 transition-all duration-300 ${completed
+      onMouseMove={completed ? undefined : handleMouseMove}
+      onMouseLeave={completed ? undefined : handleMouseLeave}
+      className={`relative rounded-2xl border bg-[#141A29] p-5 transition-all duration-200 ${
+        completed
           ? "border-white/5 opacity-60"
-          : "border-white/5 hover:border-teal-500/30 hover:shadow-[0_0_20px_rgba(94,234,212,0.05)]"
-        }`}
+          : "border-white/5 hover:border-violet-500/30"
+      }`}
+      style={{ transformStyle: "preserve-3d", willChange: "transform" }}
     >
+      {/* Subtle inner glow on hover */}
+      {!completed && (
+        <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-violet-500/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+      )}
+
       <div className="mb-4 flex items-center justify-between gap-3">
-        <div
-          className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider ${currentPriority.bg}`}
-        >
+        <div className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider ${currentPriority.bg}`}>
           <span className={`h-1.5 w-1.5 rounded-full ${currentPriority.dot}`} />
           {currentPriority.label}
         </div>
 
         {voiceCommand && (
-          <div className="inline-flex items-center gap-1 rounded-md border border-cyan-500/20 bg-[#0B0F19] px-2 py-1 font-mono text-[10px] text-cyan-400">
+          <div className="inline-flex items-center gap-1 rounded-md border border-violet-500/20 bg-[#0B0F19] px-2 py-1 font-mono text-[10px] text-violet-400">
             <Volume2 className="h-3.5 w-3.5" />
-            <span>Voice Tag</span>
+            <span>Voice</span>
           </div>
         )}
 
         {status === "delayed" && (
-          <div
-            className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider ${delayedStyle.bg}`}
-          >
+          <div className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider ${delayedStyle.bg}`}>
             <span className={`h-1.5 w-1.5 rounded-full ${delayedStyle.dot}`} />
             {delayedStyle.label}
             {delayedUntil ? ` · ${formatDueDate(delayedUntil)}` : ""}
@@ -99,16 +117,10 @@ export default function TaskCard({ task, onComplete, onEdit, onDelete }) {
       </div>
 
       <div className="mb-4">
-        <h3
-          className={`mb-1.5 text-base font-bold tracking-tight text-white ${completed ? "text-gray-500 line-through" : ""
-            }`}
-        >
+        <h3 className={`mb-1.5 text-base font-bold tracking-tight text-white ${completed ? "text-gray-500 line-through" : ""}`}>
           {title}
         </h3>
-        <p
-          className={`text-sm leading-relaxed text-gray-400 ${completed ? "text-gray-600 line-through" : ""
-            }`}
-        >
+        <p className={`text-sm leading-relaxed text-gray-400 ${completed ? "text-gray-600 line-through" : ""}`}>
           {displayDescription}
         </p>
       </div>
@@ -116,18 +128,15 @@ export default function TaskCard({ task, onComplete, onEdit, onDelete }) {
       <div className="flex items-center justify-between border-t border-white/5 pt-4 text-xs text-gray-400">
         <div className="flex items-center gap-1.5">
           <Calendar className="h-3.5 w-3.5 text-gray-500" />
-          <span className="font-mono text-gray-400">
-            {formatDueDate(dueDate)}
-          </span>
+          <span className="font-mono text-gray-400">{formatDueDate(dueDate)}</span>
         </div>
 
         <div className="flex items-center gap-1">
           <button
             onClick={() => onComplete?.(task)}
-            className={`rounded-lg p-1.5 transition-colors duration-300 hover:bg-white/5 ${completed
-                ? "text-teal-400"
-                : "text-gray-500 hover:text-teal-400"
-              }`}
+            className={`rounded-lg p-1.5 transition-colors duration-300 hover:bg-white/5 ${
+              completed ? "text-violet-400" : "text-gray-500 hover:text-violet-400"
+            }`}
             title={completed ? "Mark Incomplete" : "Mark Complete"}
           >
             <CheckCircle className="h-4.5 w-4.5" />
