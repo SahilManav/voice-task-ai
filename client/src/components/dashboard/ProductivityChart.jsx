@@ -1,17 +1,41 @@
 import { motion } from "framer-motion";
 import { TrendingUp } from "lucide-react";
 
-const weeklyData = [
-  { day: "Mon", value: 40 },
-  { day: "Tue", value: 65 },
-  { day: "Wed", value: 80 },
-  { day: "Thu", value: 50 },
-  { day: "Fri", value: 95 },
-  { day: "Sat", value: 30 },
-  { day: "Sun", value: 45 },
-];
+const getWeeklyData = (tasks) => {
+  const dayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-export default function ProductivityChart() {
+  const days = [];
+
+  for (let i = 6; i >= 0; i--) {
+    const date = new Date(today);
+    date.setDate(date.getDate() - i);
+
+    const completedCount = tasks.filter((task) => {
+      if (!task.completed || !task.updatedAt) {
+        return false;
+      }
+
+      const completedDate = new Date(task.updatedAt);
+      return (
+        completedDate.getFullYear() === date.getFullYear() &&
+        completedDate.getMonth() === date.getMonth() &&
+        completedDate.getDate() === date.getDate()
+      );
+    }).length;
+
+    days.push({
+      day: dayLabels[date.getDay()],
+      value: completedCount,
+    });
+  }
+
+  return days;
+};
+
+export default function ProductivityChart({ tasks = [] }) {
+  const weeklyData = getWeeklyData(tasks);
   return (
     <div className="space-y-6 rounded-3xl border border-white/5 bg-[#141A29] p-6">
       <div className="flex items-center justify-between">
@@ -41,11 +65,11 @@ export default function ProductivityChart() {
               className="group flex cursor-pointer flex-col items-center gap-2"
             >
               <span className="font-mono text-[10px] text-teal-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                {data.value}%
+                {data.value}
               </span>
               <motion.div
                 initial={{ height: 0 }}
-                animate={{ height: `${data.value * 1.1}px` }}
+               animate={{ height: `${Math.min(data.value * 20, 160)}px` }}
                 transition={{ duration: 0.8, delay: index * 0.05 }}
                 className="w-8 rounded-t-lg bg-gradient-to-t from-purple-500/20 to-teal-400 shadow-[0_0_10px_rgba(94,234,212,0.15)] transition-all duration-300 group-hover:to-teal-300 group-hover:shadow-[0_0_15px_rgba(94,234,212,0.3)]"
               />

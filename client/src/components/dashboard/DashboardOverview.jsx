@@ -45,7 +45,7 @@ export default function DashboardOverview({
         </div>
       </div>
 
-      <ProductivityChart />
+      <ProductivityChart tasks={tasks} />
       <DashboardScenePlaceholder />
     </div>
   );

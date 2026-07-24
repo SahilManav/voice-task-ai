@@ -1,26 +1,27 @@
 import AnalyticsCard from "./AnalyticsCard";
 
-const getOverdueCount = (tasks) =>
+const getOnTimeCount = (tasks) =>
   tasks.filter((task) => {
-    if (!task.dueDate || task.completed) {
+    if (!task.completed || !task.dueDate) {
       return false;
     }
 
     const dueDate = new Date(task.dueDate);
-    return !Number.isNaN(dueDate.getTime()) && dueDate < new Date();
+    const completedAt = new Date(task.updatedAt ?? task.dueDate);
+
+    return !Number.isNaN(dueDate.getTime()) && completedAt <= dueDate;
   }).length;
+
+const getDelayedCount = (tasks) =>
+  tasks.filter((task) => task.status === "delayed").length;
 
 export default function DashboardAnalyticsView({ tasks }) {
   const completedCount = tasks.filter((task) => task.completed).length;
   const pendingCount = tasks.filter((task) => !task.completed).length;
-  const voiceTaskCount = tasks.filter((task) => task.voiceCommand).length;
   const completionRate =
     tasks.length > 0 ? Math.round((completedCount / tasks.length) * 100) : 0;
-  const productivityVelocity =
-    tasks.length > 0
-      ? ((completedCount * 1.5 + pendingCount * 0.5) / tasks.length).toFixed(1)
-      : "0.0";
-  const overdueCount = getOverdueCount(tasks);
+  const onTimeCount = getOnTimeCount(tasks);
+  const delayedCount = getDelayedCount(tasks);
 
   return (
     <div className="space-y-6">
@@ -34,21 +35,21 @@ export default function DashboardAnalyticsView({ tasks }) {
           progress={completionRate}
         />
         <AnalyticsCard
-          title="Productivity Velocity"
-          value={productivityVelocity}
-          subtext="Efficiency index score"
+          title="Completed On Time"
+          value={onTimeCount.toString()}
+          subtext="Tasks finished before their due date"
           accent="purple"
         />
         <AnalyticsCard
-          title="Audio Feeds Captured"
-          value={voiceTaskCount.toString()}
-          subtext="Voice inputs represented in tasks"
+          title="Pending Tasks"
+          value={pendingCount.toString()}
+          subtext="Tasks still in progress"
           accent="cyan"
         />
         <AnalyticsCard
-          title="Due Threshold Alerts"
-          value={overdueCount.toString()}
-          subtext="Tasks requiring immediate action"
+          title="Delayed Tasks"
+          value={delayedCount.toString()}
+          subtext="Tasks postponed from their original date"
           accent="danger"
         />
       </div>
