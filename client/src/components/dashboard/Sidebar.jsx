@@ -41,17 +41,17 @@ const Sidebar = ({ activeTab, onTabChange, onLogout }) => {
             transition={{ delay: 0.1 }}
             className="flex items-center gap-2.5"
           >
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-400 to-purple-600 flex items-center justify-center text-[#0B0F19]">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white">
               <Mic className="w-4.5 h-4.5" />
             </div>
             <span className="font-extrabold text-white tracking-wider text-base">
-              VOX<span className="text-teal-400">AI</span>
+              Voice<span className="text-violet-400">Desk</span>
             </span>
           </motion.div>
         )}
 
         {isCollapsed && (
-          <div className="w-8 h-8 mx-auto rounded-lg bg-gradient-to-br from-teal-400 to-purple-600 flex items-center justify-center text-[#0B0F19]">
+          <div className="w-8 h-8 mx-auto rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white">
             <Mic className="w-4 h-4" />
           </div>
         )}

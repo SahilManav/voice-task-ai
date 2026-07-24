@@ -78,7 +78,7 @@ const Landing = () => {
               <Mic className="w-4.5 h-4.5" />
             </div>
             <span className="font-extrabold text-white tracking-wider text-lg">
-              VOX<span className="text-violet-400">AI</span>
+              Voice<span className="text-violet-400">Desk</span>
             </span>
           </div>
 

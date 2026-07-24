@@ -1,4 +1,4 @@
-# Voice Task AI — Voice-First AI Task Manager
+# VoiceDesk — Voice-First AI Task Manager
 
 A MERN-stack task manager where the primary input method is natural language voice. Speak a command like *"Remind me to submit the quarterly report by next Friday"* and the app extracts structured task data automatically — no forms required.
 
