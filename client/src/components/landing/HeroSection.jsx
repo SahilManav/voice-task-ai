@@ -14,7 +14,7 @@ const HeroSection = () => {
       
       {/* Background glow meshes */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute top-1/3 left-1/3 w-[300px] h-[300px] bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/3 w-[300px] h-[300px] bg-violet-500/10 rounded-full blur-[100px] pointer-events-none" />
 
       {/* Decorative Grid Overlay */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
@@ -29,7 +29,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-400 text-xs font-semibold uppercase tracking-wider"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-violet-500/10 border border-violet-500/30 text-violet-400 text-xs font-semibold uppercase tracking-wider"
           >
             <Activity className="w-4.5 h-4.5 animate-pulse" />
             AI Voice Synthesis Active
@@ -43,7 +43,7 @@ const HeroSection = () => {
             className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-[1.1] font-sans"
           >
             Command Your Workflow. <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-300 to-purple-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-purple-300 to-indigo-400">
               Hands-Free & Intelligent.
             </span>
           </motion.h1>
@@ -87,7 +87,7 @@ const HeroSection = () => {
             className="grid grid-cols-3 gap-6 pt-6 border-t border-white/5 w-full max-w-md"
           >
             <div>
-              <p className="text-2xl font-bold text-teal-400">99.8%</p>
+              <p className="text-2xl font-bold text-violet-400">99.8%</p>
               <p className="text-xs text-gray-500 uppercase tracking-wider mt-1">Accuracy</p>
             </div>
             <div>
@@ -102,24 +102,24 @@ const HeroSection = () => {
 
         </div>
 
-        {/* Right Column: React Three Fiber Scene Placeholder */}
+        {/* Right Column: Voice Visualization */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="lg:col-span-5 w-full flex justify-center items-center"
         >
-          <div className="w-full aspect-square max-w-[450px] lg:max-w-none h-96 sm:h-[450px] rounded-3xl border border-cyan-500/20 bg-[#141A29]/40 backdrop-blur-xl relative overflow-hidden flex flex-col items-center justify-center p-6 shadow-[0_0_50px_rgba(94,234,212,0.05)]">
+          <div className="w-full aspect-square max-w-[450px] lg:max-w-none h-96 sm:h-[450px] rounded-3xl border border-violet-500/20 bg-[#141A29]/40 backdrop-blur-xl relative overflow-hidden flex flex-col items-center justify-center p-6 shadow-[0_0_50px_rgba(139,92,246,0.08)]">
             
-            {/* Future React Three Fiber Scene Placeholder Grid Overlay */}
-            <div className="absolute inset-0 bg-[radial-gradient(#5eead40b_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none" />
+            {/* Grid Overlay */}
+            <div className="absolute inset-0 bg-[radial-gradient(rgba(139,92,246,0.08)_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none" />
             
-            {/* Simulated Floating AI Waveform Visualizer */}
-            <div className="relative w-48 h-48 rounded-full border border-teal-500/30 flex items-center justify-center group cursor-pointer">
+            {/* Floating Voice Visualizer */}
+            <div className="relative w-48 h-48 rounded-full border border-violet-500/30 flex items-center justify-center group cursor-pointer">
               {/* Outer pulsing ring */}
               <div className="absolute inset-0 rounded-full border border-purple-500/20 animate-ping opacity-75" />
               {/* Mid glowing ring */}
-              <div className="absolute -inset-4 rounded-full bg-teal-500/5 blur-md group-hover:bg-teal-500/10 transition-colors duration-500" />
+              <div className="absolute -inset-4 rounded-full bg-violet-500/5 blur-md group-hover:bg-violet-500/10 transition-colors duration-500" />
               
               {/* Inner floating core */}
               <motion.div 
@@ -131,24 +131,24 @@ const HeroSection = () => {
                   y: { repeat: Infinity, duration: 4, ease: "easeInOut" },
                   rotate: { repeat: Infinity, duration: 25, ease: "linear" }
                 }}
-                className="w-32 h-32 rounded-full bg-gradient-to-br from-teal-500/20 via-transparent to-purple-500/20 border border-teal-500/40 flex items-center justify-center shadow-[inset_0_0_20px_rgba(94,234,212,0.2)]"
+                className="w-32 h-32 rounded-full bg-gradient-to-br from-violet-500/20 via-transparent to-purple-500/20 border border-violet-500/40 flex items-center justify-center shadow-[inset_0_0_20px_rgba(139,92,246,0.2)]"
               >
-                <Mic className="w-12 h-12 text-teal-400 group-hover:scale-110 transition-transform duration-300" />
+                <Mic className="w-12 h-12 text-violet-400 group-hover:scale-110 transition-transform duration-300" />
               </motion.div>
             </div>
 
-            {/* Placeholder Text */}
+            {/* Description */}
             <div className="mt-8 text-center relative z-10">
               <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-1">
-                React Three Fiber Scene
+                Voice-Powered Interface
               </h4>
               <p className="text-xs text-gray-500 max-w-[250px] mx-auto">
-                Ready for a 3D Interactive Audio / Particle Waveform canvas.
+                Speak naturally — AI extracts tasks, priorities, and deadlines instantly.
               </p>
             </div>
 
             {/* Glowing borders */}
-            <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-teal-400 rounded-tl-3xl pointer-events-none" />
+            <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-violet-400 rounded-tl-3xl pointer-events-none" />
             <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-purple-400 rounded-br-3xl pointer-events-none" />
           </div>
         </motion.div>
