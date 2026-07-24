@@ -74,19 +74,19 @@ const Landing = () => {
           
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-400 to-purple-600 flex items-center justify-center text-[#0B0F19]">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white">
               <Mic className="w-4.5 h-4.5" />
             </div>
             <span className="font-extrabold text-white tracking-wider text-lg">
-              VOX<span className="text-teal-400">AI</span>
+              VOX<span className="text-violet-400">AI</span>
             </span>
           </div>
 
           {/* Desktop Navigation Links */}
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
-            <a href="#features" className="hover:text-teal-300 transition-colors duration-300">Features</a>
-            <a href="#how-it-works" className="hover:text-teal-300 transition-colors duration-300">How it Works</a>
-            <a href="#preview" className="hover:text-teal-300 transition-colors duration-300">Interface Preview</a>
+            <a href="#features" className="hover:text-violet-300 transition-colors duration-300">Features</a>
+            <a href="#how-it-works" className="hover:text-violet-300 transition-colors duration-300">How it Works</a>
+            <a href="#preview" className="hover:text-violet-300 transition-colors duration-300">Interface Preview</a>
           </nav>
 
           {/* Desktop Action Buttons */}
@@ -128,21 +128,21 @@ const Landing = () => {
             <a 
               href="#features" 
               onClick={() => setMobileMenuOpen(false)}
-              className="text-gray-300 hover:text-teal-300 text-lg font-medium"
+              className="text-gray-300 hover:text-violet-300 text-lg font-medium"
             >
               Features
             </a>
             <a 
               href="#how-it-works" 
               onClick={() => setMobileMenuOpen(false)}
-              className="text-gray-300 hover:text-teal-300 text-lg font-medium"
+              className="text-gray-300 hover:text-violet-300 text-lg font-medium"
             >
               How it Works
             </a>
             <a 
               href="#preview" 
               onClick={() => setMobileMenuOpen(false)}
-              className="text-gray-300 hover:text-teal-300 text-lg font-medium"
+              className="text-gray-300 hover:text-violet-300 text-lg font-medium"
             >
               Interface Preview
             </a>
@@ -169,10 +169,10 @@ const Landing = () => {
 
       {/* Features Grid Section */}
       <section id="features" className="py-24 px-6 max-w-7xl mx-auto w-full relative">
-        <div className="absolute top-1/2 left-0 w-72 h-72 bg-teal-500/5 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute top-1/2 left-0 w-72 h-72 bg-violet-500/5 rounded-full blur-[100px] pointer-events-none" />
         
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <h2 className="text-xs uppercase tracking-widest text-teal-400 font-bold">
+          <h2 className="text-xs uppercase tracking-widest text-violet-400 font-bold">
             Features Matrix
           </h2>
           <h3 className="text-3xl md:text-4xl font-extrabold text-white">
@@ -235,15 +235,15 @@ const Landing = () => {
 
           {/* Right Block: Live UI Preview Showcase */}
           <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/10 to-teal-500/10 rounded-3xl blur-2xl pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/10 to-violet-500/10 rounded-3xl blur-2xl pointer-events-none" />
             
             <div className="relative rounded-3xl border border-white/5 bg-[#141A29]/80 backdrop-blur-xl p-8 shadow-2xl flex flex-col gap-6">
               
               {/* Simulated Voice Panel Card UI */}
               <div className="flex justify-between items-center pb-4 border-b border-white/5">
                 <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 rounded-full bg-teal-400 animate-ping" />
-                  <span className="text-xs font-mono tracking-widest text-teal-400 uppercase">AI Transcript Engine</span>
+                  <div className="w-3 h-3 rounded-full bg-violet-400 animate-ping" />
+                  <span className="text-xs font-mono tracking-widest text-violet-400 uppercase">AI Transcript Engine</span>
                 </div>
                 <div className="text-[10px] font-mono text-purple-400">STATUS: INTERPRETING</div>
               </div>
@@ -251,7 +251,7 @@ const Landing = () => {
               {/* Speech transcript display */}
               <div className="space-y-2">
                 <p className="text-xs text-gray-500 uppercase font-bold tracking-wider">Acoustic Audio Feed</p>
-                <div className="bg-[#0B0F19] rounded-xl p-4 border border-teal-500/10 text-teal-300 font-mono text-sm">
+                <div className="bg-[#0B0F19] rounded-xl p-4 border border-violet-500/10 text-violet-300 font-mono text-sm">
                   "Create task to draft project layout deck with priority high and deadline this friday afternoon"
                 </div>
               </div>
@@ -274,7 +274,7 @@ const Landing = () => {
                   </div>
                   <div className="space-y-1">
                     <span className="text-gray-500">AI AUTO-TAG</span>
-                    <p className="text-teal-400 font-bold">#presentation</p>
+                    <p className="text-violet-400 font-bold">#presentation</p>
                   </div>
                 </div>
               </div>
@@ -297,7 +297,7 @@ const Landing = () => {
 
       {/* CTA / Security Block */}
       <section className="py-24 px-6 relative max-w-5xl mx-auto text-center space-y-8">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-teal-500/5 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-violet-500/5 rounded-full blur-[100px] pointer-events-none" />
         
         <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
           Ready to Upgrade Your Workspace?
