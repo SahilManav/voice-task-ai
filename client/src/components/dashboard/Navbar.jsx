@@ -300,7 +300,7 @@ export default function Navbar({ onMicClick, onLogout, userName = "Alex Mercer",
     <>
       <header className="sticky top-0 right-0 z-40 flex h-16 w-full items-center justify-between border-b border-gray-200 dark:border-white/5 bg-white dark:bg-[#141A29]/90 px-3 sm:px-6 backdrop-blur-md transition-colors duration-200">
         {/* Search */}
-        <div className="relative flex-1 max-w-xs sm:max-w-md mr-3">
+        <div className="relative flex-1 max-w-xs sm:max-w-md">
           <div className={`relative flex items-center rounded-xl border transition-all duration-200 bg-gray-100 dark:bg-[#0B0F19] ${
             searchFocused ? "border-violet-400 shadow-sm" : "border-gray-200 dark:border-white/10"
           }`}>
@@ -320,7 +320,8 @@ export default function Navbar({ onMicClick, onLogout, userName = "Alex Mercer",
           </div>
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-3">
+        {/* Right side icons with proper gap */}
+        <div className="flex items-center gap-2 ml-3 sm:gap-3 sm:ml-4">
           {/* Mic */}
           <motion.button onClick={onMicClick} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             className="flex items-center justify-center rounded-xl border border-violet-400/30 bg-violet-500/10 p-2 sm:p-2.5 text-violet-600 dark:text-violet-400 transition-all hover:bg-violet-500/20">
@@ -335,8 +336,8 @@ export default function Navbar({ onMicClick, onLogout, userName = "Alex Mercer",
               {bellOpen && (
                 <><div className="fixed inset-0 z-30" onClick={() => setBellOpen(false)} />
                 <motion.div initial={{ opacity: 0, y: 10, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 10, scale: 0.95 }} transition={{ duration: 0.15 }}
-                  className="absolute right-0 z-40 mt-3 w-72 rounded-2xl border border-gray-200 dark:border-white/5 bg-white dark:bg-white dark:bg-[#141A29] border-gray-200 dark:border-white/5 p-3 shadow-2xl transition-colors duration-200">
-                  <div className="border-b border-white/5 pb-2 mb-2"><p className="text-sm font-bold text-white">Notifications</p></div>
+                  className="absolute right-0 z-40 mt-3 w-72 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#141A29] p-3 shadow-xl dark:shadow-2xl">
+                  <div className="border-b border-gray-100 dark:border-white/5 pb-2 mb-2"><p className="text-sm font-bold text-gray-900 dark:text-white">Notifications</p></div>
                   {upcomingTasks.length > 0 ? (
                     <div className="space-y-2">{upcomingTasks.map((task) => {
                       const d = Math.ceil((new Date(task.dueDate) - new Date()) / (1000 * 60 * 60 * 24));
@@ -353,47 +354,54 @@ export default function Navbar({ onMicClick, onLogout, userName = "Alex Mercer",
             </AnimatePresence>
           </div>
 
-          <div className="h-6 w-px bg-white/10" />
+          <div className="h-6 w-px bg-gray-200 dark:bg-white/10" />
 
           {/* Profile */}
           <div className="relative">
-            <button onClick={() => { setProfileDropdownOpen(!profileDropdownOpen); setBellOpen(false); }} className="group flex items-center gap-3 focus:outline-none">
-              <div className="w-9 rounded-xl bg-gradient-to-tr from-violet-500 to-purple-600 p-0.5 shadow-[0_0_10px_rgba(139,92,246,0.2)] transition-all group-hover:shadow-[0_0_15px_rgba(139,92,246,0.4)]">
-                <div className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-violet-600 dark:bg-[#141A29] text-sm font-bold text-white">{initials}</div>
+            <button onClick={() => { setProfileDropdownOpen(!profileDropdownOpen); setBellOpen(false); }} className="group flex items-center gap-2 focus:outline-none">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-sm font-bold text-white shadow-md">
+                {initials}
               </div>
               <div className="hidden flex-col text-left sm:flex">
-                <span className="text-xs font-bold text-gray-900 dark:text-white group-hover:text-violet-300 transition-colors">{userName}</span>
+                <span className="text-xs font-bold text-gray-900 dark:text-white">{userName}</span>
                 <span className="text-[10px] text-gray-500 dark:text-gray-400">Workspace Owner</span>
               </div>
             </button>
 
             <AnimatePresence>
               {profileDropdownOpen && (
-                <><div className="fixed inset-0 z-30" onClick={() => setProfileDropdownOpen(false)} />
-                <motion.div initial={{ opacity: 0, y: 10, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 10, scale: 0.95 }} transition={{ duration: 0.15 }}
-                  className="absolute right-0 z-40 mt-3 w-56 rounded-2xl border border-gray-200 dark:border-white/5 bg-white dark:bg-white dark:bg-[#141A29] border-gray-200 dark:border-white/5 p-2 shadow-2xl transition-colors duration-200">
-                  <div className="border-b border-white/5 p-3">
-                    <p className="text-sm font-bold text-white">{userName}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">{userEmail}</p>
-                  </div>
-                  <div className="space-y-1 py-2">
-                    <button onClick={() => { setProfileDropdownOpen(false); setProfileModalOpen(true); }}
-                      className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-gray-500 dark:text-gray-400 dark:text-gray-400 hover:bg-white/5 hover:text-gray-900 dark:hover:text-gray-900 dark:text-white transition-colors">
-                      <User className="h-4 w-4 text-violet-400" /> My Profile
-                    </button>
-                    <button onClick={() => { setProfileDropdownOpen(false); setAccountModalOpen(true); }}
-                      className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-gray-500 dark:text-gray-400 dark:text-gray-400 hover:bg-white/5 hover:text-gray-900 dark:hover:text-gray-900 dark:text-white transition-colors">
-                      <Settings className="h-4 w-4 text-purple-400" /> Account Settings
-                    </button>
-                  </div>
-                  <div className="my-1 h-px bg-white/5" />
-                  <div className="p-1">
-                    <button onClick={() => { setProfileDropdownOpen(false); onLogout?.(); }}
-                      className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors">
-                      <LogOut className="h-4 w-4" /> Logout Session
-                    </button>
-                  </div>
-                </motion.div></>
+                <>
+                  <div className="fixed inset-0 z-30" onClick={() => setProfileDropdownOpen(false)} />
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute right-0 z-40 mt-3 w-56 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#141A29] p-2 shadow-xl dark:shadow-2xl"
+                  >
+                    <div className="border-b border-gray-100 dark:border-white/5 p-3">
+                      <p className="text-sm font-bold text-gray-900 dark:text-white">{userName}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">{userEmail}</p>
+                    </div>
+                    <div className="space-y-1 py-2">
+                      <button onClick={() => { setProfileDropdownOpen(false); setProfileModalOpen(true); }}
+                        className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white transition-colors">
+                        <User className="h-4 w-4 text-violet-500" /> My Profile
+                      </button>
+                      <button onClick={() => { setProfileDropdownOpen(false); setAccountModalOpen(true); }}
+                        className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white transition-colors">
+                        <Settings className="h-4 w-4 text-purple-500" /> Account Settings
+                      </button>
+                    </div>
+                    <div className="my-1 h-px bg-gray-100 dark:bg-white/5" />
+                    <div className="p-1">
+                      <button onClick={() => { setProfileDropdownOpen(false); onLogout?.(); }}
+                        className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 transition-colors">
+                        <LogOut className="h-4 w-4" /> Logout Session
+                      </button>
+                    </div>
+                  </motion.div>
+                </>
               )}
             </AnimatePresence>
           </div>
