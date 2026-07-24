@@ -744,6 +744,7 @@ export default function Dashboard() {
           userEmail={user?.email}
           tasks={tasks}
           onSearch={(q) => setSearchQuery(q)}
+          onNavigate={setActiveTab}
         />
 
         <main className="relative flex-1 overflow-y-auto px-6 py-8">

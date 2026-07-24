@@ -20,9 +20,11 @@ export default function Navbar({
   userEmail = "alex.mercer@vox.ai",
   tasks = [],
   onSearch,
+  onNavigate,
 }) {
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const [bellOpen, setBellOpen] = useState(false);
+  const [accountModalOpen, setAccountModalOpen] = useState(false);
   const [isDark, setIsDark] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
@@ -54,6 +56,7 @@ export default function Navbar({
   };
 
   return (
+    <>
     <header className="sticky top-0 right-0 z-40 flex h-16 w-full items-center justify-between border-b border-white/5 bg-[#141A29]/80 px-6 backdrop-blur-md">
       {/* Search Bar */}
       <div className="relative max-w-md flex-1">
@@ -208,11 +211,21 @@ export default function Navbar({
                   </div>
 
                   <div className="space-y-1 py-2">
-                    <button className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-gray-400 transition-colors duration-300 hover:bg-white/5 hover:text-white">
+                    <button
+                      onClick={() => {
+                        setProfileDropdownOpen(false);
+                        onNavigate?.("settings");
+                      }}
+                      className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-gray-400 transition-colors duration-300 hover:bg-white/5 hover:text-white">
                       <User className="h-4 w-4 text-violet-400" />
                       My Profile
                     </button>
-                    <button className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-gray-400 transition-colors duration-300 hover:bg-white/5 hover:text-white">
+                    <button
+                      onClick={() => {
+                        setProfileDropdownOpen(false);
+                        setAccountModalOpen(true);
+                      }}
+                      className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-gray-400 transition-colors duration-300 hover:bg-white/5 hover:text-white">
                       <Settings className="h-4 w-4 text-purple-400" />
                       Account Settings
                     </button>
@@ -239,5 +252,97 @@ export default function Navbar({
         </div>
       </div>
     </header>
+
+    {/* Account Settings Modal */}
+    <AnimatePresence>
+      {accountModalOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={() => setAccountModalOpen(false)}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#0B0F19]/80 px-4 backdrop-blur-sm"
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            transition={{ type: "spring", duration: 0.4 }}
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-md rounded-3xl border border-white/10 bg-[#141A29] p-6 shadow-2xl"
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 text-sm font-bold text-white shadow-lg shadow-violet-500/30">
+                  {initials}
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-white">{userName}</p>
+                  <p className="text-xs text-gray-500">{userEmail}</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setAccountModalOpen(false)}
+                className="rounded-xl border border-white/10 bg-[#0B0F19] p-2 text-gray-400 hover:text-white transition-colors"
+              >
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Account Info */}
+            <div className="space-y-3 rounded-2xl border border-white/5 bg-[#0B0F19]/50 p-4 mb-4">
+              <p className="text-[10px] uppercase tracking-wider text-gray-500 font-mono">Account Details</p>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-gray-400">Full Name</span>
+                  <span className="text-xs font-semibold text-white">{userName}</span>
+                </div>
+                <div className="h-px bg-white/5" />
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-gray-400">Email</span>
+                  <span className="text-xs font-semibold text-white">{userEmail}</span>
+                </div>
+                <div className="h-px bg-white/5" />
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-gray-400">Account Type</span>
+                  <span className="text-xs font-semibold text-violet-400">Workspace Owner</span>
+                </div>
+                <div className="h-px bg-white/5" />
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-gray-400">Status</span>
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> Active
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Note */}
+            <p className="text-xs text-gray-500 text-center mb-4">
+              To update preferences, visit{" "}
+              <button
+                onClick={() => { setAccountModalOpen(false); onNavigate?.("settings"); }}
+                className="text-violet-400 hover:text-violet-300 transition-colors"
+              >
+                Settings
+              </button>
+            </p>
+
+            {/* Logout */}
+            <button
+              onClick={() => { setAccountModalOpen(false); onLogout?.(); }}
+              className="w-full flex items-center justify-center gap-2 rounded-2xl border border-red-500/20 bg-red-500/10 py-2.5 text-sm font-semibold text-red-400 hover:bg-red-500/20 transition-colors duration-300"
+            >
+              <LogOut className="h-4 w-4" />
+              Logout Session
+            </button>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+    </>
   );
 }
