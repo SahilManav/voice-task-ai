@@ -1,11 +1,33 @@
+import { useState, useEffect } from "react";
 import { ListTodo, Plus, Mic } from "lucide-react";
-
 import Button from "../common/Button";
 import TaskCard from "./TaskCard";
 
+const VOICE_EXAMPLES = [
+  "Create task submit the report by tomorrow, high priority",
+  "Remind me to call the client on Friday",
+  "Add task review the presentation by next Monday",
+  "Create urgent task fix the bug before 5pm today",
+  "Remind me to send the invoice by end of week",
+];
+
 function EmptyTasksState() {
+  const [exampleIndex, setExampleIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setVisible(false);
+      setTimeout(() => {
+        setExampleIndex((i) => (i + 1) % VOICE_EXAMPLES.length);
+        setVisible(true);
+      }, 400);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="rounded-2xl border border-gray-200 dark:border-white/5 p-10 text-center bg-white dark:bg-[#141A29] border-gray-200 dark:border-white/5 transition-colors duration-200">
+    <div className="rounded-2xl border border-gray-200 dark:border-white/5 p-10 text-center bg-white dark:bg-[#141A29] transition-colors duration-200">
       <div className="mb-4 flex justify-center">
         <div className="flex h-14 w-14 items-center justify-center rounded-full bg-violet-500/10">
           <Mic className="h-7 w-7 text-violet-500" />
@@ -13,9 +35,14 @@ function EmptyTasksState() {
       </div>
       <p className="mb-1 text-base font-semibold text-gray-900 dark:text-white">No tasks yet</p>
       <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">Try saying something like:</p>
-      <p className="mx-auto max-w-xs rounded-xl border border-violet-500/20 bg-violet-500/5 px-4 py-2 text-sm italic text-violet-500">
-        "Create task submit the report by tomorrow, high priority"
-      </p>
+      <div className="mx-auto max-w-xs rounded-xl border border-violet-500/20 bg-violet-500/5 px-4 py-2.5 min-h-[48px] flex items-center justify-center">
+        <p
+          className="text-sm italic text-violet-600 dark:text-violet-400 text-center transition-opacity duration-400"
+          style={{ opacity: visible ? 1 : 0 }}
+        >
+          "{VOICE_EXAMPLES[exampleIndex]}"
+        </p>
+      </div>
     </div>
   );
 }

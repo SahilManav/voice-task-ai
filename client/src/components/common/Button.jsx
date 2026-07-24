@@ -32,11 +32,11 @@ const Button = ({
     // Secondary: Neon Purple glowing solid/gradient style
     secondary: "bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-[0_0_15px_rgba(139,92,246,0.3)] hover:shadow-[0_0_25px_rgba(139,92,246,0.5)] border border-purple-400/30",
     
-    // Outline: Glassmorphic borders with accent hover text and glow
-    outline: "bg-[#141A29]/40 backdrop-blur-md text-violet-300 border border-violet-500/30 hover:border-violet-400 hover:bg-[#141A29]/75 hover:shadow-[0_0_15px_rgba(139,92,246,0.2)]",
+    // Outline: works in both light and dark
+    outline: "bg-gray-100 dark:bg-[#141A29]/40 backdrop-blur-md text-violet-600 dark:text-violet-300 border border-violet-500/30 hover:border-violet-400 hover:bg-violet-50 dark:hover:bg-[#141A29]/75",
     
-    // Ghost: Clean transparent border, accent hover glow
-    ghost: "bg-transparent text-gray-300 hover:text-white hover:bg-white/5",
+    // Ghost: Clean transparent
+    ghost: "bg-transparent text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5",
   };
 
   return (
