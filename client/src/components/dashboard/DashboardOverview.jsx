@@ -9,6 +9,7 @@ import DashboardScenePlaceholder from "./DashboardScenePlaceholder";
 export default function DashboardOverview({
   userName,
   tasks,
+  isLoadingTasks,
   recentCommands,
   onOpenVoice,
   onOpenTaskModal,
@@ -30,6 +31,7 @@ export default function DashboardOverview({
         <div className="space-y-6 lg:col-span-8">
           <DashboardTasks
             tasks={tasks}
+            isLoadingTasks={isLoadingTasks}
             onAddTask={onOpenTaskModal}
             onComplete={onTaskComplete}
             onEdit={onTaskEdit}

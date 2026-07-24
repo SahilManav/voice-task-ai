@@ -26,6 +26,7 @@ export default function DashboardTasks({
   title,
   description,
   tasks,
+  isLoadingTasks,
   onAddTask,
   onComplete,
   onEdit,
@@ -75,7 +76,17 @@ export default function DashboardTasks({
           </span>
         </div>
 
-        {pendingTasks.length > 0 ? (
+      {isLoadingTasks ? (
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="rounded-2xl border border-white/5 bg-[#141A29] p-5 space-y-3 animate-pulse">
+                <div className="h-4 w-3/4 rounded bg-white/10" />
+                <div className="h-3 w-1/2 rounded bg-white/5" />
+                <div className="h-3 w-1/3 rounded bg-white/5" />
+              </div>
+            ))}
+          </div>
+        ) : pendingTasks.length > 0 ? (
           <div className={`grid gap-6 ${gridClassName}`}>
             {pendingTasks.map((task) => (
               <TaskCard

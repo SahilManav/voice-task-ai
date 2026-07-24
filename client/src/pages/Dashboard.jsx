@@ -232,11 +232,13 @@ export default function Dashboard() {
   const [parsedCommand, setParsedCommand] = useState(null);
   const [speechRate, setSpeechRate] = useState(1);
   const [tasks, setTasks] = useState([]);
+  const [isLoadingTasks, setIsLoadingTasks] = useState(true);
   const [voiceHistory, setVoiceHistory] = useState(initialVoiceHistory);
 
   useEffect(() => {
     const fetchTasks = async () => {
       try {
+        setIsLoadingTasks(true);
         const res = await api.get("/tasks");
 
         if (res.data.success) {
@@ -249,6 +251,8 @@ export default function Dashboard() {
         console.error("Failed to fetch tasks:", err);
         setTasks([]);
         toast.error("Failed to fetch tasks.");
+      } finally {
+        setIsLoadingTasks(false);
       }
     };
 
@@ -711,6 +715,7 @@ export default function Dashboard() {
           <DashboardOverview
             userName={user?.name}
             tasks={tasks}
+            isLoadingTasks={isLoadingTasks}
             recentCommands={voiceHistory}
             onOpenVoice={() => setVoicePanelOpen(true)}
             onOpenTaskModal={handleManualTaskAdd}
