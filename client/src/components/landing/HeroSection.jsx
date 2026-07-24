@@ -98,8 +98,7 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
-            className="text-violet-400 inline-block min-w-[110px] text-center font-bold"
-          >
+className="inline-block min-w-[80px] text-center font-bold text-violet-400"          >
             {words[wordIndex]}
           </motion.span>
 
