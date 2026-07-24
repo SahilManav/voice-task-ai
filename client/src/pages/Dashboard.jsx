@@ -39,13 +39,13 @@ const buildTaskPayload = (task, completed = task.completed) => ({
   completed,
 });
 
-const speak = (message) => {
+const speak = (message, rate = 1) => {
   if (!("speechSynthesis" in window)) return;
 
   window.speechSynthesis.cancel();
 
   const utterance = new SpeechSynthesisUtterance(message);
-  utterance.rate = 1;
+  utterance.rate = rate;
   utterance.pitch = 1;
   utterance.volume = 1;
 
@@ -230,6 +230,7 @@ export default function Dashboard() {
   const [transcript, setTranscript] = useState("");
   const [aiResponse, setAiResponse] = useState("");
   const [parsedCommand, setParsedCommand] = useState(null);
+  const [speechRate, setSpeechRate] = useState(1);
   const [tasks, setTasks] = useState([]);
   const [voiceHistory, setVoiceHistory] = useState(initialVoiceHistory);
 
@@ -679,12 +680,14 @@ export default function Dashboard() {
           />
         );
 
-      case "settings":
+ case "settings":
         return (
           <DashboardSettingsView
             icon={Settings}
-            title="Settings Console"
-            description="To configure system defaults, please access the Settings subpage directly."
+            title="Settings"
+            description="Configure voice preferences, task defaults, and notifications."
+            speechRate={speechRate}
+            onSpeechRateChange={setSpeechRate}
           />
         );
 
