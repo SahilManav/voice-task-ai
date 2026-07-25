@@ -18,19 +18,21 @@ export default function Login() {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleGuestLogin = async () => {
-    setLoading(true);
-    setError("");
+const handleGuestLogin = async () => {
+  console.log("HANDLE GUEST LOGIN");
 
-    try {
-      await guestLogin();
-      navigate("/dashboard");
-    } catch (err) {
-      setError("Unable to create guest account.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  setLoading(true);
+  setError("");
+
+  try {
+    await guestLogin();
+    navigate("/dashboard");
+  } catch (err) {
+    setError("Unable to create guest account.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleChange = (e) => {
     setForm({
