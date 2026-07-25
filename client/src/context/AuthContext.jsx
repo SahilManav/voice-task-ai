@@ -31,17 +31,23 @@ export default function AuthProvider({ children }) {
     checkAuth();
   }, []);
 
-  const login = async (data) => {
-    const res = await api.post("/auth/login", data);
-    localStorage.setItem("token", res.data.token);
-    setUser(res.data.user);
-    return res.data;
-  };
-  const guestLogin = async () => {
+const login = async (data) => {
+  console.log("LOGIN FUNCTION CALLED");
+
+  const res = await api.post("/auth/login", data);
+
+  localStorage.setItem("token", res.data.token);
+  setUser(res.data.user);
+
+  return res.data;
+};
+
+const guestLogin = async () => {
+  console.log("GUEST FUNCTION CALLED");
+
   const res = await api.post("/auth/guest");
 
   localStorage.setItem("token", res.data.token);
-
   setUser(res.data.user);
 
   return res.data;
