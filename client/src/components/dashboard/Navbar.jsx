@@ -86,7 +86,7 @@ function ProfileModal({ userName, userEmail, onClose }) {
           <p className="text-[10px] uppercase tracking-wider text-gray-500 font-mono">Edit Profile</p>
 
           <div>
-            <label className="block text-xs font-medium text-gray-300 mb-1.5">Full Name</label>
+            <label className="block mb-1.5 text-xs font-medium text-slate-600 dark:text-slate-300">Full Name</label>
             <input name="name" value={form.name} onChange={handleChange}
               className={`w-full rounded-2xl bg-gray-100 dark:bg-[#0B0F19] border px-4 py-3 text-sm text-gray-900 dark:text-white placeholder-gray-500 outline-none transition-all duration-300 ${errors.name ? "border-red-500/60" : "border-gray-200 dark:border-white/10 focus:border-violet-400"}`}
             />
@@ -94,7 +94,7 @@ function ProfileModal({ userName, userEmail, onClose }) {
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-gray-300 mb-1.5">Email Address</label>
+            <label className="block mb-1.5 text-xs font-medium text-slate-600 dark:text-slate-300">Email Address</label>
             <input name="email" value={form.email} onChange={handleChange}
               className={`w-full rounded-2xl bg-gray-100 dark:bg-[#0B0F19] border px-4 py-3 text-sm text-gray-900 dark:text-white placeholder-gray-500 outline-none transition-all duration-300 ${errors.email ? "border-red-500/60" : "border-gray-200 dark:border-white/10 focus:border-violet-400"}`}
             />
@@ -102,20 +102,69 @@ function ProfileModal({ userName, userEmail, onClose }) {
           </div>
 
           <div className="flex gap-3 pt-2">
-            <button onClick={onClose} className="flex-1 rounded-2xl border border-gray-200 dark:border-white/10 bg-white/5 py-3 text-sm text-gray-500 dark:text-gray-400 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-900 dark:text-white transition-colors">
+            <motion.button
+              onClick={onClose}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ duration: 0.2 }}
+              className="flex-1 rounded-2xl
+      border border-slate-300 dark:border-slate-700
+      bg-white dark:bg-[#141A29]
+      py-3
+      text-sm font-semibold
+      text-slate-700 dark:text-slate-300
+      shadow-sm
+      transition-all duration-300
+      hover:bg-violet-50
+      hover:border-violet-400
+      hover:text-violet-700
+      dark:hover:bg-violet-500/10
+      dark:hover:border-violet-500/30
+      dark:hover:text-violet-300"
+            >
               Cancel
-            </button>
-            <motion.button onClick={handleSave} disabled={saving}
-              whileHover={{ scale: saving ? 1 : 1.02 }} whileTap={{ scale: saving ? 1 : 0.98 }}
-              className="flex-1 flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-500 to-purple-600 py-3 text-sm font-bold text-gray-900 dark:text-white shadow-lg shadow-violet-500/30 disabled:opacity-50"
+            </motion.button>
+
+            <motion.button
+              onClick={handleSave}
+              disabled={saving}
+              whileHover={{ scale: saving ? 1 : 1.02 }}
+              whileTap={{ scale: saving ? 1 : 0.98 }}
+              className="flex-1 flex items-center justify-center gap-2 rounded-2xl
+      bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-600
+      py-3
+      text-sm font-bold
+      text-white
+      shadow-lg shadow-violet-500/30
+      transition-all duration-300
+      hover:shadow-xl hover:shadow-violet-500/40
+      disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {saving ? (
-                <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>
-              ) : <Save className="h-4 w-4" />}
+                <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24">
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    fill="none"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                  />
+                </svg>
+              ) : (
+                <Save className="h-4 w-4" />
+              )}
+
               {saving ? "Saving..." : "Save Changes"}
             </motion.button>
           </div>
-        </div>
+        </div>   {/* closes: <div className="p-6 space-y-4"> */}
       </motion.div>
     </motion.div>
   );
@@ -170,16 +219,24 @@ function AccountSettingsModal({ userName, userEmail, onClose, onLogout }) {
         className="w-full max-w-md rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#141A29] shadow-2xl overflow-hidden"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-white/5">
-          <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 text-sm font-bold text-white">
-              {initials}
-            </div>
-            <div>
-              <p className="text-sm font-bold text-white">{userName}</p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">{userEmail}</p>
-            </div>
+        <div className="relative overflow-hidden border-b border-gray-200 dark:border-white/10 bg-gradient-to-br from-violet-600/20 via-fuchsia-500/10 to-transparent px-6 py-6">          <div className="flex items-center gap-3">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 text-lg font-bold text-white shadow-xl shadow-violet-500/40">
+            {initials}
           </div>
+          <div>
+            <p className="text-base font-bold text-slate-900 dark:text-white">
+              {userName}
+            </p>
+
+            <p className="text-sm text-slate-600 dark:text-slate-400">
+              {userEmail}
+            </p>
+            <span className="mt-2 inline-flex items-center rounded-full bg-violet-500/10 px-2.5 py-1 text-[10px] font-semibold text-violet-500 border border-violet-500/20">
+              Workspace Owner
+            </span>
+          </div>
+
+        </div>
           <button onClick={onClose} className="rounded-xl border border-gray-200 dark:border-white/10 bg-gray-100 dark:bg-[#0B0F19] p-1.5 text-gray-500 dark:text-gray-400 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-900 dark:text-white transition-colors">
             <X className="h-4 w-4" />
           </button>
@@ -189,12 +246,30 @@ function AccountSettingsModal({ userName, userEmail, onClose, onLogout }) {
           {/* Account Info Row */}
           <div className="grid grid-cols-2 gap-3">
             {[
-              { label: "Account Type", value: "Workspace Owner", color: "text-violet-400" },
-              { label: "Status", value: "● Active", color: "text-emerald-400" },
+              {
+                label: "Account Type",
+                value: "Workspace Owner",
+                color: "text-violet-500",
+                bg: "bg-gradient-to-br from-violet-500/10 to-transparent border border-violet-500/20",
+              },
+              {
+                label: "Status",
+                value: "Active",
+                color: "text-emerald-500",
+                bg: "bg-gradient-to-br from-emerald-500/10 to-transparent border border-emerald-500/20",
+              },
             ].map((item) => (
-              <div key={item.label} className="rounded-2xl border border-white/5 bg-[#0B0F19]/50 px-4 py-3">
-                <p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wider">{item.label}</p>
-                <p className={`text-xs font-semibold mt-1 ${item.color}`}>{item.value}</p>
+              <div
+                key={item.label}
+                className={`rounded-2xl px-4 py-3 ${item.bg}`}
+              >
+                <p className="text-[10px] uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                  {item.label}
+                </p>
+
+                <p className={`mt-1 text-xs font-semibold ${item.color}`}>
+                  {item.value}
+                </p>
               </div>
             ))}
           </div>
@@ -208,11 +283,22 @@ function AccountSettingsModal({ userName, userEmail, onClose, onLogout }) {
 
             {/* Current Password */}
             <div>
-              <label className="block text-xs font-medium text-gray-300 mb-1.5">Current Password</label>
+              <label className="block mb-1.5 text-xs font-medium text-slate-600 dark:text-slate-300">Current Password</label>
               <div className="relative">
                 <input name="currentPassword" type={showCurrent ? "text" : "password"} value={form.currentPassword} onChange={handleChange} placeholder="Enter current password"
-                  className={`w-full rounded-2xl bg-gray-100 dark:bg-[#0B0F19] border px-4 py-3 pr-11 text-sm text-gray-900 dark:text-white placeholder-gray-500 outline-none transition-all ${errors.currentPassword ? "border-red-500/60" : "border-gray-200 dark:border-white/10 focus:border-violet-400"}`}
-                />
+                  className={`w-full rounded-2xl border bg-white dark:bg-[#0B0F19]
+border-slate-200 dark:border-white/10
+px-4 py-3 pr-11
+text-sm text-slate-900 dark:text-white
+placeholder:text-slate-400
+shadow-sm
+outline-none
+transition-all duration-300
+hover:border-violet-300
+focus:border-violet-500
+focus:ring-4
+focus:ring-violet-500/10
+${errors.currentPassword ? "border-red-500/60" : ""}`} />
                 <button type="button" onClick={() => setShowCurrent(!showCurrent)} className="absolute inset-y-0 right-3 flex items-center text-gray-500 dark:text-gray-400 dark:text-gray-400 hover:text-violet-400 transition-colors">
                   {showCurrent ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
@@ -222,11 +308,22 @@ function AccountSettingsModal({ userName, userEmail, onClose, onLogout }) {
 
             {/* New Password */}
             <div>
-              <label className="block text-xs font-medium text-gray-300 mb-1.5">New Password</label>
+              <label className="block mb-1.5 text-xs font-medium text-slate-600 dark:text-slate-300">New Password</label>
               <div className="relative">
                 <input name="newPassword" type={showNew ? "text" : "password"} value={form.newPassword} onChange={handleChange} placeholder="Min 6 characters"
-                  className={`w-full rounded-2xl bg-gray-100 dark:bg-[#0B0F19] border px-4 py-3 pr-11 text-sm text-gray-900 dark:text-white placeholder-gray-500 outline-none transition-all ${errors.newPassword ? "border-red-500/60" : "border-gray-200 dark:border-white/10 focus:border-violet-400"}`}
-                />
+                  className={`w-full rounded-2xl border bg-white dark:bg-[#0B0F19]
+border-slate-200 dark:border-white/10
+px-4 py-3 pr-11
+text-sm text-slate-900 dark:text-white
+placeholder:text-slate-400
+shadow-sm
+outline-none
+transition-all duration-300
+hover:border-violet-300
+focus:border-violet-500
+focus:ring-4
+focus:ring-violet-500/10
+${errors.newPassword ? "border-red-500/60" : ""}`} />
                 <button type="button" onClick={() => setShowNew(!showNew)} className="absolute inset-y-0 right-3 flex items-center text-gray-500 dark:text-gray-400 dark:text-gray-400 hover:text-violet-400 transition-colors">
                   {showNew ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
@@ -236,9 +333,21 @@ function AccountSettingsModal({ userName, userEmail, onClose, onLogout }) {
 
             {/* Confirm Password */}
             <div>
-              <label className="block text-xs font-medium text-gray-300 mb-1.5">Confirm New Password</label>
+              <label className="block mb-1.5 text-xs font-medium text-slate-600 dark:text-slate-300">Confirm New Password</label>
               <input name="confirmPassword" type="password" value={form.confirmPassword} onChange={handleChange} placeholder="Repeat new password"
-                className={`w-full rounded-2xl bg-gray-100 dark:bg-[#0B0F19] border px-4 py-3 text-sm text-gray-900 dark:text-white placeholder-gray-500 outline-none transition-all ${errors.confirmPassword ? "border-red-500/60" : "border-gray-200 dark:border-white/10 focus:border-violet-400"}`}
+                className={`w-full rounded-2xl border bg-white dark:bg-[#0B0F19]
+border-slate-200 dark:border-white/10
+px-4 py-3
+text-sm text-slate-900 dark:text-white
+placeholder:text-slate-400
+shadow-sm
+outline-none
+transition-all duration-300
+hover:border-violet-300
+focus:border-violet-500
+focus:ring-4
+focus:ring-violet-500/10
+${errors.confirmPassword ? "border-red-500/60" : ""}`}
               />
               {errors.confirmPassword && <p className="mt-1 text-xs text-red-400">⚠ {errors.confirmPassword}</p>}
             </div>
@@ -246,14 +355,65 @@ function AccountSettingsModal({ userName, userEmail, onClose, onLogout }) {
 
           {/* Action Buttons */}
           <div className="flex gap-3 pt-1">
-            <button onClick={onClose} className="flex-1 rounded-2xl border border-gray-200 dark:border-white/10 bg-white/5 py-3 text-sm text-gray-500 dark:text-gray-400 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-900 dark:text-white transition-colors">
-              Cancel
-            </button>
-            <motion.button onClick={handleSave} disabled={saving}
-              whileHover={{ scale: saving ? 1 : 1.02 }} whileTap={{ scale: saving ? 1 : 0.98 }}
-              className="flex-1 flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-500 to-purple-600 py-3 text-sm font-bold text-gray-900 dark:text-white shadow-lg shadow-violet-500/30 disabled:opacity-50"
+            <motion.button
+              onClick={onClose}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ duration: 0.2 }}
+              className="flex-1 rounded-2xl
+      border border-slate-300 dark:border-slate-700
+      bg-white dark:bg-[#141A29]
+      py-3
+      text-sm font-semibold
+      text-slate-700 dark:text-slate-300
+      shadow-sm
+      transition-all duration-300
+      hover:bg-violet-50
+      hover:border-violet-400
+      hover:text-violet-700
+      dark:hover:bg-violet-500/10
+      dark:hover:border-violet-500/30
+      dark:hover:text-violet-300"
             >
-              {saving ? <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg> : <Save className="h-4 w-4" />}
+              Cancel
+            </motion.button>
+
+            <motion.button
+              onClick={handleSave}
+              disabled={saving}
+              whileHover={{ scale: saving ? 1 : 1.02 }}
+              whileTap={{ scale: saving ? 1 : 0.98 }}
+              className="flex-1 flex items-center justify-center gap-2 rounded-2xl
+      bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-600
+      py-3
+      text-sm font-bold
+      text-white
+      shadow-lg shadow-violet-500/30
+      transition-all duration-300
+      hover:shadow-xl hover:shadow-violet-500/40
+      disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {saving ? (
+                <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24">
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    fill="none"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                  />
+                </svg>
+              ) : (
+                <Save className="h-4 w-4" />
+              )}
+
               {saving ? "Saving..." : "Update Password"}
             </motion.button>
           </div>
@@ -283,6 +443,7 @@ export default function Navbar({ onMicClick, onLogout, userName = "Alex Mercer",
   const [searchQuery, setSearchQuery] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
   const profileRef = useRef(null);
+  const bellRef = useRef(null);
   useEffect(() => {
     function handleClickOutside(event) {
       if (
@@ -290,6 +451,13 @@ export default function Navbar({ onMicClick, onLogout, userName = "Alex Mercer",
         !profileRef.current.contains(event.target)
       ) {
         setProfileDropdownOpen(false);
+      }
+
+      if (
+        bellRef.current &&
+        !bellRef.current.contains(event.target)
+      ) {
+        setBellOpen(false);
       }
     }
 
@@ -342,7 +510,7 @@ export default function Navbar({ onMicClick, onLogout, userName = "Alex Mercer",
           </motion.button>
 
           {/* Bell */}
-          <div className="relative">
+          <div ref={bellRef} className="relative">
             <button onClick={() => { setBellOpen(!bellOpen); setProfileDropdownOpen(false); }}
               className="flex items-center justify-center rounded-xl border border-gray-200 dark:border-white/10 bg-gray-100 dark:bg-[#0B0F19] p-2 sm:p-2.5 text-gray-600 dark:text-gray-400 transition-all hover:bg-gray-200 dark:hover:bg-white/10">
               <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -351,9 +519,9 @@ export default function Navbar({ onMicClick, onLogout, userName = "Alex Mercer",
             <AnimatePresence>
               {bellOpen && (
                 <>
-                  <div className="fixed inset-0 z-30" onClick={() => setBellOpen(false)} />
+
                   <motion.div initial={{ opacity: 0, y: 10, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 10, scale: 0.95 }} transition={{ duration: 0.15 }}
-                    className="absolute right-0 z-40 mt-3 w-72 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#141A29] p-3 shadow-xl dark:shadow-2xl">
+                   className="fixed top-20 right-3 z-40 w-[320px] max-w-[calc(100vw-24px)] rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#141A29] p-3 shadow-xl dark:shadow-2xl">
                     <div className="border-b border-gray-100 dark:border-white/5 pb-2 mb-2">
                       <p className="text-sm font-bold text-gray-900 dark:text-white">Notifications</p>
                     </div>

@@ -5,6 +5,7 @@ const router = express.Router();
 const {
   register,
   login,
+  guestLogin,
   logout,
   getMe,
   updateProfile,
@@ -33,7 +34,7 @@ router.post(
   validate,
   login
 );
-
+router.post("/guest", guestLogin);
 router.post("/logout", logout);
 
 router.get("/me", protect, getMe);

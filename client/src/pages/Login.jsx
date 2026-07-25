@@ -7,7 +7,7 @@ import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, guestLogin } = useAuth();
 
   const [form, setForm] = useState({
     email: "",
@@ -21,11 +21,12 @@ export default function Login() {
   const handleGuestLogin = async () => {
     setLoading(true);
     setError("");
+
     try {
-      await login({ email: "guest@voicedesk.app", password: "guest123456" });
+      await guestLogin();
       navigate("/dashboard");
     } catch (err) {
-      setError("Guest account not available yet. Please register.");
+      setError("Unable to create guest account.");
     } finally {
       setLoading(false);
     }

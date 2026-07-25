@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
+const crypto = require("crypto");
 const User = require("../models/User");
 
 const createToken = (id) => {
@@ -114,6 +114,42 @@ const login = async (req, res) => {
 
   }
 };
+// GUEST LOGIN
+const guestLogin = async (req, res) => {
+  try {
+    const randomId = crypto.randomBytes(6).toString("hex");
+    const randomPassword = crypto.randomBytes(16).toString("hex");
+
+    const hashedPassword = await bcrypt.hash(randomPassword, 10);
+
+    const user = await User.create({
+      name: "Guest User",
+      email: `guest_${randomId}@voicedesk.app`,
+      password: hashedPassword,
+      isGuest: true,
+    });
+
+    const token = createToken(user._id);
+
+    res.cookie("token", token, cookieOptions);
+
+    res.status(201).json({
+      success: true,
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+      },
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
 // LOGOUT
 const logout = (req, res) => {
@@ -210,6 +246,7 @@ const updateProfile = async (req, res) => {
 module.exports = {
   register,
   login,
+  guestLogin,
   logout,
   getMe,
   updateProfile,
