@@ -263,6 +263,11 @@ export default function Dashboard() {
   });
   const [voiceHistory, setVoiceHistory] = useState(initialVoiceHistory);
 
+  // Clear voice history when user changes
+  useEffect(() => {
+    setVoiceHistory([]);
+  }, [user]);
+
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -284,8 +289,14 @@ export default function Dashboard() {
       }
     };
 
-    fetchTasks();
-  }, []);
+    // Only fetch if user is authenticated
+    if (user) {
+      fetchTasks();
+    } else {
+      setTasks([]);
+      setIsLoadingTasks(false);
+    }
+  }, [user]); // Refetch tasks when user changes
 
   const createTask = async ({
     title,
