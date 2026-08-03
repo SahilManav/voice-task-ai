@@ -38,10 +38,29 @@ Password: guest123456
 
 ## 🖼️ Screenshots
 
-<!-- Add screenshots here, e.g.: -->
-<!-- ![Dashboard](./screenshots/dashboard.png) -->
-<!-- ![Voice Assistant Panel](./screenshots/voice-panel.png) -->
-<!-- ![Analytics](./screenshots/analytics.png) -->
+### Landing Page
+![Landing Page](./screenshots/LandingPage.png)
+
+### Authentication
+<div style="display: flex; gap: 10px;">
+  <img src="./screenshots/LoginPage.png" alt="Login Page" width="49%">
+  <img src="./screenshots/RegisterPage.png" alt="Register Page" width="49%">
+</div>
+
+### Dashboard
+![Dashboard Overview](./screenshots/Dashboard.png)
+
+### Task Management
+![Tasks View](./screenshots/Tasks.png)
+
+### Voice Assistant
+![Voice Assistant Panel](./screenshots/Voice-Assistant.png)
+
+### Analytics
+![Analytics Dashboard](./screenshots/Analytics.png)
+
+### Mobile View
+![Mobile Responsive](./screenshots/Mobile.png)
 
 ## 🛠️ Tech Stack
 
